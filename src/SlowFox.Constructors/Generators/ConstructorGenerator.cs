@@ -13,7 +13,9 @@ namespace SlowFox.Constructors.Generators
     [Generator]
     public sealed class ConstructorGenerator : ISourceGenerator
     {
-        private const string InjectableClassAttributeName = "InjectDependencies";
+        private const string InjectableClassAttributeName1 = "SlowFox.InjectDependenciesAttribute";
+        private const string InjectableClassAttributeName2 = "SlowFox.InjectDependencies";
+        private const string InjectableClassAttributeName3 = "InjectDependencies";
 
         public void Initialize(GeneratorInitializationContext context)
         {
@@ -46,6 +48,11 @@ namespace SlowFox.Constructors.Generators
                     .ToList();
 
                 List<string> namespaces = new List<string>();
+
+                if (!types?.Any() ?? true)
+                {
+                    return;
+                }
 
                 if (types != null && types.Any())
                 {
@@ -138,10 +145,18 @@ namespace SlowFox.Constructors.Generators
             {
                 if (context.Node is ClassDeclarationSyntax cds)
                 {
+                    // TODO: Remove
+                    var allChildren = cds.DescendantNodes().OfType<AttributeSyntax>().SelectMany(p => p.DescendantTokens()).Where(dt => dt.IsKind(SyntaxKind.IdentifierToken)).ToList();
+
+                    bool matches(string type)
+                    {
+                        return type.Equals(InjectableClassAttributeName1) || type.Equals(InjectableClassAttributeName2) || type.Equals(InjectableClassAttributeName3);
+                    }
+
                     var attribute = cds
                         .DescendantNodes()
                         .OfType<AttributeSyntax>()
-                        .Where(p => p.DescendantTokens().Any(dt => dt.IsKind(SyntaxKind.IdentifierToken) && (context.SemanticModel.GetTypeInfo(dt.Parent).Type?.ToString().Equals(InjectableClassAttributeName) ?? false)))
+                        .Where(p => p.DescendantTokens().Any(dt => dt.IsKind(SyntaxKind.IdentifierToken) && matches(context.SemanticModel.GetTypeInfo(dt.Parent).Type?.ToString())))
                         .FirstOrDefault();
 
                     if (attribute != null)

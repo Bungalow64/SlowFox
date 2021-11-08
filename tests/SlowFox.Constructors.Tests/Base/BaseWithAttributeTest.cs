@@ -24,5 +24,9 @@ namespace SlowFox
         {
             return AssertGeneration(generatorOutput, _expectedAttributeContents, generatorFilename, _expectedAttributeFileName, code);
         }
+        protected Task AssertNoGeneration(string code)
+        {
+            return AssertNoSecondaryGeneration(_expectedAttributeContents, _expectedAttributeFileName, code);
+        }
     }
 }

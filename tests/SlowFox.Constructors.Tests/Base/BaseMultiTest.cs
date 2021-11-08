@@ -23,6 +23,10 @@ namespace SlowFox.Constructors.Tests.Base
         {
             return AssertGeneration(generator1output, generator2output, generator1filename, generator2filename, GenericCode);
         }
+        protected Task AssertNoSecondaryGeneration(string generator1output, string generator2output)
+        {
+            return AssertNoSecondaryGeneration(generator1output, generator2output, GenericCode);
+        }
 
         protected async Task AssertGeneration(string generator1output, string generator2output, string generator1filename, string generator2filename, params string[] code)
         {
@@ -52,6 +56,38 @@ namespace SlowFox.Constructors.Tests.Base
                     {
                         (typeof(TGenerator1), generator1filename, SourceText.From(generator1output, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
                         (typeof(TGenerator2), generator2filename, SourceText.From(generator2output, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+                }.RunAsync();
+            }
+        }
+
+        protected async Task AssertNoSecondaryGeneration(string generator1output, string generator1filename, params string[] code)
+        {
+            if (code.Length == 1)
+            {
+                await new Verifiers.CSharpSourceGeneratorVerifier<TGenerator2>.Test
+                {
+                    TestState =
+                {
+                    Sources = { code[0] },
+                    GeneratedSources =
+                    {
+                        (typeof(TGenerator2), generator1filename, SourceText.From(generator1output, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+                }.RunAsync();
+            }
+            else
+            {
+                await new Verifiers.CSharpSourceGeneratorVerifier<TGenerator2>.Test
+                {
+                    TestState =
+                {
+                    Sources = { code[0], code[1] },
+                    GeneratedSources =
+                    {
+                        (typeof(TGenerator2), generator1filename, SourceText.From(generator1output, Encoding.UTF8, SourceHashAlgorithm.Sha1))
                     }
                 }
                 }.RunAsync();

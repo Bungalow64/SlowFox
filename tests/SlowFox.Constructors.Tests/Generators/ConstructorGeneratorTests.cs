@@ -8,7 +8,7 @@ namespace SlowFox.Constructors.Tests.Generators
     public class ConstructorGeneratorTests : BaseWithAttributeTest<ConstructorGenerator>
     {
         [Fact]
-        public async Task Class_WithAttribute_NoTypes_NoConstructorCreated()
+        public async Task Class_WithAttribute_NoTypes_NothingCreated()
         {
             var classFile =
 @"using SlowFox;
@@ -19,15 +19,7 @@ namespace Logic.Readers
     public partial class UserReader { }
 }";
 
-            var generated =
-@"namespace Logic.Readers
-{
-    public partial class UserReader
-    {
-
-    }
-}";
-            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile);
+            await AssertNoGeneration(classFile);
         }
 
         [Fact]
@@ -302,6 +294,113 @@ namespace Logic.Readers
         private readonly Helper.IO.IDatabase _database;
 
         public UserReader(Helper.IO.IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task Class_WithAttributeViaUsing_GenerateMemberAndConstructor()
+        {
+            var classFile1 =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader { }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers
+{
+    public interface IDatabase { }
+}
+";
+
+            var generated =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        public UserReader(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task Class_WithAttributeViaNamespace_GenerateMemberAndConstructor()
+        {
+            var classFile1 =
+@"namespace Logic.Readers
+{
+    [SlowFox.InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader { }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers
+{
+    public interface IDatabase { }
+}
+";
+
+            var generated =
+@"namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        public UserReader(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task Class_WithAttributeViaAlias_GenerateMemberAndConstructor()
+        {
+            var classFile1 =
+@"using S = SlowFox.InjectDependenciesAttribute;
+
+namespace Logic.Readers
+{
+    [S(typeof(IDatabase))]
+    public partial class UserReader { }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers
+{
+    public interface IDatabase { }
+}
+";
+
+            var generated =
+@"using S = SlowFox.InjectDependenciesAttribute;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        public UserReader(IDatabase database)
         {
             _database = database;
         }

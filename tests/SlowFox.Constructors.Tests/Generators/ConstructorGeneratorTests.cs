@@ -66,6 +66,63 @@ namespace Logic.Readers
         }
 
         [Fact]
+        public async Task ClassInSlowFoxNamespace_WithAttribute_WithSingleType_GenerateMemberAndConstructor()
+        {
+            var classFile1 =
+@"using SlowFox.Constructors.SampleClient.IO;
+using System;
+
+namespace SlowFox.Constructors.SampleClient
+{
+    [SlowFox.InjectDependencies(typeof(IDatabase), typeof(IReader))]
+    public partial class Class1
+    {
+    }
+}
+";
+
+            var classFile2 =
+@"using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SlowFox.Constructors.SampleClient
+{
+    public interface IDatabase
+    {
+    }
+}
+namespace SlowFox.Constructors.SampleClient.IO
+{
+    public interface IReader
+    {
+    }
+}";
+
+            var generated =
+@"using SlowFox.Constructors.SampleClient.IO;
+using System;
+
+namespace SlowFox.Constructors.SampleClient
+{
+    public partial class Class1
+    {
+        private readonly IDatabase _database;
+        private readonly IReader _reader;
+
+        public Class1(IDatabase database, IReader reader)
+        {
+            _database = database;
+            _reader = reader;
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Class1.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
         public async Task Class_WithAttribute_WithMultipleTypes_GenerateMembersAndConstructor()
         {
             var classFile1 =

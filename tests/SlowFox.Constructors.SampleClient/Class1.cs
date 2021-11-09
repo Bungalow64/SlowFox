@@ -3,12 +3,14 @@ using System;
 
 namespace SlowFox.Constructors.SampleClient
 {
-    [InjectDependencies(typeof(IDatabase), typeof(IReader))]
+    [SlowFox.InjectDependencies(typeof(IDatabase), typeof(IReader))]
     public partial class Class1
     {
+        private readonly string name;
+
         void A()
         {
-            var a = new Class1(null, null);
+            //var a = new Class1(null, null);
         }
     }
 }

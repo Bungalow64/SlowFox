@@ -19,6 +19,13 @@ namespace SlowFox.Constructors.Generators
 
         public void Initialize(GeneratorInitializationContext context)
         {
+
+#if DEBUG
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                //System.Diagnostics.Debugger.Launch();
+            }
+#endif 
             context.RegisterForSyntaxNotifications(() => new ConstructorGeneratorReceiver());
         }
 
@@ -34,6 +41,13 @@ namespace SlowFox.Constructors.Generators
 
         public void Execute(GeneratorExecutionContext context)
         {
+
+#if DEBUG
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                //System.Diagnostics.Debugger.Launch();
+            }
+#endif 
             var syntaxReceiver = (ConstructorGeneratorReceiver)context.SyntaxContextReceiver;
 
             foreach (var targetClass in syntaxReceiver.ClassesToAugment)
@@ -53,6 +67,13 @@ namespace SlowFox.Constructors.Generators
                 {
                     return;
                 }
+
+                bool skipUnderscore = false;
+                if (context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("skip_underscores", out string skipUnderscoreValue))
+                {
+                    skipUnderscore = skipUnderscoreValue.Equals("true", StringComparison.OrdinalIgnoreCase);
+                }
+
 
                 if (types != null && types.Any())
                 {
@@ -84,16 +105,26 @@ namespace SlowFox.Constructors.Generators
 
                 if (types != null)
                 {
+                    var fieldPrefix = skipUnderscore ? string.Empty : "_";
                     var usedNames = new List<string>();
                     var names = types.Select(p => new TypeDetails(p, usedNames)).ToList();
 
                     //var names = typeNames.Select(p => new { TypeName = ((IdentifierNameSyntax)p).Identifier.Text, Name = NameGenerator.GetName(((IdentifierNameSyntax)p).Identifier.Text, usedNames) }).ToList();
 
-                    propertyList = string.Join(Environment.NewLine, names.Select(p => $"        private readonly {p.TypeName} _{p.Name};"));
+                    propertyList = string.Join(Environment.NewLine, names.Select(p => $"        private readonly {p.TypeName} {fieldPrefix}{p.Name};"));
+
+                    string getConstructorFieldName(string name)
+                    {
+                        if (string.IsNullOrEmpty(fieldPrefix))
+                        {
+                            return $"this.{name}";
+                        }
+                        return $"{fieldPrefix}{name}";
+                    }
 
                     ctor = $@"        public {targetClass.Key.Identifier}({string.Join(", ", names.Select(p => $"{p.TypeName} {p.Name}"))})
         {{
-{string.Join(Environment.NewLine, names.Select(p => $"            _{p.Name} = {p.Name};"))}
+{string.Join(Environment.NewLine, names.Select(p => $"            {getConstructorFieldName(p.Name)} = {p.Name};"))}
         }}";
                 }
 
@@ -130,9 +161,9 @@ namespace SlowFox.Constructors.Generators
                         TypeName = qualifiedNameSyntax.GetText().ToString();
                         Name = NameGenerator.GetName(TypeName, existingNames);
                         break;
-                    //case AliasQualifiedNameSyntax aliasQualifiedNameSyntax:
-                    //    TypeName = aliasQualifiedNameSyntax.GetText().ToString();
-                    //    break;
+                        //case AliasQualifiedNameSyntax aliasQualifiedNameSyntax:
+                        //    TypeName = aliasQualifiedNameSyntax.GetText().ToString();
+                        //    break;
                 }
             }
         }
@@ -150,6 +181,10 @@ namespace SlowFox.Constructors.Generators
 
                     bool matches(string type)
                     {
+                        if (string.IsNullOrEmpty(type))
+                        {
+                            return false;
+                        }
                         return type.Equals(InjectableClassAttributeName1) || type.Equals(InjectableClassAttributeName2) || type.Equals(InjectableClassAttributeName3);
                     }
 

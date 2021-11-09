@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Constructors.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Constructors.SampleClient", "tests\SlowFox.Constructors.SampleClient\SlowFox.Constructors.SampleClient.csproj", "{60BA73FA-1EA5-40C8-8643-B68E5C855733}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlowFox.Constructors.SampleClient.Tests", "tests\SlowFox.Constructors.SampleClient.Tests\SlowFox.Constructors.SampleClient.Tests.csproj", "{647B4131-4A29-47D5-80D6-85D8A5B88978}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Constructors.SampleClient.Tests", "tests\SlowFox.Constructors.SampleClient.Tests\SlowFox.Constructors.SampleClient.Tests.csproj", "{647B4131-4A29-47D5-80D6-85D8A5B88978}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalProject.SampleProject1", "tests\ExternalProject.SampleProject1\ExternalProject.SampleProject1.csproj", "{1AEBC9D4-B627-4215-B4BE-9D8714E9196C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{647B4131-4A29-47D5-80D6-85D8A5B88978}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{647B4131-4A29-47D5-80D6-85D8A5B88978}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{647B4131-4A29-47D5-80D6-85D8A5B88978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AEBC9D4-B627-4215-B4BE-9D8714E9196C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AEBC9D4-B627-4215-B4BE-9D8714E9196C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AEBC9D4-B627-4215-B4BE-9D8714E9196C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AEBC9D4-B627-4215-B4BE-9D8714E9196C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

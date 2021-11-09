@@ -13,7 +13,7 @@ namespace SlowFox.Constructors.SampleClient.Tests
         [Fact]
         public void Test1()
         {
-            //Class1 c = new Class1(_database.Object, _reader.Object);
+           // Class1 c = new Class1(_database.Object, _reader.Object);
             //Assert.NotNull(c);
         }
     }

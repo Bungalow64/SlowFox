@@ -69,7 +69,9 @@ namespace SlowFox.Constructors.Generators
                 }
 
                 bool skipUnderscore = false;
-                if (context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("skip_underscores", out string skipUnderscoreValue))
+
+                var options = context.AnalyzerConfigOptions.GetOptions(targetClass.Key.SyntaxTree);
+                if (options != null && options.TryGetValue("skip_underscores", out string skipUnderscoreValue))
                 {
                     skipUnderscore = skipUnderscoreValue.Equals("true", StringComparison.OrdinalIgnoreCase);
                 }

@@ -4,11 +4,11 @@ using SlowFox;
 namespace ExternalProject.SampleProject1.Others
 {
     [InjectDependencies(typeof(IDataReader2))]
-    public partial class Class1a
+    public partial class Class1
     {
-        public static Class1a BuildSelf()
+        public static Class1 BuildSelf()
         {
-            return new Class1a(null);
+            return new Class1(null);
         }
     }
 

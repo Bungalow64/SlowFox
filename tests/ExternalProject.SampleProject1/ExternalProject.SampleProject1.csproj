@@ -1,19 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove=".editorconfig" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="SlowFox.Constructors" Version="0.0.4" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EditorConfigFiles Include=".editorconfig" />
-  </ItemGroup>
+	<ItemGroup>
+	  <EditorConfigFiles Remove="C:\Git\SlowFox\tests\ExternalProject.SampleProject1\.editorconfig" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="SlowFox.Constructors" Version="0.0.2" />
-  </ItemGroup>
+	<ItemGroup>
+	  <None Include="C:\Git\SlowFox\tests\ExternalProject.SampleProject1\.editorconfig" />
+	</ItemGroup>
 
 </Project>

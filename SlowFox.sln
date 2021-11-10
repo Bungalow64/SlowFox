@@ -11,7 +11,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Constructors.Sample
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Constructors.SampleClient.Tests", "tests\SlowFox.Constructors.SampleClient.Tests\SlowFox.Constructors.SampleClient.Tests.csproj", "{647B4131-4A29-47D5-80D6-85D8A5B88978}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalProject.SampleProject1", "tests\ExternalProject.SampleProject1\ExternalProject.SampleProject1.csproj", "{1AEBC9D4-B627-4215-B4BE-9D8714E9196C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.SampleProject1", "tests\ExternalProject.SampleProject1\ExternalProject.SampleProject1.csproj", "{1AEBC9D4-B627-4215-B4BE-9D8714E9196C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Generators", "1.Generators", "{95A76331-56BB-410B-BE6C-67035E2F0EDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Tests", "2.Tests", "{6238711A-68AD-48A4-B332-5985E7978EC7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.NuGet", "1.NuGet", "{E646EF38-7469-4049-9821-C1F73478C017}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Local", "2.Local", "{0A079797-78C6-459C-8C83-EC98D31A4738}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.SampleSolutions", "3.SampleSolutions", "{0FAB3773-CADC-4721-9A6F-E1885E3FF208}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +52,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{20F95D73-4BD5-4DE4-85E8-6EC74B6A099D} = {95A76331-56BB-410B-BE6C-67035E2F0EDC}
+		{CE642FBB-60B4-43B9-9ADE-83C1341FC523} = {6238711A-68AD-48A4-B332-5985E7978EC7}
+		{60BA73FA-1EA5-40C8-8643-B68E5C855733} = {0A079797-78C6-459C-8C83-EC98D31A4738}
+		{647B4131-4A29-47D5-80D6-85D8A5B88978} = {0A079797-78C6-459C-8C83-EC98D31A4738}
+		{1AEBC9D4-B627-4215-B4BE-9D8714E9196C} = {E646EF38-7469-4049-9821-C1F73478C017}
+		{E646EF38-7469-4049-9821-C1F73478C017} = {0FAB3773-CADC-4721-9A6F-E1885E3FF208}
+		{0A079797-78C6-459C-8C83-EC98D31A4738} = {0FAB3773-CADC-4721-9A6F-E1885E3FF208}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACC25F40-F46F-4534-8287-48AA983A694F}

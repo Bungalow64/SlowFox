@@ -62,6 +62,42 @@ namespace SlowFox.Constructors.Tests.Base
             }
         }
 
+        protected async Task AssertTwoGeneration(string generator1output, string generator2output, string generator3output, string generator1filename, string generator2filename, string generator3filename, params string[] code)
+        {
+            if (code.Length == 1)
+            {
+                await new Verifiers.CSharpMultipleSourceGeneratorVerifier<TGenerator1, TGenerator2>.Test
+                {
+                    TestState =
+                {
+                    Sources = { code[0] },
+                    GeneratedSources =
+                    {
+                        (typeof(TGenerator1), generator1filename, SourceText.From(generator1output, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(TGenerator1), generator2filename, SourceText.From(generator2output, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(TGenerator2), generator3filename, SourceText.From(generator3output, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+                }.RunAsync();
+            }
+            else
+            {
+                await new Verifiers.CSharpMultipleSourceGeneratorVerifier<TGenerator1, TGenerator2>.Test
+                {
+                    TestState =
+                {
+                    Sources = { code[0], code[1] },
+                    GeneratedSources =
+                    {
+                        (typeof(TGenerator1), generator1filename, SourceText.From(generator1output, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(TGenerator1), generator2filename, SourceText.From(generator2output, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(TGenerator2), generator3filename, SourceText.From(generator3output, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+                }.RunAsync();
+            }
+        }
+
         protected async Task AssertNoSecondaryGeneration(string generator1output, string generator1filename, params string[] code)
         {
             if (code.Length == 1)

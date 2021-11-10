@@ -24,6 +24,10 @@ namespace SlowFox
         {
             return AssertGeneration(generatorOutput, _expectedAttributeContents, generatorFilename, _expectedAttributeFileName, code);
         }
+        protected Task AssertGenerationTwoOutputs(string generatorOutput1, string generatorFilename1, string generatorOutput2, string generatorFilename2, params string[] code)
+        {
+            return AssertTwoGeneration(generatorOutput1, generatorOutput2, _expectedAttributeContents, generatorFilename1, generatorFilename2, _expectedAttributeFileName, code);
+        }
         protected Task AssertNoGeneration(string code)
         {
             return AssertNoSecondaryGeneration(_expectedAttributeContents, _expectedAttributeFileName, code);

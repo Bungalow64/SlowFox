@@ -62,7 +62,7 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
         }
 
         [Fact]
@@ -119,7 +119,7 @@ namespace SlowFox.Constructors.SampleClient
         }
     }
 }";
-            await AssertFullGeneration(generated, "Class1.Generated.cs", classFile1, classFile2);
+            await AssertFullGeneration(generated, "SlowFox.Constructors.SampleClient.Class1.Generated.cs", classFile1, classFile2);
         }
 
         [Fact]
@@ -168,7 +168,7 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
         }
 
         [Fact]
@@ -206,7 +206,7 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1);
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1);
         }
 
         [Fact]
@@ -242,7 +242,7 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
         }
 
         [Fact]
@@ -280,7 +280,7 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
         }
 
         [Fact]
@@ -318,7 +318,7 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
         }
 
         [Fact]
@@ -356,7 +356,7 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
         }
 
         [Fact]
@@ -393,7 +393,7 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
         }
 
         [Fact]
@@ -426,7 +426,7 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
         }
 
         [Fact]
@@ -463,7 +463,125 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "UserReader.Generated.cs", classFile1, classFile2);
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task TwoDifferentClasses_GenerateUniqueFilesForBoth()
+        {
+            var classFile1 =
+@"using Logic.Readers;
+
+namespace Logic.Readers.Section1
+{
+    [SlowFox.InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader1 { }
+}
+
+namespace Logic.Readers.Section2
+{
+    [SlowFox.InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader2 { }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers
+{
+    public interface IDatabase { }
+}
+";
+
+            var generated1 =
+@"using Logic.Readers;
+
+namespace Logic.Readers.Section1
+{
+    public partial class UserReader1
+    {
+        private readonly IDatabase _database;
+
+        public UserReader1(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+
+            var generated2 =
+@"using Logic.Readers;
+
+namespace Logic.Readers.Section2
+{
+    public partial class UserReader2
+    {
+        private readonly IDatabase _database;
+
+        public UserReader2(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+            await AssertGenerationTwoOutputs(generated1, "Logic.Readers.Section1.UserReader1.Generated.cs", generated2, "Logic.Readers.Section2.UserReader2.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task TwoDifferentClasses_SameNameDifferentNamespace_GenerateUniqueFilesForBoth()
+        {
+            var classFile1 =
+@"using Logic.Readers;
+
+namespace Logic.Readers.Section1
+{
+    [SlowFox.InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader1 { }
+}
+
+namespace Logic.Readers.Section2
+{
+    [SlowFox.InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader1 { }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers
+{
+    public interface IDatabase { }
+}
+";
+
+            var generated1 =
+@"using Logic.Readers;
+
+namespace Logic.Readers.Section1
+{
+    public partial class UserReader1
+    {
+        private readonly IDatabase _database;
+
+        public UserReader1(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+
+            var generated2 =
+@"using Logic.Readers;
+
+namespace Logic.Readers.Section2
+{
+    public partial class UserReader1
+    {
+        private readonly IDatabase _database;
+
+        public UserReader1(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+            await AssertGenerationTwoOutputs(generated1, "Logic.Readers.Section1.UserReader1.Generated.cs", generated2, "Logic.Readers.Section2.UserReader1.Generated.cs", classFile1, classFile2);
         }
     }
 }

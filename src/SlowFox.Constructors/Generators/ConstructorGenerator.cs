@@ -141,7 +141,7 @@ namespace SlowFox.Constructors.Generators
 {propertyList}{ctor}
     }}
 }}", Encoding.UTF8);
-                context.AddSource($"{targetClass.Key.Identifier.Text}.Generated.cs", sourceText);
+                context.AddSource($"{namespaceValue}.{targetClass.Key.Identifier.Text}.Generated.cs", sourceText);
             }
         }
         class TypeDetails

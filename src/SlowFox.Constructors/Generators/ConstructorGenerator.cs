@@ -17,6 +17,8 @@ namespace SlowFox.Constructors.Generators
         private const string InjectableClassAttributeName2 = "SlowFox.InjectDependencies";
         private const string InjectableClassAttributeName3 = "InjectDependencies";
 
+        private const string RootConfig = "slowfox_generation.constructors.";
+
         public void Initialize(GeneratorInitializationContext context)
         {
 
@@ -52,6 +54,8 @@ namespace SlowFox.Constructors.Generators
 
             foreach (var targetClass in syntaxReceiver.ClassesToAugment)
             {
+                var semanticModel = context.Compilation.GetSemanticModel(targetClass.Key.SyntaxTree);
+
                 List<TypeSyntax> types = targetClass
                     .Value
                     .ArgumentList
@@ -69,11 +73,19 @@ namespace SlowFox.Constructors.Generators
                 }
 
                 bool skipUnderscore = false;
+                bool includeNullCheck = false;
 
                 var options = context.AnalyzerConfigOptions.GetOptions(targetClass.Key.SyntaxTree);
-                if (options != null && options.TryGetValue("skip_underscores", out string skipUnderscoreValue))
+                if (options != null)
                 {
-                    skipUnderscore = skipUnderscoreValue.Equals("true", StringComparison.OrdinalIgnoreCase);
+                    if (options.TryGetValue($"{RootConfig}skip_underscores", out string skipUnderscoreValue))
+                    {
+                        skipUnderscore = skipUnderscoreValue.Equals("true", StringComparison.OrdinalIgnoreCase);
+                    }
+                    if (options.TryGetValue($"{RootConfig}include_nullcheck", out string includeNullcheckValue))
+                    {
+                        includeNullCheck = includeNullcheckValue.Equals("true", StringComparison.OrdinalIgnoreCase);
+                    }
                 }
 
 
@@ -109,24 +121,33 @@ namespace SlowFox.Constructors.Generators
                 {
                     var fieldPrefix = skipUnderscore ? string.Empty : "_";
                     var usedNames = new List<string>();
-                    var names = types.Select(p => new TypeDetails(p, usedNames)).ToList();
+                    var names = types.Select(p => new TypeDetails(semanticModel, p, usedNames, fieldPrefix)).ToList();
+
 
                     //var names = typeNames.Select(p => new { TypeName = ((IdentifierNameSyntax)p).Identifier.Text, Name = NameGenerator.GetName(((IdentifierNameSyntax)p).Identifier.Text, usedNames) }).ToList();
 
-                    propertyList = string.Join(Environment.NewLine, names.Select(p => $"        private readonly {p.TypeName} {fieldPrefix}{p.Name};"));
+                    propertyList = string.Join(Environment.NewLine, names.Select(p => $"        private readonly {p.TypeName} {p.MemberName};"));
 
-                    string getConstructorFieldName(string name)
+                    string getConstructorFieldName(TypeDetails typeDetails)
                     {
-                        if (string.IsNullOrEmpty(fieldPrefix))
+                        if (string.IsNullOrEmpty(typeDetails.FieldPrefix))
                         {
-                            return $"this.{name}";
+                            return $"this.{typeDetails.MemberName}";
                         }
-                        return $"{fieldPrefix}{name}";
+                        return typeDetails.MemberName;
                     }
-
-                    ctor = $@"        public {targetClass.Key.Identifier}({string.Join(", ", names.Select(p => $"{p.TypeName} {p.Name}"))})
+                    string getNullCheck(TypeDetails typeDetails)
+                    {
+                        var nullCheck = "";
+                        if (includeNullCheck && typeDetails.IsNullable)
+                        {
+                            nullCheck = $" ?? throw new System.ArgumentNullException(nameof({typeDetails.Name}))";
+                        }
+                        return nullCheck;
+                    }
+                    ctor = $@"        public {targetClass.Key.Identifier}({string.Join(", ", names.Select(p => $"{p.TypeName} {p.InputName}"))})
         {{
-{string.Join(Environment.NewLine, names.Select(p => $"            {getConstructorFieldName(p.Name)} = {p.Name};"))}
+{string.Join(Environment.NewLine, names.Select(p => $"            {getConstructorFieldName(p)} = {p.InputName}{getNullCheck(p)};"))}
         }}";
                 }
 
@@ -150,22 +171,58 @@ namespace SlowFox.Constructors.Generators
         {
             public string TypeName { get; set; }
             public string Name { get; set; }
-
-            public TypeDetails(TypeSyntax typeSyntax, List<string> existingNames)
+            public bool IsNullable { get; set; }
+            public bool RequiresPrefix => TypeName.Replace("?", "") == Name;
+            public string InputName => RequiresPrefix ? $"@{Name}" : Name;
+            public string FieldPrefix { get; set; }
+            public string MemberName
             {
+                get
+                {
+                    string expected = $"{FieldPrefix}{Name}";
+                    if (expected == TypeName.Replace("?", ""))
+                    {
+                        return $"@{expected}";
+                    }
+                    return expected;
+                }
+            }
+
+            public TypeDetails(SemanticModel semanticModel, TypeSyntax typeSyntax, List<string> existingNames, string fieldPrefix)
+            {
+                FieldPrefix = fieldPrefix;
+
                 switch (typeSyntax)
                 {
                     case IdentifierNameSyntax identifierNameSyntax:
                         TypeName = identifierNameSyntax.Identifier.Text;
                         Name = NameGenerator.GetName(TypeName, existingNames);
                         break;
+                    case NullableTypeSyntax nullableTypeSyntax:
+                        TypeName = nullableTypeSyntax.GetText().ToString();
+                        Name = NameGenerator.GetName(TypeName, existingNames);
+                        break;
                     case QualifiedNameSyntax qualifiedNameSyntax:
                         TypeName = qualifiedNameSyntax.GetText().ToString();
                         Name = NameGenerator.GetName(TypeName, existingNames);
                         break;
+                    default:
+                        TypeName = typeSyntax.ToString();
+                        Name = typeSyntax.ToString();
+                        break;
                         //case AliasQualifiedNameSyntax aliasQualifiedNameSyntax:
                         //    TypeName = aliasQualifiedNameSyntax.GetText().ToString();
                         //    break;
+                }
+                var type = semanticModel.GetTypeInfo(typeSyntax).Type;
+
+                if (type != null)
+                {
+                    IsNullable = type.IsReferenceType;
+                    //if (type is INamedTypeSymbol namedTypeSymbol)
+                    //{
+                    //    IsNullable = type.IsReferenceType || namedTypeSymbol.ConstructedFrom?.ToString() == "System.Nullable<T>";
+                    //}
                 }
             }
         }

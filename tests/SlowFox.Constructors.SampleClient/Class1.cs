@@ -6,11 +6,11 @@ namespace SlowFox.Constructors.SampleClient
     [SlowFox.InjectDependencies(typeof(IDatabase), typeof(IReader))]
     public partial class Class1
     {
-        private readonly string name;
+        private Class1 inputClass;
 
-        void A()
+        public void A(Class1 input)
         {
-            //var a = new Class1(null, null);
+            inputClass = input ?? throw new ArgumentNullException(nameof(input));
         }
     }
 }

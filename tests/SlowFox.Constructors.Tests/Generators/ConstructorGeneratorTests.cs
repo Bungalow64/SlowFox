@@ -1,5 +1,7 @@
+using Microsoft.CodeAnalysis.Text;
 using SlowFox.Constructors.Generators;
 using SlowFox.Constructors.Tests.Base;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -582,6 +584,450 @@ namespace Logic.Readers.Section2
     }
 }";
             await AssertGenerationTwoOutputs(generated1, "Logic.Readers.Section1.UserReader1.Generated.cs", generated2, "Logic.Readers.Section2.UserReader1.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task Class_WithNonNullAttribute_IgnoreNullCheck()
+        {
+            var classFile1 =
+@"using SlowFox;
+using System;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(DateTime), typeof(DateTime?), typeof(IDatabase))]
+    public partial class UserReader { }
+}
+";
+            var classFile2 = @"
+namespace Logic.Readers
+{
+    public interface IDatabase { }
+}
+";
+            var config =
+@"
+is_global = true
+slowfox_generation.constructors.include_nullcheck = true
+";
+            var generated =
+@"using SlowFox;
+using System;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly DateTime _dateTime;
+        private readonly DateTime? _dateTime2;
+        private readonly IDatabase _database;
+
+        public UserReader(DateTime dateTime, DateTime? dateTime2, IDatabase database)
+        {
+            _dateTime = dateTime;
+            _dateTime2 = dateTime2;
+            _database = database ?? throw new System.ArgumentNullException(nameof(database));
+        }
+    }
+}";
+            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+            {
+                TestState =
+                {
+                    Sources = { classFile1, classFile2 },
+                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
+                    GeneratedSources =
+                    {
+                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+            }.RunAsync();
+        }
+
+        [Fact]
+        public async Task Class_WithNonNullIntAttribute_IgnoreNullCheck()
+        {
+            var classFile1 =
+@"using SlowFox;
+using System;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(int))]
+    public partial class UserReader { }
+}
+";
+            var config =
+@"
+is_global = true
+slowfox_generation.constructors.include_nullcheck = true
+";
+            var generated =
+@"using SlowFox;
+using System;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly int _int;
+
+        public UserReader(int @int)
+        {
+            _int = @int;
+        }
+    }
+}";
+            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+            {
+                TestState =
+                {
+                    Sources = { classFile1 },
+                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
+                    GeneratedSources =
+                    {
+                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+            }.RunAsync();
+        }
+
+        [Fact]
+        public async Task Class_WithNullIntAttribute_IgnoreNullCheck()
+        {
+            var classFile1 =
+@"using SlowFox;
+using System;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(int?))]
+    public partial class UserReader { }
+}
+";
+            var config =
+@"
+is_global = true
+slowfox_generation.constructors.include_nullcheck = true
+";
+            var generated =
+@"using SlowFox;
+using System;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly int? _int;
+
+        public UserReader(int? @int)
+        {
+            _int = @int;
+        }
+    }
+}";
+            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+            {
+                TestState =
+                {
+                    Sources = { classFile1 },
+                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
+                    GeneratedSources =
+                    {
+                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+            }.RunAsync();
+        }
+
+        [Fact]
+        public async Task Class_WithAttribute_ConfigureWithoutUnderscores_GenerateWithoutUnderscore()
+        {
+            var classFile1 =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader { }
+    public interface IDatabase { }
+}
+";
+            var config =
+@"
+is_global = true
+slowfox_generation.constructors.skip_underscores = true
+";
+            var generated =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IDatabase database;
+
+        public UserReader(IDatabase database)
+        {
+            this.database = database;
+        }
+    }
+}";
+            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+            {
+                TestState =
+                {
+                    Sources = { classFile1 },
+                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
+                    GeneratedSources =
+                    {
+                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+            }.RunAsync();
+        }
+
+        [Fact]
+        public async Task Class_WithAttribute_ConfigureWithUnderscores_GenerateWithUnderscore()
+        {
+            var classFile1 =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader { }
+
+    public interface IDatabase { }
+}
+";
+            var config =
+@"
+is_global = true
+slowfox_generation.constructors.skip_underscores = false
+";
+            var generated =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        public UserReader(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+            {
+                TestState =
+                {
+                    Sources = { classFile1 },
+                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
+                    GeneratedSources =
+                    {
+                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+            }.RunAsync();
+        }
+
+        [Fact]
+        public async Task Class_WithAttribute_ConfigureWithoutNullCheck_GenerateWithoutNullCheck()
+        {
+            var classFile1 =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader { }
+    public interface IDatabase { }
+}
+";
+            var config =
+@"
+is_global = true
+slowfox_generation.constructors.include_nullcheck = false
+";
+            var generated =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        public UserReader(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+            {
+                TestState =
+                {
+                    Sources = { classFile1 },
+                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
+                    GeneratedSources =
+                    {
+                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+            }.RunAsync();
+        }
+
+        [Fact]
+        public async Task Class_WithAttribute_ConfigureWithNullCheck_GenerateWithNullCheck()
+        {
+            var classFile1 =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader { }
+    public interface IDatabase { }
+}
+";
+            var config =
+@"
+is_global = true
+slowfox_generation.constructors.include_nullcheck = true
+";
+            var generated =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        public UserReader(IDatabase database)
+        {
+            _database = database ?? throw new System.ArgumentNullException(nameof(database));
+        }
+    }
+}";
+            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+            {
+                TestState =
+                {
+                    Sources = { classFile1 },
+                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
+                    GeneratedSources =
+                    {
+                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+            }.RunAsync();
+        }
+
+        [Fact]
+        public async Task Class_IntDepdendency_SkipUnderscores_GenerateCorrectMemberName()
+        {
+            var classFile1 =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(int))]
+    public partial class UserReader { }
+}
+";
+            var config =
+@"
+is_global = true
+slowfox_generation.constructors.skip_underscores = true
+";
+            var generated =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly int @int;
+
+        public UserReader(int @int)
+        {
+            this.@int = @int;
+        }
+    }
+}";
+            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+            {
+                TestState =
+                {
+                    Sources = { classFile1 },
+                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
+                    GeneratedSources =
+                    {
+                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+            }.RunAsync();
+        }
+
+        [Fact]
+        public async Task Class_IntDepdendency_IncludeUnderscores_GenerateCorrectMemberName()
+        {
+            var classFile1 =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(int))]
+    public partial class UserReader { }
+}
+";
+            var config =
+@"
+is_global = true
+slowfox_generation.constructors.skip_underscores = false
+";
+            var generated =
+@"using SlowFox;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly int _int;
+
+        public UserReader(int @int)
+        {
+            _int = @int;
+        }
+    }
+}";
+            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+            {
+                TestState =
+                {
+                    Sources = { classFile1 },
+                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
+                    GeneratedSources =
+                    {
+                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
+                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
+                    }
+                }
+            }.RunAsync();
         }
     }
 }

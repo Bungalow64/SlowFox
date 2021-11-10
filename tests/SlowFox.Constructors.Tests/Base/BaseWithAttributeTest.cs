@@ -20,6 +20,9 @@ namespace SlowFox
         public InjectDependenciesAttribute(params Type[] types) => Types = types;
     }
 }";
+        protected string ExpectedAttributeFileName => _expectedAttributeFileName;
+        protected string ExpectedAttributeContents => _expectedAttributeContents;
+
         protected Task AssertFullGeneration(string generatorOutput, string generatorFilename, params string[] code)
         {
             return AssertGeneration(generatorOutput, _expectedAttributeContents, generatorFilename, _expectedAttributeFileName, code);

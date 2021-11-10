@@ -31,6 +31,8 @@ namespace SlowFox.Constructors.Logic
                 }
             }
 
+            typeName = typeName.Replace("?", "");
+
             string originalName = typeName;
 
             int index = 2;

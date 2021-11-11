@@ -44,3 +44,4 @@ steps:
     projects: |
       **/External*/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
+    vstsFeed: '46089223-147e-4f42-b802-450dfa09eb3b'

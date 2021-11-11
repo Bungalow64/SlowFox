@@ -22,8 +22,16 @@ steps:
       **/*[Tt]ests/*.csproj
       !**/External*/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
+  displayName: Pack
   inputs:
     command: pack
+    versioningScheme: byPrereleaseNumber
     packagesToPack: 'src/**/*.csproj'
     packDestination: '$(Build.ArtifactStagingDirectory)'
+- task: DotNetCoreCLI@2
+  displayName: Push
+  inputs:
+    command: push
+    searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
+    feedPublish: 'bungalow64'

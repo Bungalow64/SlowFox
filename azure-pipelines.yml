@@ -31,7 +31,6 @@ steps:
     requestedMinorVersion: 1
     requestedPatchVersion: 0
     packagesToPack: 'src/**/*.csproj'
-    packDestination: '$(Build.ArtifactStagingDirectory)'
 - task: DotNetCoreCLI@2
   displayName: Push
   inputs:
@@ -39,9 +38,15 @@ steps:
     searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
     feedPublish: 'bungalow64'
 - task: DotNetCoreCLI@2
+  displayName: Restore (External)
+  inputs:
+    command: 'restore'
+    projects: '**/External*/*.csproj'
+    feedsToUse: 'select'
+    vstsFeed: '46089223-147e-4f42-b802-450dfa09eb3b'
+- task: DotNetCoreCLI@2
   displayName: Build (External)
   inputs:
     projects: |
       **/External*/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
-    vstsFeed: '46089223-147e-4f42-b802-450dfa09eb3b'

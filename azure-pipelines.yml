@@ -49,4 +49,4 @@ steps:
   inputs:
     projects: |
       **/External*/*.csproj
-    arguments: '--configuration $(BuildConfiguration)'
+    arguments: '--configuration $(BuildConfiguration) --no-restore'

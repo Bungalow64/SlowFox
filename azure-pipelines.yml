@@ -27,6 +27,9 @@ steps:
   inputs:
     command: pack
     versioningScheme: byPrereleaseNumber
+    requestedMajorVersion: 0
+    requestedMinorVersion: 1
+    requestedPatchVersion: 0
     packagesToPack: 'src/**/*.csproj'
     packDestination: '$(Build.ArtifactStagingDirectory)'
 - task: DotNetCoreCLI@2

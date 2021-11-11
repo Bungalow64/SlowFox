@@ -1,0 +1,26 @@
+trigger:
+- master
+
+variables:
+  BuildConfiguration: 'Debug'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    arguments: '--configuration $(BuildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Test (code)
+  inputs:
+    command: test
+    projects: |
+      **/*[Tt]ests/*.csproj
+    arguments: '--configuration $(BuildConfiguration)'
+- task: NuGetCommand@2
+  inputs:
+    command: pack
+    packagesToPack: 'src/**/*.csproj'
+    packDestination: '$(Build.ArtifactStagingDirectory)'

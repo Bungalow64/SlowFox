@@ -38,3 +38,9 @@ steps:
     command: push
     searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
     feedPublish: 'bungalow64'
+- task: DotNetCoreCLI@2
+  displayName: Build (External)
+  inputs:
+    projects: |
+      **/External*/*.csproj
+    arguments: '--configuration $(BuildConfiguration)'

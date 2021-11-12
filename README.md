@@ -59,7 +59,7 @@ You can reference these private members in from original class, and you can call
 
 # But, I hate underscores.  Can I change what's generated?
 
-Yes, yes you can.  In a `.editorconfig` file, you can change the naming convention used so that it doesn't have a preceeding underscore.
+Yes you can.  In a `.editorconfig` file, you can change the naming convention used so that it doesn't have a preceeding underscore.
 
 ```
 [*.cs]

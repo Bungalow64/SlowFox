@@ -54,7 +54,7 @@ namespace MySampleProject
 
 And that's it!
 
-You can reference these private members in from original class, and you can call this constructor during DI, or call it manually, or use it in unit tests - it's as if you've written it all yourself.  However, if you change what's listed within the `InjectDependencies` attribute, this generated code will automatically update, without you having to do anything.
+You can reference these private members in your original class, and you can call this constructor during DI, or call it manually, or use it in unit tests - it's as if you've written it all yourself.  However, if you change what's listed within the `InjectDependencies` attribute, this generated code will automatically update, without you having to do anything.
 
 # But, I hate underscores.  Can I change what's generated?
 

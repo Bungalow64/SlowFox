@@ -1,5 +1,5 @@
 root = true
 
-[*]
-skip_underscores = false
+[*.cs]
+slowfox_generation.constructors.include_nullcheck = true
 

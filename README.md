@@ -13,7 +13,6 @@ SloxFox.Constructors is a generator that allows you to define the injectable dep
 # Why use SlowFox.Constructors?
 It can sometimes get a bit tedious writing constructors, especially if you're using Dependency Injection and the constructor parameters are just a list of interfaces.  Adding a new dependency might involve adding a class member, adding a constructor parameter, and adding an assignment between the two in that constructor.  This can be quite distracting, especially if you're in the middle of a rapid prototype, or trying to get some refactoring done.
 
-# How does SlowFox help?
 Using a new attribute provided by SlowFox.Constructors, you can now just list the dependencies needed to be injected into a class, and the generator will do the rest for you.  Adding or removing a dependency is as simple as updating the list within the attribute, and the generator will automatically refresh and create the updated code.
 
 # How do I get this working?

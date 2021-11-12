@@ -1029,5 +1029,77 @@ namespace Logic.Readers
                 }
             }.RunAsync();
         }
+
+        [Fact]
+        public async Task NestedClass_GenerateCodeForNested()
+        {
+            var classFile1 =
+@"namespace Logic.Readers
+{
+    public partial class UserReader 
+    {
+        [SlowFox.InjectDependencies(typeof(IDatabase))]
+        private partial class InnerClass { }
+    }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers
+{
+    public interface IDatabase { }
+}
+";
+
+            var generated =
+@"namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private partial class InnerClass
+        {
+            private readonly IDatabase _database;
+
+            public InnerClass(IDatabase database)
+            {
+                _database = database;
+            }
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader-InnerClass.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task InternalClass_GenerateInternalCode()
+        {
+            var classFile1 =
+@"namespace Logic.Readers
+{
+    [SlowFox.InjectDependencies(typeof(IDatabase))]
+    internal partial class UserReader { }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers
+{
+    public interface IDatabase { }
+}
+";
+
+            var generated =
+@"namespace Logic.Readers
+{
+    internal partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        public UserReader(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+        }
     }
 }

@@ -8,12 +8,4 @@
 		<PackageReference Include="SlowFox.Constructors" Version="0.1.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <EditorConfigFiles Remove="C:\Git\SlowFox\tests\ExternalProject.SampleProject1\.editorconfig" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="C:\Git\SlowFox\tests\ExternalProject.SampleProject1\.editorconfig" />
-	</ItemGroup>
-
 </Project>

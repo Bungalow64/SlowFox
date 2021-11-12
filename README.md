@@ -112,6 +112,24 @@ namespace MySampleProject
 }
 ```
 
+# FAQ
+
+## Sometimes IntelliSense doesn't update properly, is there something wrong?
+
+> It appears as though the tooling for source generators aren't 100% there yet, so if you find that IntelliSense is warning you that something doesn't exist that you'd expect, or if you go and find the generated code and it's not updated following a change, it may be that you need to give a bit of a kick-start to get going again.  If a rebuild doesn't fix it, try closing and opening your IDE (especially if you're using Visual Studio), and you should see the updates then.  This only seems to affect IDEs though - the actual .NET build seems really solid for generated code.
+
+## I've applied the `InjectDependencies` attribute but I get an error for "Missing partial modifier on declaration of type 'MyCurrentClass'; another partial declaration of this type exists'".  What do I do?
+
+> You've not set your class to be partial.  Do that, and the error will be fixed.
+
+## Can I use this to generate constructors for nested classes?
+
+> Yes.
+
+## What happens if I don't list any types in the `InjectDependencies` attribute?
+
+> Nothing.  No code is generated for that class.
+
 # Can I help fix any bugs with this, or add new capabilities?
 
 Of course!  Head on over to the [issues](https://github.com/Bungalow64/SlowFox/issues) page, raise it, and we'll have a chat about what needs to be done.

@@ -9,7 +9,7 @@ namespace SlowFox.Constructors.Logic
         public string ClassName { get; set; }
         public string Namespace { get; set; }
         public int TabIndex { get; set; }
-        public List<string> UsingNamespaces { get; set; }
+        public List<(string namespaceText, bool withinNamespace)> UsingNamespaces { get; set; }
         public List<string> Parameters { get; set; }
         public List<string> ParameterAssignments { get; set; }
         public List<string> Members { get; set; }
@@ -23,14 +23,23 @@ namespace SlowFox.Constructors.Logic
         public string Render()
         {
             string indentation = Indentation;
+            string indentation1 = GetIndentation(1);
             string indentation2 = GetIndentation(IsNested ? 1 : 2);
             string indentation3 = GetIndentation(IsNested ? 2 : 3);
             string nested = GetIndentation(ParentClasses?.Count() ?? 0);
 
-            string namespaceList = string.Join("", UsingNamespaces);
-            if (namespaceList.Length > 0)
+            string outerNamespaceList = string.Join(Environment.NewLine, UsingNamespaces.Where(p => !p.withinNamespace).Select(p => p.namespaceText.Trim()));
+            if (outerNamespaceList.Length > 0)
             {
-                namespaceList += Environment.NewLine;
+                outerNamespaceList += Environment.NewLine;
+                outerNamespaceList += Environment.NewLine;
+            }
+
+            string innerNamespaceList = string.Join(Environment.NewLine, UsingNamespaces.Where(p => p.withinNamespace).Select(p => $"{indentation1}{p.namespaceText.Trim()}"));
+            if (innerNamespaceList.Length > 0)
+            {
+                innerNamespaceList = Environment.NewLine + innerNamespaceList;
+                innerNamespaceList += Environment.NewLine;
             }
 
             string propertyList = string.Join(Environment.NewLine, Members.Select(p => $"{indentation}{nested}{indentation2}{p}"));
@@ -70,16 +79,16 @@ namespace SlowFox.Constructors.Logic
 
 
 
-                return $@"{indentation}{namespaceList}namespace {Namespace}
-{indentation}{{
+                return $@"{indentation}{outerNamespaceList}namespace {Namespace}
+{indentation}{{{innerNamespaceList}
 {indentation}{wrapStart}
 {indentation}    {inner}
 {indentation}{wrapEnd}
 {indentation}}}";
             }
 
-            return $@"{indentation}{namespaceList}namespace {Namespace}
-{indentation}{{
+            return $@"{indentation}{outerNamespaceList}namespace {Namespace}
+{indentation}{{{innerNamespaceList}
 {indentation}    {Modifier} class {ClassName}
 {indentation}    {{
 {indentation}{propertyList}

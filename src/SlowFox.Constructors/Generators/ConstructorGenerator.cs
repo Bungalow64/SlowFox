@@ -114,7 +114,13 @@ namespace SlowFox.Constructors.Generators
                     }
                 }
 
-                List<string> namespaces = targetClass.Key.SyntaxTree.GetRoot().DescendantNodes().OfType<UsingDirectiveSyntax>().Select(p => p.ToFullString()).ToList();
+                (string namespaceText, bool withinNamespace) getNamespace(UsingDirectiveSyntax node) 
+                {
+                    return (node.ToFullString(), node.Parent?.IsKind(Microsoft.CodeAnalysis.CSharp.SyntaxKind.NamespaceDeclaration) ?? false);
+                }
+
+                List<(string namespaceText, bool withinNamespace)> namespaces = 
+                    targetClass.Key.SyntaxTree.GetRoot().DescendantNodes().OfType<UsingDirectiveSyntax>().Select(p => getNamespace(p)).ToList();
 
                 string namespaceValue = GetNamespace(targetClass.Key.Identifier.Parent);
                 List<(string className, string modifiers)> parentClasses = GetParentClasses(targetClass.Key.Identifier.Parent?.Parent);

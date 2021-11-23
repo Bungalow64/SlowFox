@@ -1101,5 +1101,175 @@ namespace Logic.Readers
 }";
             await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
         }
+
+        [Fact]
+        public async Task UsingDirectivesOutsideClass_GenerateDirectivesOutsideClass()
+        {
+            var classFile1 =
+@"using Logic.Readers.IO;
+
+namespace Logic.Readers
+{
+    [SlowFox.InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader { }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers.IO
+{
+    public interface IDatabase { }
+}";
+
+            var generated =
+@"using Logic.Readers.IO;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        public UserReader(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task UsingDirectivesInsideClass_GenerateDirectivesInsideClass()
+        {
+            var classFile1 =
+@"namespace Logic.Readers
+{
+    using Logic.Readers.IO;
+
+    [SlowFox.InjectDependencies(typeof(IDatabase))]
+    public partial class UserReader { }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers.IO
+{
+    public interface IDatabase { }
+}";
+
+            var generated =
+@"namespace Logic.Readers
+{
+    using Logic.Readers.IO;
+
+    public partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        public UserReader(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task UsingDirectivesInsideAndOutsideClass_GenerateDirectivesInCorrectPlace()
+        {
+            var classFile1 =
+@"using Logic.Readers.Data;
+
+namespace Logic.Readers
+{
+    using Logic.Readers.IO;
+
+    [SlowFox.InjectDependencies(typeof(IDatabase), typeof(IFileReader))]
+    public partial class UserReader { }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers.IO
+{
+    public interface IDatabase { }
+}
+
+namespace Logic.Readers.Data
+{
+    public interface IFileReader { }
+}";
+
+            var generated =
+@"using Logic.Readers.Data;
+
+namespace Logic.Readers
+{
+    using Logic.Readers.IO;
+
+    public partial class UserReader
+    {
+        private readonly IDatabase _database;
+        private readonly IFileReader _fileReader;
+
+        public UserReader(IDatabase database, IFileReader fileReader)
+        {
+            _database = database;
+            _fileReader = fileReader;
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task UsingDirectivesMultipleInsideAndOutsideClass_GenerateDirectivesInCorrectPlace()
+        {
+            var classFile1 =
+@"using Logic.Readers.Data;
+using System;
+
+namespace Logic.Readers
+{
+    using Logic.Readers.IO;
+    using System.Text;
+
+    [SlowFox.InjectDependencies(typeof(IDatabase), typeof(IFileReader))]
+    public partial class UserReader { }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers.IO
+{
+    public interface IDatabase { }
+}
+
+namespace Logic.Readers.Data
+{
+    public interface IFileReader { }
+}";
+
+            var generated =
+@"using Logic.Readers.Data;
+using System;
+
+namespace Logic.Readers
+{
+    using Logic.Readers.IO;
+    using System.Text;
+
+    public partial class UserReader
+    {
+        private readonly IDatabase _database;
+        private readonly IFileReader _fileReader;
+
+        public UserReader(IDatabase database, IFileReader fileReader)
+        {
+            _database = database;
+            _fileReader = fileReader;
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+        }
     }
 }

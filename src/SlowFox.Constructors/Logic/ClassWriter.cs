@@ -23,6 +23,10 @@ namespace SlowFox.Constructors.Logic
         {
             int nestedClasses = ParentClasses?.Count() ?? 0;
             int namespaceIndents = Namespaces.Count - 1;
+            if (namespaceIndents < 0)
+            {
+                namespaceIndents = 0;
+            }
             int classIndentCount = nestedClasses + namespaceIndents;
             int attributeIndentCount = nestedClasses + namespaceIndents + 2;
             int assignmentIndentCount = nestedClasses + namespaceIndents + 3;

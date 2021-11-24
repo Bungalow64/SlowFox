@@ -36,7 +36,7 @@ namespace SlowFox.Constructors.Generators
 
             while (parent != null)
             {
-                if (parent is NamespaceDeclarationSyntax namespaceDeclaration)
+                if (parent is BaseNamespaceDeclarationSyntax namespaceDeclaration)
                 {
                     namespaces.Add(new ParentNamespace(namespaceDeclaration));
                 }
@@ -122,7 +122,7 @@ namespace SlowFox.Constructors.Generators
                     }
                 }
 
-                List<string> namespaces = 
+                List<string> namespaces =
                     targetClass.Key.SyntaxTree
                     .GetRoot()
                     .DescendantNodes()

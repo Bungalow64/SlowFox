@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SlowFox.Constructors.Tests.Generators
+namespace SlowFox.Constructors.Tests.Generators;
+
+public class ConstructorGeneratorTests : BaseWithAttributeTest<ConstructorGenerator>
 {
-    public class ConstructorGeneratorTests : BaseWithAttributeTest<ConstructorGenerator>
+    [Fact]
+    public async Task Class_WithAttribute_NoTypes_NothingCreated()
     {
-        [Fact]
-        public async Task Class_WithAttribute_NoTypes_NothingCreated()
-        {
-            var classFile =
+        var classFile =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -21,13 +21,13 @@ namespace Logic.Readers
     public partial class UserReader { }
 }";
 
-            await AssertNoGeneration(classFile);
-        }
+        await AssertNoGeneration(classFile);
+    }
 
-        [Fact]
-        public async Task Class_WithAttribute_WithSingleType_GenerateMemberAndConstructor()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttribute_WithSingleType_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
 @"using SlowFox;
 using Logic.IO;
 
@@ -38,7 +38,7 @@ namespace Logic.Readers
 }
 ";
 
-            var classFile2 =
+        var classFile2 =
 @"using SlowFox;
 using Logic.IO;
 
@@ -48,7 +48,7 @@ namespace Logic.IO
 }
 ";
 
-            var generated =
+        var generated =
 @"using SlowFox;
 using Logic.IO;
 
@@ -64,13 +64,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task ClassInSlowFoxNamespace_WithAttribute_WithSingleType_GenerateMemberAndConstructor()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task ClassInSlowFoxNamespace_WithAttribute_WithSingleType_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
 @"using SlowFox.Constructors.SampleClient.IO;
 using System;
 
@@ -83,7 +83,7 @@ namespace SlowFox.Constructors.SampleClient
 }
 ";
 
-            var classFile2 =
+        var classFile2 =
 @"using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,7 +103,7 @@ namespace SlowFox.Constructors.SampleClient.IO
     }
 }";
 
-            var generated =
+        var generated =
 @"using SlowFox.Constructors.SampleClient.IO;
 using System;
 
@@ -121,13 +121,13 @@ namespace SlowFox.Constructors.SampleClient
         }
     }
 }";
-            await AssertFullGeneration(generated, "SlowFox.Constructors.SampleClient.Class1.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "SlowFox.Constructors.SampleClient.Class1.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task Class_WithAttribute_WithMultipleTypes_GenerateMembersAndConstructor()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttribute_WithMultipleTypes_GenerateMembersAndConstructor()
+    {
+        var classFile1 =
 @"using SlowFox;
 using Logic.IO;
 using Logic.Exports;
@@ -139,7 +139,7 @@ namespace Logic.Readers
 }
 ";
 
-            var classFile2 =
+        var classFile2 =
 @"namespace Logic.IO
 {
     public interface IDatabase { }
@@ -151,7 +151,7 @@ namespace Logic.Exports
 }
 ";
 
-            var generated =
+        var generated =
 @"using SlowFox;
 using Logic.IO;
 using Logic.Exports;
@@ -170,13 +170,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task Class_WithAttribute_WithDuplicateType_GenerateMemberAndConstructorsWithUniqueNames()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttribute_WithDuplicateType_GenerateMemberAndConstructorsWithUniqueNames()
+    {
+        var classFile1 =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -191,7 +191,7 @@ namespace Logic.Readers
 }
 ";
 
-            var generated =
+        var generated =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -208,13 +208,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1);
+    }
 
-        [Fact]
-        public async Task Class_WithAttribute_WithTypeWithInlineNamespace_GenerateMemberAndConstructor()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttribute_WithTypeWithInlineNamespace_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -222,14 +222,14 @@ namespace Logic.Readers
     [InjectDependencies(typeof(Logic.IO.IDatabase))]
     public partial class UserReader { }
 }";
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.IO
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated =
+        var generated =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -244,13 +244,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task Class_WithAttribute_WithTypeWithInlinePartialNamespace_GenerateMemberAndConstructor()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttribute_WithTypeWithInlinePartialNamespace_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
 @"using SlowFox;
 using Logic;
 
@@ -259,14 +259,14 @@ namespace Logic.Readers
     [InjectDependencies(typeof(IO.IDatabase))]
     public partial class UserReader { }
 }";
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.IO
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated =
+        var generated =
 @"using SlowFox;
 using Logic;
 
@@ -282,13 +282,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task Class_WithAttribute_WithTypeWithAliasNamespace_GenerateMemberAndConstructor()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttribute_WithTypeWithAliasNamespace_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
 @"using SlowFox;
 using ExIO = ExternalProject.Helpers.IO;
 
@@ -297,14 +297,14 @@ namespace Logic.Readers
     [InjectDependencies(typeof(ExIO.IDatabase))]
     public partial class UserReader { }
 }";
-            var classFile2 = @"
+        var classFile2 = @"
 namespace ExternalProject.Helpers.IO
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated =
+        var generated =
 @"using SlowFox;
 using ExIO = ExternalProject.Helpers.IO;
 
@@ -320,13 +320,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task Class_WithAttribute_WithTypeWithAliasPartialNamespace_GenerateMemberAndConstructor()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttribute_WithTypeWithAliasPartialNamespace_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
 @"using SlowFox;
 using Helper = ExternalProject.Helpers;
 
@@ -335,14 +335,14 @@ namespace Logic.Readers
     [InjectDependencies(typeof(Helper.IO.IDatabase))]
     public partial class UserReader { }
 }";
-            var classFile2 = @"
+        var classFile2 = @"
 namespace ExternalProject.Helpers.IO
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated =
+        var generated =
 @"using SlowFox;
 using Helper = ExternalProject.Helpers;
 
@@ -358,13 +358,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task Class_WithAttributeViaUsing_GenerateMemberAndConstructor()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttributeViaUsing_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -373,14 +373,14 @@ namespace Logic.Readers
     public partial class UserReader { }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated =
+        var generated =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -395,27 +395,27 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task Class_WithAttributeViaNamespace_GenerateMemberAndConstructor()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttributeViaNamespace_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
 @"namespace Logic.Readers
 {
     [SlowFox.InjectDependencies(typeof(IDatabase))]
     public partial class UserReader { }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated =
+        var generated =
 @"namespace Logic.Readers
 {
     public partial class UserReader
@@ -428,13 +428,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task Class_WithAttributeViaAlias_GenerateMemberAndConstructor()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttributeViaAlias_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
 @"using S = SlowFox.InjectDependenciesAttribute;
 
 namespace Logic.Readers
@@ -443,14 +443,14 @@ namespace Logic.Readers
     public partial class UserReader { }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated =
+        var generated =
 @"using S = SlowFox.InjectDependenciesAttribute;
 
 namespace Logic.Readers
@@ -465,13 +465,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task TwoDifferentClasses_GenerateUniqueFilesForBoth()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task TwoDifferentClasses_GenerateUniqueFilesForBoth()
+    {
+        var classFile1 =
 @"using Logic.Readers;
 
 namespace Logic.Readers.Section1
@@ -486,14 +486,14 @@ namespace Logic.Readers.Section2
     public partial class UserReader2 { }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated1 =
+        var generated1 =
 @"using Logic.Readers;
 
 namespace Logic.Readers.Section1
@@ -509,7 +509,7 @@ namespace Logic.Readers.Section1
     }
 }";
 
-            var generated2 =
+        var generated2 =
 @"using Logic.Readers;
 
 namespace Logic.Readers.Section2
@@ -524,13 +524,13 @@ namespace Logic.Readers.Section2
         }
     }
 }";
-            await AssertGenerationTwoOutputs(generated1, "Logic.Readers.Section1.UserReader1.Generated.cs", generated2, "Logic.Readers.Section2.UserReader2.Generated.cs", classFile1, classFile2);
-        }
+        await AssertGenerationTwoOutputs(generated1, "Logic.Readers.Section1.UserReader1.Generated.cs", generated2, "Logic.Readers.Section2.UserReader2.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task TwoDifferentClasses_SameNameDifferentNamespace_GenerateUniqueFilesForBoth()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task TwoDifferentClasses_SameNameDifferentNamespace_GenerateUniqueFilesForBoth()
+    {
+        var classFile1 =
 @"using Logic.Readers;
 
 namespace Logic.Readers.Section1
@@ -545,14 +545,14 @@ namespace Logic.Readers.Section2
     public partial class UserReader1 { }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated1 =
+        var generated1 =
 @"using Logic.Readers;
 
 namespace Logic.Readers.Section1
@@ -568,7 +568,7 @@ namespace Logic.Readers.Section1
     }
 }";
 
-            var generated2 =
+        var generated2 =
 @"using Logic.Readers;
 
 namespace Logic.Readers.Section2
@@ -583,13 +583,13 @@ namespace Logic.Readers.Section2
         }
     }
 }";
-            await AssertGenerationTwoOutputs(generated1, "Logic.Readers.Section1.UserReader1.Generated.cs", generated2, "Logic.Readers.Section2.UserReader1.Generated.cs", classFile1, classFile2);
-        }
+        await AssertGenerationTwoOutputs(generated1, "Logic.Readers.Section1.UserReader1.Generated.cs", generated2, "Logic.Readers.Section2.UserReader1.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task Class_WithNonNullAttribute_IgnoreNullCheck()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithNonNullAttribute_IgnoreNullCheck()
+    {
+        var classFile1 =
 @"using SlowFox;
 using System;
 
@@ -599,18 +599,18 @@ namespace Logic.Readers
     public partial class UserReader { }
 }
 ";
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers
 {
     public interface IDatabase { }
 }
 ";
-            var config =
+        var config =
 @"
 is_global = true
 slowfox_generation.constructors.include_nullcheck = true
 ";
-            var generated =
+        var generated =
 @"using SlowFox;
 using System;
 
@@ -630,9 +630,9 @@ namespace Logic.Readers
         }
     }
 }";
-            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-            {
-                TestState =
+        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+        {
+            TestState =
                 {
                     Sources = { classFile1, classFile2 },
                     AnalyzerConfigFiles = { ("/.editorconfig", config) },
@@ -642,13 +642,13 @@ namespace Logic.Readers
                         (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
                     }
                 }
-            }.RunAsync();
-        }
+        }.RunAsync();
+    }
 
-        [Fact]
-        public async Task Class_WithNonNullIntAttribute_IgnoreNullCheck()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithNonNullIntAttribute_IgnoreNullCheck()
+    {
+        var classFile1 =
 @"using SlowFox;
 using System;
 
@@ -658,12 +658,12 @@ namespace Logic.Readers
     public partial class UserReader { }
 }
 ";
-            var config =
+        var config =
 @"
 is_global = true
 slowfox_generation.constructors.include_nullcheck = true
 ";
-            var generated =
+        var generated =
 @"using SlowFox;
 using System;
 
@@ -679,9 +679,9 @@ namespace Logic.Readers
         }
     }
 }";
-            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-            {
-                TestState =
+        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+        {
+            TestState =
                 {
                     Sources = { classFile1 },
                     AnalyzerConfigFiles = { ("/.editorconfig", config) },
@@ -691,13 +691,13 @@ namespace Logic.Readers
                         (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
                     }
                 }
-            }.RunAsync();
-        }
+        }.RunAsync();
+    }
 
-        [Fact]
-        public async Task Class_WithNullIntAttribute_IgnoreNullCheck()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithNullIntAttribute_IgnoreNullCheck()
+    {
+        var classFile1 =
 @"using SlowFox;
 using System;
 
@@ -707,12 +707,12 @@ namespace Logic.Readers
     public partial class UserReader { }
 }
 ";
-            var config =
+        var config =
 @"
 is_global = true
 slowfox_generation.constructors.include_nullcheck = true
 ";
-            var generated =
+        var generated =
 @"using SlowFox;
 using System;
 
@@ -728,9 +728,9 @@ namespace Logic.Readers
         }
     }
 }";
-            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-            {
-                TestState =
+        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+        {
+            TestState =
                 {
                     Sources = { classFile1 },
                     AnalyzerConfigFiles = { ("/.editorconfig", config) },
@@ -740,13 +740,13 @@ namespace Logic.Readers
                         (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
                     }
                 }
-            }.RunAsync();
-        }
+        }.RunAsync();
+    }
 
-        [Fact]
-        public async Task Class_WithAttribute_ConfigureWithoutUnderscores_GenerateWithoutUnderscore()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttribute_ConfigureWithoutUnderscores_GenerateWithoutUnderscore()
+    {
+        var classFile1 =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -756,12 +756,12 @@ namespace Logic.Readers
     public interface IDatabase { }
 }
 ";
-            var config =
+        var config =
 @"
 is_global = true
 slowfox_generation.constructors.skip_underscores = true
 ";
-            var generated =
+        var generated =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -776,9 +776,9 @@ namespace Logic.Readers
         }
     }
 }";
-            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-            {
-                TestState =
+        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+        {
+            TestState =
                 {
                     Sources = { classFile1 },
                     AnalyzerConfigFiles = { ("/.editorconfig", config) },
@@ -788,13 +788,13 @@ namespace Logic.Readers
                         (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
                     }
                 }
-            }.RunAsync();
-        }
+        }.RunAsync();
+    }
 
-        [Fact]
-        public async Task Class_WithAttribute_ConfigureWithUnderscores_GenerateWithUnderscore()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttribute_ConfigureWithUnderscores_GenerateWithUnderscore()
+    {
+        var classFile1 =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -805,12 +805,12 @@ namespace Logic.Readers
     public interface IDatabase { }
 }
 ";
-            var config =
+        var config =
 @"
 is_global = true
 slowfox_generation.constructors.skip_underscores = false
 ";
-            var generated =
+        var generated =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -825,9 +825,9 @@ namespace Logic.Readers
         }
     }
 }";
-            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-            {
-                TestState =
+        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+        {
+            TestState =
                 {
                     Sources = { classFile1 },
                     AnalyzerConfigFiles = { ("/.editorconfig", config) },
@@ -837,13 +837,13 @@ namespace Logic.Readers
                         (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
                     }
                 }
-            }.RunAsync();
-        }
+        }.RunAsync();
+    }
 
-        [Fact]
-        public async Task Class_WithAttribute_ConfigureWithoutNullCheck_GenerateWithoutNullCheck()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttribute_ConfigureWithoutNullCheck_GenerateWithoutNullCheck()
+    {
+        var classFile1 =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -853,12 +853,12 @@ namespace Logic.Readers
     public interface IDatabase { }
 }
 ";
-            var config =
+        var config =
 @"
 is_global = true
 slowfox_generation.constructors.include_nullcheck = false
 ";
-            var generated =
+        var generated =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -873,9 +873,9 @@ namespace Logic.Readers
         }
     }
 }";
-            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-            {
-                TestState =
+        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+        {
+            TestState =
                 {
                     Sources = { classFile1 },
                     AnalyzerConfigFiles = { ("/.editorconfig", config) },
@@ -885,13 +885,13 @@ namespace Logic.Readers
                         (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
                     }
                 }
-            }.RunAsync();
-        }
+        }.RunAsync();
+    }
 
-        [Fact]
-        public async Task Class_WithAttribute_ConfigureWithNullCheck_GenerateWithNullCheck()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_WithAttribute_ConfigureWithNullCheck_GenerateWithNullCheck()
+    {
+        var classFile1 =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -901,12 +901,12 @@ namespace Logic.Readers
     public interface IDatabase { }
 }
 ";
-            var config =
+        var config =
 @"
 is_global = true
 slowfox_generation.constructors.include_nullcheck = true
 ";
-            var generated =
+        var generated =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -921,9 +921,9 @@ namespace Logic.Readers
         }
     }
 }";
-            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-            {
-                TestState =
+        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+        {
+            TestState =
                 {
                     Sources = { classFile1 },
                     AnalyzerConfigFiles = { ("/.editorconfig", config) },
@@ -933,13 +933,13 @@ namespace Logic.Readers
                         (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
                     }
                 }
-            }.RunAsync();
-        }
+        }.RunAsync();
+    }
 
-        [Fact]
-        public async Task Class_IntDepdendency_SkipUnderscores_GenerateCorrectMemberName()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_IntDepdendency_SkipUnderscores_GenerateCorrectMemberName()
+    {
+        var classFile1 =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -948,12 +948,12 @@ namespace Logic.Readers
     public partial class UserReader { }
 }
 ";
-            var config =
+        var config =
 @"
 is_global = true
 slowfox_generation.constructors.skip_underscores = true
 ";
-            var generated =
+        var generated =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -968,9 +968,9 @@ namespace Logic.Readers
         }
     }
 }";
-            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-            {
-                TestState =
+        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+        {
+            TestState =
                 {
                     Sources = { classFile1 },
                     AnalyzerConfigFiles = { ("/.editorconfig", config) },
@@ -980,13 +980,13 @@ namespace Logic.Readers
                         (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
                     }
                 }
-            }.RunAsync();
-        }
+        }.RunAsync();
+    }
 
-        [Fact]
-        public async Task Class_IntDepdendency_IncludeUnderscores_GenerateCorrectMemberName()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task Class_IntDepdendency_IncludeUnderscores_GenerateCorrectMemberName()
+    {
+        var classFile1 =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -995,12 +995,12 @@ namespace Logic.Readers
     public partial class UserReader { }
 }
 ";
-            var config =
+        var config =
 @"
 is_global = true
 slowfox_generation.constructors.skip_underscores = false
 ";
-            var generated =
+        var generated =
 @"using SlowFox;
 
 namespace Logic.Readers
@@ -1015,9 +1015,9 @@ namespace Logic.Readers
         }
     }
 }";
-            await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-            {
-                TestState =
+        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
+        {
+            TestState =
                 {
                     Sources = { classFile1 },
                     AnalyzerConfigFiles = { ("/.editorconfig", config) },
@@ -1027,13 +1027,13 @@ namespace Logic.Readers
                         (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
                     }
                 }
-            }.RunAsync();
-        }
+        }.RunAsync();
+    }
 
-        [Fact]
-        public async Task NestedClass_GenerateCodeForNested()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task NestedClass_GenerateCodeForNested()
+    {
+        var classFile1 =
 @"namespace Logic.Readers
 {
     public partial class UserReader 
@@ -1043,14 +1043,14 @@ namespace Logic.Readers
     }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated =
+        var generated =
 @"namespace Logic.Readers
 {
     public partial class UserReader
@@ -1066,13 +1066,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader-InnerClass.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader-InnerClass.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task NestedClassMultiple_GenerateCodeForNested()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task NestedClassMultiple_GenerateCodeForNested()
+    {
+        var classFile1 =
 @"namespace Logic.Readers
 {
     public partial class UserReader
@@ -1090,14 +1090,14 @@ namespace Logic.Readers
     }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated =
+        var generated =
 @"namespace Logic.Readers
 {
     public partial class UserReader
@@ -1119,27 +1119,27 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader-UpperClass-MiddleClass-InnerClass.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader-UpperClass-MiddleClass-InnerClass.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task InternalClass_GenerateInternalCode()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task InternalClass_GenerateInternalCode()
+    {
+        var classFile1 =
 @"namespace Logic.Readers
 {
     [SlowFox.InjectDependencies(typeof(IDatabase))]
     internal partial class UserReader { }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated =
+        var generated =
 @"namespace Logic.Readers
 {
     internal partial class UserReader
@@ -1152,13 +1152,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task UsingDirectivesOutsideClass_GenerateDirectivesOutsideClass()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task UsingDirectivesOutsideClass_GenerateDirectivesOutsideClass()
+    {
+        var classFile1 =
 @"using Logic.Readers.IO;
 
 namespace Logic.Readers
@@ -1167,13 +1167,13 @@ namespace Logic.Readers
     public partial class UserReader { }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers.IO
 {
     public interface IDatabase { }
 }";
 
-            var generated =
+        var generated =
 @"using Logic.Readers.IO;
 
 namespace Logic.Readers
@@ -1188,13 +1188,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task UsingDirectivesInsideClass_GenerateDirectivesInsideClass()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task UsingDirectivesInsideClass_GenerateDirectivesInsideClass()
+    {
+        var classFile1 =
 @"namespace Logic.Readers
 {
     using Logic.Readers.IO;
@@ -1203,13 +1203,13 @@ namespace Logic.Readers
     public partial class UserReader { }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers.IO
 {
     public interface IDatabase { }
 }";
 
-            var generated =
+        var generated =
 @"namespace Logic.Readers
 {
     using Logic.Readers.IO;
@@ -1224,13 +1224,13 @@ namespace Logic.Readers.IO
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task UsingDirectivesInsideAndOutsideClass_GenerateDirectivesInCorrectPlace()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task UsingDirectivesInsideAndOutsideClass_GenerateDirectivesInCorrectPlace()
+    {
+        var classFile1 =
 @"using Logic.Readers.Data;
 
 namespace Logic.Readers
@@ -1241,7 +1241,7 @@ namespace Logic.Readers
     public partial class UserReader { }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers.IO
 {
     public interface IDatabase { }
@@ -1252,7 +1252,7 @@ namespace Logic.Readers.Data
     public interface IFileReader { }
 }";
 
-            var generated =
+        var generated =
 @"using Logic.Readers.Data;
 
 namespace Logic.Readers
@@ -1271,13 +1271,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task UsingDirectivesMultipleInsideAndOutsideClass_GenerateDirectivesInCorrectPlace()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task UsingDirectivesMultipleInsideAndOutsideClass_GenerateDirectivesInCorrectPlace()
+    {
+        var classFile1 =
 @"using Logic.Readers.Data;
 using System;
 
@@ -1290,7 +1290,7 @@ namespace Logic.Readers
     public partial class UserReader { }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers.IO
 {
     public interface IDatabase { }
@@ -1301,7 +1301,7 @@ namespace Logic.Readers.Data
     public interface IFileReader { }
 }";
 
-            var generated =
+        var generated =
 @"using Logic.Readers.Data;
 using System;
 
@@ -1322,13 +1322,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task NestedNamespace_GenerateFileWithCorrectNamespace()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task NestedNamespace_GenerateFileWithCorrectNamespace()
+    {
+        var classFile1 =
 @"namespace Logic
 {
     namespace Readers
@@ -1338,13 +1338,13 @@ namespace Logic.Readers
     }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers
 {
     public interface IDatabase { }
 }";
 
-            var generated =
+        var generated =
 @"namespace Logic
 {
     namespace Readers
@@ -1360,13 +1360,13 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task NestedNamespaceWithNestedUsings_GenerateUsingsAtCorrectLevels()
-        {
-            var classFile1 =
+    [Fact]
+    public async Task NestedNamespaceWithNestedUsings_GenerateUsingsAtCorrectLevels()
+    {
+        var classFile1 =
 @"using System;
 
 namespace Logic
@@ -1383,7 +1383,7 @@ namespace Logic
     }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace ExternalHelpers.IO
 {
     public interface IDatabase { }
@@ -1394,7 +1394,7 @@ namespace ExternalHelpers.Communication
     public interface IEmailer { }
 }";
 
-            var generated =
+        var generated =
 @"using System;
 
 namespace Logic
@@ -1419,14 +1419,14 @@ namespace Logic
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task NestedNamespaceWithMultipleNestedClass_GenerateCodeForNested()
-        {
+    [Fact]
+    public async Task NestedNamespaceWithMultipleNestedClass_GenerateCodeForNested()
+    {
 
-            var classFile1 =
+        var classFile1 =
 @"using System;
 using System.Text;
 
@@ -1462,14 +1462,14 @@ namespace Logic.Readers
     }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers
 {
     public interface IDatabase { }
 }
 ";
 
-            var generated =
+        var generated =
 @"using System;
 using System.Text;
 
@@ -1509,14 +1509,14 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.Sub1.Sub2.UserReader-UpperClass-MiddleClass-InnerClass.Generated.cs", classFile1, classFile2);
-        }
+        await AssertFullGeneration(generated, "Logic.Readers.Sub1.Sub2.UserReader-UpperClass-MiddleClass-InnerClass.Generated.cs", classFile1, classFile2);
+    }
 
-        [Fact]
-        public async Task NestedNamespaceWithAlternateUsingDirectives_GenerateCodeForNested()
-        {
+    [Fact]
+    public async Task NestedNamespaceWithAlternateUsingDirectives_GenerateCodeForNested()
+    {
 
-            var classFile1 =
+        var classFile1 =
 @"using System;
 
 namespace Logic.Readers
@@ -1552,7 +1552,7 @@ namespace Logic.Readers
     }
 }";
 
-            var classFile2 = @"
+        var classFile2 = @"
 namespace Logic.Readers.IO
 {
     public interface IDatabase { }
@@ -1567,7 +1567,7 @@ namespace Logic.InternalLogic.Logging
 }
 ";
 
-            var generated =
+        var generated =
 @"using System;
 
 namespace Logic.Readers
@@ -1611,7 +1611,46 @@ namespace Logic.Readers
         }
     }
 }";
-            await AssertFullGeneration(generated, "Logic.Readers.Sub1.Sub2.UserReader-UpperClass-MiddleClass-InnerClass.Generated.cs", classFile1, classFile2);
+        await AssertFullGeneration(generated, "Logic.Readers.Sub1.Sub2.UserReader-UpperClass-MiddleClass-InnerClass.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithFileNamespace_GenerateMembersAndConstructor()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers;
+
+[InjectDependencies(typeof(IDatabase))]
+public partial class UserReader { }
+";
+
+        var classFile2 =
+@"namespace Logic.IO
+{
+    public interface IDatabase { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        public UserReader(IDatabase database)
+        {
+            _database = database;
         }
     }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 }
+

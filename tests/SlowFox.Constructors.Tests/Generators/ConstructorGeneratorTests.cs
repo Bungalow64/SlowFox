@@ -1070,6 +1070,59 @@ namespace Logic.Readers
         }
 
         [Fact]
+        public async Task NestedClassMultiple_GenerateCodeForNested()
+        {
+            var classFile1 =
+@"namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private partial class UpperClass
+        {
+            private partial class MiddleClass
+            {
+                [SlowFox.InjectDependencies(typeof(IDatabase))]
+                private partial class InnerClass
+                {
+                }
+            }
+        }
+    }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers
+{
+    public interface IDatabase { }
+}
+";
+
+            var generated =
+@"namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private partial class UpperClass
+        {
+            private partial class MiddleClass
+            {
+                private partial class InnerClass
+                {
+                    private readonly IDatabase _database;
+
+                    public InnerClass(IDatabase database)
+                    {
+                        _database = database;
+                    }
+                }
+            }
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader-UpperClass-MiddleClass-InnerClass.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
         public async Task InternalClass_GenerateInternalCode()
         {
             var classFile1 =
@@ -1270,6 +1323,295 @@ namespace Logic.Readers
     }
 }";
             await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task NestedNamespace_GenerateFileWithCorrectNamespace()
+        {
+            var classFile1 =
+@"namespace Logic
+{
+    namespace Readers
+    {
+        [SlowFox.InjectDependencies(typeof(IDatabase))]
+        public partial class UserReader { }
+    }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers
+{
+    public interface IDatabase { }
+}";
+
+            var generated =
+@"namespace Logic
+{
+    namespace Readers
+    {
+        public partial class UserReader
+        {
+            private readonly IDatabase _database;
+
+            public UserReader(IDatabase database)
+            {
+                _database = database;
+            }
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task NestedNamespaceWithNestedUsings_GenerateUsingsAtCorrectLevels()
+        {
+            var classFile1 =
+@"using System;
+
+namespace Logic
+{
+    using ExternalHelpers.IO;
+
+    namespace Readers
+    {
+        using System.Text;
+        using ExternalHelpers.Communication;
+
+        [SlowFox.InjectDependencies(typeof(IDatabase), typeof(IEmailer))]
+        public partial class UserReader { }
+    }
+}";
+
+            var classFile2 = @"
+namespace ExternalHelpers.IO
+{
+    public interface IDatabase { }
+}
+
+namespace ExternalHelpers.Communication
+{
+    public interface IEmailer { }
+}";
+
+            var generated =
+@"using System;
+
+namespace Logic
+{
+    using ExternalHelpers.IO;
+
+    namespace Readers
+    {
+        using System.Text;
+        using ExternalHelpers.Communication;
+
+        public partial class UserReader
+        {
+            private readonly IDatabase _database;
+            private readonly IEmailer _emailer;
+
+            public UserReader(IDatabase database, IEmailer emailer)
+            {
+                _database = database;
+                _emailer = emailer;
+            }
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task NestedNamespaceWithMultipleNestedClass_GenerateCodeForNested()
+        {
+
+            var classFile1 =
+@"using System;
+using System.Text;
+
+namespace Logic.Readers
+{
+    using Logic;
+    using System.Threading.Tasks;
+
+    namespace Sub1
+    {
+        using System.Buffers;
+        using System.Data;
+
+        namespace Sub2
+        {
+            using System.Configuration;
+            using System.Dynamic;
+
+            public partial class UserReader
+            {
+                private partial class UpperClass
+                {
+                    private partial class MiddleClass
+                    {
+                        [SlowFox.InjectDependencies(typeof(IDatabase))]
+                        private partial class InnerClass
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers
+{
+    public interface IDatabase { }
+}
+";
+
+            var generated =
+@"using System;
+using System.Text;
+
+namespace Logic.Readers
+{
+    using Logic;
+    using System.Threading.Tasks;
+
+    namespace Sub1
+    {
+        using System.Buffers;
+        using System.Data;
+
+        namespace Sub2
+        {
+            using System.Configuration;
+            using System.Dynamic;
+
+            public partial class UserReader
+            {
+                private partial class UpperClass
+                {
+                    private partial class MiddleClass
+                    {
+                        private partial class InnerClass
+                        {
+                            private readonly IDatabase _database;
+
+                            public InnerClass(IDatabase database)
+                            {
+                                _database = database;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Logic.Readers.Sub1.Sub2.UserReader-UpperClass-MiddleClass-InnerClass.Generated.cs", classFile1, classFile2);
+        }
+
+        [Fact]
+        public async Task NestedNamespaceWithAlternateUsingDirectives_GenerateCodeForNested()
+        {
+
+            var classFile1 =
+@"using System;
+
+namespace Logic.Readers
+{
+    using Logic;
+    using System.Threading.Tasks;
+    using Internal = Logic.InternalLogic.Logging;
+
+    namespace Sub1
+    {
+        using System.Buffers;
+        using LRIO = Logic.Readers.IO;
+
+        namespace Sub2
+        {
+            using System.Configuration;
+            using Email = Logic.Communication.IEmailer;
+
+            public partial class UserReader
+            {
+                private partial class UpperClass
+                {
+                    private partial class MiddleClass
+                    {
+                        [SlowFox.InjectDependencies(typeof(LRIO.IDatabase), typeof(Email), typeof(Internal.IEventLog))]
+                        private partial class InnerClass
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}";
+
+            var classFile2 = @"
+namespace Logic.Readers.IO
+{
+    public interface IDatabase { }
+}
+namespace Logic.Communication
+{
+    public interface IEmailer { }
+}
+namespace Logic.InternalLogic.Logging
+{
+    public interface IEventLog { }
+}
+";
+
+            var generated =
+@"using System;
+
+namespace Logic.Readers
+{
+    using Logic;
+    using System.Threading.Tasks;
+    using Internal = Logic.InternalLogic.Logging;
+
+    namespace Sub1
+    {
+        using System.Buffers;
+        using LRIO = Logic.Readers.IO;
+
+        namespace Sub2
+        {
+            using System.Configuration;
+            using Email = Logic.Communication.IEmailer;
+
+            public partial class UserReader
+            {
+                private partial class UpperClass
+                {
+                    private partial class MiddleClass
+                    {
+                        private partial class InnerClass
+                        {
+                            private readonly LRIO.IDatabase _database;
+                            private readonly Email _email;
+                            private readonly Internal.IEventLog _eventLog;
+
+                            public InnerClass(LRIO.IDatabase database, Email email, Internal.IEventLog eventLog)
+                            {
+                                _database = database;
+                                _email = email;
+                                _eventLog = eventLog;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}";
+            await AssertFullGeneration(generated, "Logic.Readers.Sub1.Sub2.UserReader-UpperClass-MiddleClass-InnerClass.Generated.cs", classFile1, classFile2);
         }
     }
 }

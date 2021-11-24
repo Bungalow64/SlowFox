@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using SlowFox.Constructors.Generators.Definitions;
@@ -29,14 +30,21 @@ namespace SlowFox.Constructors.Generators
             context.RegisterForSyntaxNotifications(() => new ConstructorGeneratorReceiver());
         }
 
-        private string GetNamespace(SyntaxNode parent)
+        private List<ParentNamespace> GetNamespace(SyntaxNode parent)
         {
-            while (parent != null && !(parent is NamespaceDeclarationSyntax))
+            List<ParentNamespace> namespaces = new List<ParentNamespace>();
+
+            while (parent != null)
             {
+                if (parent is NamespaceDeclarationSyntax namespaceDeclaration)
+                {
+                    namespaces.Add(new ParentNamespace(namespaceDeclaration));
+                }
                 parent = parent.Parent;
             }
 
-            return ((NamespaceDeclarationSyntax)parent).Name.ToString();
+            namespaces.Reverse();
+            return namespaces;
         }
 
         private string GetModifiers(ClassDeclarationSyntax classDeclarationSyntax)
@@ -114,15 +122,16 @@ namespace SlowFox.Constructors.Generators
                     }
                 }
 
-                (string namespaceText, bool withinNamespace) getNamespace(UsingDirectiveSyntax node) 
-                {
-                    return (node.ToFullString(), node.Parent?.IsKind(Microsoft.CodeAnalysis.CSharp.SyntaxKind.NamespaceDeclaration) ?? false);
-                }
+                List<string> namespaces = 
+                    targetClass.Key.SyntaxTree
+                    .GetRoot()
+                    .DescendantNodes()
+                    .OfType<UsingDirectiveSyntax>()
+                    .Where(p => !p.Parent?.IsKind(SyntaxKind.NamespaceDeclaration) ?? true)
+                    .Select(p => p.ToFullString())
+                    .ToList();
 
-                List<(string namespaceText, bool withinNamespace)> namespaces = 
-                    targetClass.Key.SyntaxTree.GetRoot().DescendantNodes().OfType<UsingDirectiveSyntax>().Select(p => getNamespace(p)).ToList();
-
-                string namespaceValue = GetNamespace(targetClass.Key.Identifier.Parent);
+                List<ParentNamespace> namespaceValues = GetNamespace(targetClass.Key.Identifier.Parent);
                 List<(string className, string modifiers)> parentClasses = GetParentClasses(targetClass.Key.Identifier.Parent?.Parent);
 
                 var fieldPrefix = skipUnderscore ? string.Empty : "_";
@@ -157,7 +166,7 @@ namespace SlowFox.Constructors.Generators
                 var newClass = new ClassWriter
                 {
                     UsingNamespaces = namespaces,
-                    Namespace = namespaceValue,
+                    Namespaces = namespaceValues,
                     ClassName = targetClass.Key.Identifier.Text,
                     Members = names.Select(p => $"private readonly {p.TypeName} {p.MemberName};").ToList(),
                     Parameters = names.Select(p => $"{p.TypeName} {p.InputName}").ToList(),
@@ -167,7 +176,7 @@ namespace SlowFox.Constructors.Generators
                 };
 
                 SourceText sourceText = SourceText.From(newClass.Render(), Encoding.UTF8);
-                context.AddSource($"{namespaceValue}.{outputName}.Generated.cs", sourceText);
+                context.AddSource($"{string.Join(".", namespaceValues.Select(p => p.NamespaceName))}.{outputName}.Generated.cs", sourceText);
             }
         }
     }

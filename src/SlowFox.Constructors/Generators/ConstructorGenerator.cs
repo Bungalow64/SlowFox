@@ -17,6 +17,12 @@ namespace SlowFox.Constructors.Generators
     {
 
         private const string RootConfig = "slowfox_generation.constructors.";
+        private static readonly DiagnosticDescriptor UnexpectedErrorDiagnostic = new DiagnosticDescriptor(id: "SFCTORGEN001",
+                                                                                              title: "Couldn't generate constructor",
+                                                                                              messageFormat: "Couldn't generate the constructor for object '{0}'.  Exception: {1} {2}.",
+                                                                                              category: "Design",
+                                                                                              DiagnosticSeverity.Warning,
+                                                                                              isEnabledByDefault: true);
 
         public void Initialize(GeneratorInitializationContext context)
         {
@@ -79,104 +85,110 @@ namespace SlowFox.Constructors.Generators
 
         public void Execute(GeneratorExecutionContext context)
         {
-
 #if DEBUG
             if (!System.Diagnostics.Debugger.IsAttached)
             {
                 //System.Diagnostics.Debugger.Launch();
             }
-#endif 
+#endif
             var syntaxReceiver = (ConstructorGeneratorReceiver)context.SyntaxContextReceiver;
 
             foreach (var targetClass in syntaxReceiver.ClassesToAugment)
             {
-                var semanticModel = context.Compilation.GetSemanticModel(targetClass.Key.SyntaxTree);
-
-                List<TypeSyntax> types = targetClass
-                    .Value
-                    .ArgumentList
-                    ?.Arguments
-                    .Select(p => p.Expression)
-                    .OfType<TypeOfExpressionSyntax>()
-                    .Select(p => p.Type)
-                    .ToList();
-
-                if (!types?.Any() ?? true)
+                try
                 {
-                    return;
-                }
+                    var semanticModel = context.Compilation.GetSemanticModel(targetClass.Key.SyntaxTree);
 
-                bool skipUnderscore = false;
-                bool includeNullCheck = false;
+                    List<TypeSyntax> types = targetClass
+                        .Value
+                        .ArgumentList
+                        ?.Arguments
+                        .Select(p => p.Expression)
+                        .OfType<TypeOfExpressionSyntax>()
+                        .Select(p => p.Type)
+                        .ToList();
 
-                var options = context.AnalyzerConfigOptions.GetOptions(targetClass.Key.SyntaxTree);
-                if (options != null)
-                {
-                    if (options.TryGetValue($"{RootConfig}skip_underscores", out string skipUnderscoreValue))
+                    if (!types?.Any() ?? true)
                     {
-                        skipUnderscore = skipUnderscoreValue.Equals("true", StringComparison.OrdinalIgnoreCase);
+                        continue;
                     }
-                    if (options.TryGetValue($"{RootConfig}include_nullcheck", out string includeNullcheckValue))
+
+                    bool skipUnderscore = false;
+                    bool includeNullCheck = false;
+
+                    var options = context.AnalyzerConfigOptions.GetOptions(targetClass.Key.SyntaxTree);
+                    if (options != null)
                     {
-                        includeNullCheck = includeNullcheckValue.Equals("true", StringComparison.OrdinalIgnoreCase);
+                        if (options.TryGetValue($"{RootConfig}skip_underscores", out string skipUnderscoreValue))
+                        {
+                            skipUnderscore = skipUnderscoreValue.Equals("true", StringComparison.OrdinalIgnoreCase);
+                        }
+                        if (options.TryGetValue($"{RootConfig}include_nullcheck", out string includeNullcheckValue))
+                        {
+                            includeNullCheck = includeNullcheckValue.Equals("true", StringComparison.OrdinalIgnoreCase);
+                        }
                     }
-                }
 
-                List<string> namespaces =
-                    targetClass.Key.SyntaxTree
-                    .GetRoot()
-                    .DescendantNodes()
-                    .OfType<UsingDirectiveSyntax>()
-                    .Where(p => !p.Parent?.IsKind(SyntaxKind.NamespaceDeclaration) ?? true)
-                    .Select(p => p.ToFullString())
-                    .ToList();
+                    List<string> namespaces =
+                        targetClass.Key.SyntaxTree
+                        .GetRoot()
+                        .DescendantNodes()
+                        .OfType<UsingDirectiveSyntax>()
+                        .Where(p => !p.Parent?.IsKind(SyntaxKind.NamespaceDeclaration) ?? true)
+                        .Select(p => p.ToFullString())
+                        .ToList();
 
-                List<ParentNamespace> namespaceValues = GetNamespace(targetClass.Key.Identifier.Parent);
-                List<(string className, string modifiers)> parentClasses = GetParentClasses(targetClass.Key.Identifier.Parent?.Parent);
+                    List<ParentNamespace> namespaceValues = GetNamespace(targetClass.Key.Identifier.Parent);
+                    List<(string className, string modifiers)> parentClasses = GetParentClasses(targetClass.Key.Identifier.Parent?.Parent);
 
-                var fieldPrefix = skipUnderscore ? string.Empty : "_";
-                var usedNames = new List<string>();
-                var names = types.Select(p => new TypeDetails(semanticModel, p, usedNames, fieldPrefix)).ToList();
+                    var fieldPrefix = skipUnderscore ? string.Empty : "_";
+                    var usedNames = new List<string>();
+                    var names = types.Select(p => new TypeDetails(semanticModel, p, usedNames, fieldPrefix)).ToList();
 
-                string getConstructorFieldName(TypeDetails typeDetails)
-                {
-                    if (string.IsNullOrEmpty(typeDetails.FieldPrefix))
+                    string getConstructorFieldName(TypeDetails typeDetails)
                     {
-                        return $"this.{typeDetails.MemberName}";
+                        if (string.IsNullOrEmpty(typeDetails.FieldPrefix))
+                        {
+                            return $"this.{typeDetails.MemberName}";
+                        }
+                        return typeDetails.MemberName;
                     }
-                    return typeDetails.MemberName;
-                }
-                string getNullCheck(TypeDetails typeDetails)
-                {
-                    var nullCheck = "";
-                    if (includeNullCheck && typeDetails.IsNullable)
+                    string getNullCheck(TypeDetails typeDetails)
                     {
-                        nullCheck = $" ?? throw new System.ArgumentNullException(nameof({typeDetails.Name}))";
+                        var nullCheck = "";
+                        if (includeNullCheck && typeDetails.IsNullable)
+                        {
+                            nullCheck = $" ?? throw new System.ArgumentNullException(nameof({typeDetails.Name}))";
+                        }
+                        return nullCheck;
                     }
-                    return nullCheck;
+
+                    string outputName = $"{targetClass.Key.Identifier.Text}";
+                    if (parentClasses.Any())
+                    {
+                        parentClasses.Reverse();
+                        outputName = string.Join("-", parentClasses.Select(p => p.className)) + "-" + outputName;
+                    }
+
+                    var newClass = new ClassWriter
+                    {
+                        UsingNamespaces = namespaces,
+                        Namespaces = namespaceValues,
+                        ClassName = targetClass.Key.Identifier.Text,
+                        Members = names.Select(p => $"private readonly {p.TypeName} {p.MemberName};").ToList(),
+                        Parameters = names.Select(p => $"{p.TypeName} {p.InputName}").ToList(),
+                        ParameterAssignments = names.Select(p => $"{getConstructorFieldName(p)} = {p.InputName}{getNullCheck(p)};").ToList(),
+                        ParentClasses = parentClasses,
+                        Modifier = GetModifiers(targetClass.Key)
+                    };
+
+                    SourceText sourceText = SourceText.From(newClass.Render(), Encoding.UTF8);
+                    context.AddSource($"{string.Join(".", namespaceValues.Select(p => p.NamespaceName))}.{outputName}.Generated.cs", sourceText);
                 }
-
-                string outputName = $"{targetClass.Key.Identifier.Text}";
-                if (parentClasses.Any())
+                catch (Exception ex)
                 {
-                    parentClasses.Reverse();
-                    outputName = string.Join("-", parentClasses.Select(p => p.className)) + "-" + outputName;
+                    context.ReportDiagnostic(Diagnostic.Create(UnexpectedErrorDiagnostic, targetClass.Value.GetLocation(), targetClass.Key.Identifier.Value, ex.Message, ex.StackTrace));
                 }
-
-                var newClass = new ClassWriter
-                {
-                    UsingNamespaces = namespaces,
-                    Namespaces = namespaceValues,
-                    ClassName = targetClass.Key.Identifier.Text,
-                    Members = names.Select(p => $"private readonly {p.TypeName} {p.MemberName};").ToList(),
-                    Parameters = names.Select(p => $"{p.TypeName} {p.InputName}").ToList(),
-                    ParameterAssignments = names.Select(p => $"{getConstructorFieldName(p)} = {p.InputName}{getNullCheck(p)};").ToList(),
-                    ParentClasses = parentClasses,
-                    Modifier = GetModifiers(targetClass.Key)
-                };
-
-                SourceText sourceText = SourceText.From(newClass.Render(), Encoding.UTF8);
-                context.AddSource($"{string.Join(".", namespaceValues.Select(p => p.NamespaceName))}.{outputName}.Generated.cs", sourceText);
             }
         }
     }

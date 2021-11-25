@@ -4,14 +4,19 @@ using System.Text;
 
 namespace SlowFox.Constructors.Generators
 {
+    /// <summary>
+    /// Source generator for generating the attribute to be used for identifying classes to have a constructor automatically generated
+    /// </summary>
     [Generator]
     public sealed class InjectDependenciesAttributeGenerator : ISourceGenerator
     {
+        /// <inheritdoc/>
         public void Initialize(GeneratorInitializationContext context)
         {
             // nothing happening
         }
 
+        /// <inheritdoc/>
         public void Execute(GeneratorExecutionContext context)
         {
             var code = @"using System;

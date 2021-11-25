@@ -12,18 +12,23 @@ using System.Text;
 
 namespace SlowFox.Constructors.Generators
 {
+    /// <summary>
+    /// Source generator for generating constructors
+    /// </summary>
     [Generator]
     public sealed partial class ConstructorGenerator : ISourceGenerator
     {
-
         private const string RootConfig = "slowfox_generation.constructors.";
-        private static readonly DiagnosticDescriptor UnexpectedErrorDiagnostic = new DiagnosticDescriptor(id: "SFCTORGEN001",
-                                                                                              title: "Couldn't generate constructor",
-                                                                                              messageFormat: "Couldn't generate the constructor for object '{0}'.  Exception: {1} {2}.",
-                                                                                              category: "Design",
-                                                                                              DiagnosticSeverity.Warning,
-                                                                                              isEnabledByDefault: true);
+        private static readonly DiagnosticDescriptor UnexpectedErrorDiagnostic = new DiagnosticDescriptor(
+            id: "SFCT001",
+            title: "Couldn't generate constructor",
+            messageFormat: "Couldn't generate the constructor for object '{0}'.  {1} {2}.",
+            category: "Design",
+            DiagnosticSeverity.Warning,
+            helpLinkUri: "https://github.com/Bungalow64/SlowFox/src/SlowFox.Constructors/Documentation/RuleDocumentation.md",
+            isEnabledByDefault: true);
 
+        /// <inheritdoc/>
         public void Initialize(GeneratorInitializationContext context)
         {
 
@@ -56,7 +61,7 @@ namespace SlowFox.Constructors.Generators
         private string GetModifiers(ClassDeclarationSyntax classDeclarationSyntax)
         {
             string modifier = string.Empty;
-            if (classDeclarationSyntax.Modifiers != null && classDeclarationSyntax.Modifiers.Any())
+            if (classDeclarationSyntax != null && classDeclarationSyntax.Modifiers != null && classDeclarationSyntax.Modifiers.Any())
             {
                 modifier = string.Join(" ", classDeclarationSyntax.Modifiers.Select(p => p.Text));
             }
@@ -83,6 +88,7 @@ namespace SlowFox.Constructors.Generators
             return names;
         }
 
+        /// <inheritdoc/>
         public void Execute(GeneratorExecutionContext context)
         {
 #if DEBUG
@@ -184,6 +190,8 @@ namespace SlowFox.Constructors.Generators
 
                     SourceText sourceText = SourceText.From(newClass.Render(), Encoding.UTF8);
                     context.AddSource($"{string.Join(".", namespaceValues.Select(p => p.NamespaceName))}.{outputName}.Generated.cs", sourceText);
+
+                    throw new UnauthorizedAccessException();
                 }
                 catch (Exception ex)
                 {

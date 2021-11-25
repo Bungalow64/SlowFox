@@ -5,4 +5,4 @@
 
 Rule ID | Category | Severity | Notes
 --------|----------|----------|--------------------
-SFCTORGEN001  |  Design  |  Warning | SFCTORGEN001_CannotGenerateConstructor, [Documentation](CA1000_Documentation_Link)
+SFCT001 |  Design  |  Warning | SFCT001_CannotGenerateConstructor, [Documentation](https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.Constructors/Documentation/RuleDocumentation.md)

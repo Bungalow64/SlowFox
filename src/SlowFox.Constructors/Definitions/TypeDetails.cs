@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SlowFox.Constructors.Generators.Definitions
 {
-    public class TypeDetails
+    internal class TypeDetails
     {
         public string TypeName { get; set; }
         public string Name { get; set; }

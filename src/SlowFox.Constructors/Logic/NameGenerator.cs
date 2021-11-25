@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SlowFox.Constructors.Logic
 {
-    public static class NameGenerator
+    internal static class NameGenerator
     {
         public static string GetName(string typeName, List<string> usedNames)
         {

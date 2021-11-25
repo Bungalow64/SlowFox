@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace SlowFox.Constructors.Generators.Receivers
 {
-    public class ConstructorGeneratorReceiver : ISyntaxContextReceiver
+    internal class ConstructorGeneratorReceiver : ISyntaxContextReceiver
     {
         private const string InjectableClassAttributeName1 = "SlowFox.InjectDependenciesAttribute";
         private const string InjectableClassAttributeName2 = "SlowFox.InjectDependencies";

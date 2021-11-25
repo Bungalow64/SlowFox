@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SlowFox.Constructors.Logic
 {
-    public class ClassWriter
+    internal class ClassWriter
     {
         public string ClassName { get; set; }
         public List<ParentNamespace> Namespaces { get; set; }

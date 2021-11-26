@@ -1,0 +1,5 @@
+root = true
+
+[*.cs]
+slowfox_generation.constructors.skip_underscores = true
+

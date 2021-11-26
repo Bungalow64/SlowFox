@@ -17,6 +17,8 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Test (code)
   inputs:
+    packageType: 'sdk'
+    version: '6.0.x'
     command: test
     projects: |
       **/*[Tt]ests/*.csproj
@@ -45,8 +47,19 @@ steps:
     feedsToUse: 'select'
     vstsFeed: '46089223-147e-4f42-b802-450dfa09eb3b'
 - task: DotNetCoreCLI@2
+    packageType: 'sdk'
+    version: '6.0.x'
   displayName: Build (External)
   inputs:
     projects: |
       **/External*/*.csproj
     arguments: '--configuration $(BuildConfiguration) --no-restore'
+- task: DotNetCoreCLI@2
+  displayName: Test (External Projects)
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.x'
+    command: test
+    projects: |
+      **/External*/*Tests.csproj
+    arguments: '--configuration $(BuildConfiguration)'

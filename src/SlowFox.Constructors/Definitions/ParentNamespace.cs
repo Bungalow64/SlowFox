@@ -11,6 +11,10 @@ namespace SlowFox.Constructors.Generators.Definitions
 
         public ParentNamespace(BaseNamespaceDeclarationSyntax syntax)
         {
+            if (syntax is null)
+            {
+                return;
+            }
             NamespaceName = syntax.Name.ToString();
             UsingDirectives = syntax.ChildNodes().OfType<UsingDirectiveSyntax>().Select(p => p.ToFullString()).ToList();
         }

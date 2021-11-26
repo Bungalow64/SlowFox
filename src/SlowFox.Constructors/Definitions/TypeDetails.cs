@@ -49,19 +49,15 @@ namespace SlowFox.Constructors.Generators.Definitions
                     TypeName = typeSyntax.ToString();
                     Name = typeSyntax.ToString();
                     break;
-                    //case AliasQualifiedNameSyntax aliasQualifiedNameSyntax:
-                    //    TypeName = aliasQualifiedNameSyntax.GetText().ToString();
-                    //    break;
             }
-            var type = semanticModel.GetTypeInfo(typeSyntax).Type;
-
-            if (type != null)
+            if (semanticModel != null)
             {
-                IsNullable = type.IsReferenceType;
-                //if (type is INamedTypeSymbol namedTypeSymbol)
-                //{
-                //    IsNullable = type.IsReferenceType || namedTypeSymbol.ConstructedFrom?.ToString() == "System.Nullable<T>";
-                //}
+                var type = semanticModel.GetTypeInfo(typeSyntax).Type;
+
+                if (type != null)
+                {
+                    IsNullable = type.IsReferenceType;
+                }
             }
         }
     }

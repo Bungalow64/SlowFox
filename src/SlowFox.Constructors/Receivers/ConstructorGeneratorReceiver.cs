@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,37 +16,27 @@ namespace SlowFox.Constructors.Generators.Receivers
 
         public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
         {
-            try
+            if (context.Node is ClassDeclarationSyntax cds)
             {
-                if (context.Node is ClassDeclarationSyntax cds)
+                bool matches(string type)
                 {
-                    // TODO: Remove
-                    var allChildren = cds.DescendantNodes().OfType<AttributeSyntax>().SelectMany(p => p.DescendantTokens()).Where(dt => dt.IsKind(SyntaxKind.IdentifierToken)).ToList();
-
-                    bool matches(string type)
+                    if (string.IsNullOrEmpty(type))
                     {
-                        if (string.IsNullOrEmpty(type))
-                        {
-                            return false;
-                        }
-                        return type.Equals(InjectableClassAttributeName1) || type.Equals(InjectableClassAttributeName2) || type.Equals(InjectableClassAttributeName3);
+                        return false;
                     }
-
-                    var attribute = cds
-                        .AttributeLists
-                        .SelectMany(p => p.Attributes)
-                        .Where(p => p.DescendantTokens().Any(dt => dt.IsKind(SyntaxKind.IdentifierToken) && matches(context.SemanticModel.GetTypeInfo(dt.Parent).Type?.ToString())))
-                        .FirstOrDefault();
-
-                    if (attribute != null)
-                    {
-                        ClassesToAugment.Add(new KeyValuePair<ClassDeclarationSyntax, AttributeSyntax>(cds, attribute));
-                    }
+                    return type.Equals(InjectableClassAttributeName1) || type.Equals(InjectableClassAttributeName2) || type.Equals(InjectableClassAttributeName3);
                 }
-            }
-            catch (Exception)
-            {
-                // Ignore error
+
+                var attribute = cds
+                    .AttributeLists
+                    .SelectMany(p => p.Attributes)
+                    .Where(p => p.DescendantTokens().Any(dt => dt.IsKind(SyntaxKind.IdentifierToken) && dt.Parent != null && matches(context.SemanticModel.GetTypeInfo(dt.Parent).Type?.ToString())))
+                    .FirstOrDefault();
+
+                if (attribute != null)
+                {
+                    ClassesToAugment.Add(new KeyValuePair<ClassDeclarationSyntax, AttributeSyntax>(cds, attribute));
+                }
             }
         }
     }

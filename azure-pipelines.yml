@@ -8,6 +8,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: UseDotNet@2
+  displayName: 'Use .NET 6 Core SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.x'
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
@@ -17,8 +22,6 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Test (code)
   inputs:
-    packageType: 'sdk'
-    version: '6.0.x'
     command: test
     projects: |
       **/*[Tt]ests/*.csproj
@@ -49,16 +52,12 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Build (External)
   inputs:
-    packageType: 'sdk'
-    version: '6.0.x'
     projects: |
       **/External*/*.csproj
     arguments: '--configuration $(BuildConfiguration) --no-restore'
 - task: DotNetCoreCLI@2
   displayName: Test (External Projects)
   inputs:
-    packageType: 'sdk'
-    version: '6.0.x'
     command: test
     projects: |
       **/External*/*Tests.csproj

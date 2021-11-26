@@ -61,4 +61,4 @@ steps:
     command: test
     projects: |
       **/External*/*Tests.csproj
-    arguments: '--configuration $(BuildConfiguration)'
+    arguments: '--configuration $(BuildConfiguration) --no-restore'

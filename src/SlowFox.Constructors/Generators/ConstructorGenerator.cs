@@ -190,8 +190,6 @@ namespace SlowFox.Constructors.Generators
 
                     SourceText sourceText = SourceText.From(newClass.Render(), Encoding.UTF8);
                     context.AddSource($"{string.Join(".", namespaceValues.Select(p => p.NamespaceName))}.{outputName}.Generated.cs", sourceText);
-
-                    throw new UnauthorizedAccessException();
                 }
                 catch (Exception ex)
                 {

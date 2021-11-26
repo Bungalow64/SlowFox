@@ -1,0 +1,5 @@
+root = true
+
+[*.cs]
+slowfox_generation.constructors.include_nullcheck = true
+

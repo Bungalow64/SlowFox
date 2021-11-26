@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SlowFox.Constructors</name>
+    </assembly>
+    <members>
+        <member name="T:SlowFox.Constructors.Generators.ConstructorGenerator">
+            <summary>
+            Source generator for generating constructors
+            </summary>
+        </member>
+        <member name="M:SlowFox.Constructors.Generators.ConstructorGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SlowFox.Constructors.Generators.ConstructorGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SlowFox.Constructors.Generators.InjectDependenciesAttributeGenerator">
+            <summary>
+            Source generator for generating the attribute to be used for identifying classes to have a constructor automatically generated
+            </summary>
+        </member>
+        <member name="M:SlowFox.Constructors.Generators.InjectDependenciesAttributeGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SlowFox.Constructors.Generators.InjectDependenciesAttributeGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,74 @@
+trigger:
+- master
+
+variables:
+  BuildConfiguration: 'Debug'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Use .NET 6 Core SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.x'
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: |
+      src/**/*.csproj
+    arguments: '--configuration $(BuildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Test (code)
+  inputs:
+    command: test
+    projects: |
+      **/*[Tt]ests/*.csproj
+      !**/External*/*.csproj
+    arguments: '--configuration $(BuildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Pack
+  inputs:
+    command: pack
+    versioningScheme: byPrereleaseNumber
+    requestedMajorVersion: 0
+    requestedMinorVersion: 1
+    requestedPatchVersion: 0
+    packagesToPack: 'src/**/*.csproj'
+- task: DotNetCoreCLI@2
+  displayName: Push
+  inputs:
+    command: push
+    searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
+    feedPublish: 'bungalow64'
+- task: DotNetCoreCLI@2
+  displayName: Restore (External)
+  inputs:
+    command: 'restore'
+    projects: '**/External*/*.csproj'
+    feedsToUse: 'select'
+    vstsFeed: '46089223-147e-4f42-b802-450dfa09eb3b'
+- task: DotNetCoreCLI@2
+  displayName: Build (External)
+  inputs:
+    projects: |
+      **/External*/*.csproj
+    arguments: '--configuration $(BuildConfiguration) --no-restore'
+- task: UseDotNet@2
+  displayName: 'Use .NET 3.1 Core SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '3.1.x'
+- task: UseDotNet@2
+  displayName: 'Use .NET 5 Core SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '5.0.x'
+- task: DotNetCoreCLI@2
+  displayName: Test (External Projects)
+  inputs:
+    command: test
+    projects: |
+      **/External*/*Tests.csproj
+    arguments: '--configuration $(BuildConfiguration) --no-restore'

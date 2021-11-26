@@ -1,0 +1,5 @@
+root = true
+
+# All files
+[*]
+skip_underscores2 = true

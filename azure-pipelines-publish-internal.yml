@@ -24,4 +24,4 @@ steps:
   displayName: Push
   inputs:
     command: push
-    publishVstsFeed: '8f7cbf78-ee6b-4179-89eb-8cb300c05510/355fdd34-a6c7-4a5f-bd91-3d57fa40c1ed'
+    feedPublish: 'bungalow64'

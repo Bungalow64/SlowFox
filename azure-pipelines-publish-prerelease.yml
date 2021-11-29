@@ -1,0 +1,31 @@
+trigger:
+- none
+
+variables:
+  BuildConfiguration: 'Release'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: |
+      src/**/*.csproj
+    arguments: '--configuration $(BuildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Pack
+  inputs:
+    command: pack
+    versioningScheme: byPrereleaseNumber
+    requestedMajorVersion: 0
+    requestedMinorVersion: 1
+    requestedPatchVersion: 0
+    packagesToPack: 'src/**/*.csproj'
+- task: NuGetCommand@2
+  displayName: Push
+  inputs:
+    command: push
+    nuGetFeedType: external
+    publishFeedCredentials: 'NuGet (Bungalow64)'

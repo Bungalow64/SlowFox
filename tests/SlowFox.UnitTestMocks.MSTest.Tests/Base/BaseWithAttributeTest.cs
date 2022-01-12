@@ -1,23 +1,23 @@
 ﻿using Microsoft.CodeAnalysis;
-using SlowFox.Constructors.Generators;
+using SlowFox.UnitTestMocks.MSTest.Generators;
 using System.Threading.Tasks;
 
-namespace SlowFox.Constructors.Tests.Base
+namespace SlowFox.UnitTestMocks.MSTest.Tests.Base
 {
-    public abstract class BaseWithAttributeTest<TGenerator1> : BaseMultiTest<TGenerator1, InjectDependenciesAttributeGenerator>
+    public abstract class BaseWithAttributeTest<TGenerator1> : BaseMultiTest<TGenerator1, InjectMocksAttributeGenerator>
         where TGenerator1 : ISourceGenerator, new()
     {
-        private const string _expectedAttributeFileName = "SlowFox.Constructors.Generators.InjectDependenciesAttribute.Generated.cs";
+        private const string _expectedAttributeFileName = "SlowFox.UnitTestMocks.MSTest.Generators.InjectMocksAttribute.Generated.cs";
         private const string _expectedAttributeContents = @"using System;
 
 namespace SlowFox
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class InjectDependenciesAttribute : Attribute
+    public sealed class InjectMocksAttribute : Attribute
     {
-        public Type[] Types { get; set; }
-        public InjectDependenciesAttribute() { }
-        public InjectDependenciesAttribute(params Type[] types) => Types = types;
+        public Type Type { get; set; }
+        public InjectMocksAttribute() { }
+        public InjectMocksAttribute(Type type) => Type = type;
     }
 }";
         protected string ExpectedAttributeFileName => _expectedAttributeFileName;

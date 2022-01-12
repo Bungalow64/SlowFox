@@ -1,9 +1,9 @@
-﻿using SlowFox.Constructors.Definitions;
+﻿using SlowFox.UnitTestMocks.MSTest.Definitions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SlowFox.Constructors.Logic
+namespace SlowFox.UnitTestMocks.MSTest.Logic
 {
     internal class ClassWriter
     {
@@ -16,6 +16,8 @@ namespace SlowFox.Constructors.Logic
         public bool IsNested => ParentClasses?.Any() ?? false;
         public List<(string className, string modifiers)> ParentClasses { get; set; } = new List<(string className, string modifiers)>();
         public string Modifier { get; set; }
+        public string MethodSignature { get; set; }
+        public string MethodBody { get; set; }
 
         private string GetIndentation(int tabIndex) => string.Concat(Enumerable.Repeat("    ", tabIndex));
 
@@ -54,15 +56,27 @@ namespace SlowFox.Constructors.Logic
             string wrapStart = BuildWrapStart(nestedClassIndent);
             string wrapEnd = BuildWrapEnd(nestedClassIndent);
 
+            string method = string.Empty;
+            if (!string.IsNullOrEmpty(MethodSignature))
+            {
+                method = $@"
+
+{classIndent}        {MethodSignature}
+{classIndent}        {{
+{classIndent}            {MethodBody}
+{classIndent}        }}";
+            }
+
             string built = $@"{outerNamespaceList}{BuildNamespaceStart()}{wrapStart}{classIndent}    {Modifier} class {ClassName}
 {classIndent}    {{
 {propertyList}
-{classIndent}        public {ClassName}({parameterList})
+{classIndent}        [TestInitialize]
+{classIndent}        public void Init()
 {classIndent}        {{
 {assignments}
-{classIndent}        }}
+{classIndent}        }}{method}
 {classIndent}    }}{wrapEnd}{BuildNamespaceEnd()}";
-
+            
             return built;
         }
 

@@ -2,13 +2,13 @@
 using Microsoft.CodeAnalysis.Text;
 using System.Text;
 
-namespace SlowFox.Constructors.Generators
+namespace SlowFox.UnitTestMocks.MSTest.Generators
 {
     /// <summary>
-    /// Source generator for generating the attribute to be used for identifying classes to have a constructor automatically generated
+    /// Source generator for generating the attribute to be used for identifying classes to have mocks automatically generated
     /// </summary>
     [Generator]
-    public sealed class InjectDependenciesAttributeGenerator : ISourceGenerator
+    public sealed class InjectMocksAttributeGenerator : ISourceGenerator
     {
         /// <inheritdoc/>
         public void Initialize(GeneratorInitializationContext context)
@@ -24,15 +24,15 @@ namespace SlowFox.Constructors.Generators
 namespace SlowFox
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class InjectDependenciesAttribute : Attribute
+    public sealed class InjectMocksAttribute : Attribute
     {
-        public Type[] Types { get; set; }
-        public InjectDependenciesAttribute() { }
-        public InjectDependenciesAttribute(params Type[] types) => Types = types;
+        public Type Type { get; set; }
+        public InjectMocksAttribute() { }
+        public InjectMocksAttribute(Type type) => Type = type;
     }
 }";
             context.AddSource(
-                "SlowFox.Constructors.Generators.InjectDependenciesAttribute.Generated.cs",
+                "SlowFox.UnitTestMocks.MSTest.Generators.InjectMocksAttribute.Generated.cs",
                 SourceText.From(code, Encoding.UTF8)
             );
         }

@@ -2,8 +2,8 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
-using SlowFox.Constructors.Generators.Definitions;
-using SlowFox.Constructors.Generators.Receivers;
+using SlowFox.Constructors.Definitions;
+using SlowFox.Constructors.Receivers;
 using SlowFox.Constructors.Logic;
 using System;
 using System.Collections.Generic;
@@ -31,7 +31,6 @@ namespace SlowFox.Constructors.Generators
         /// <inheritdoc/>
         public void Initialize(GeneratorInitializationContext context)
         {
-
 #if DEBUG
             if (!System.Diagnostics.Debugger.IsAttached)
             {

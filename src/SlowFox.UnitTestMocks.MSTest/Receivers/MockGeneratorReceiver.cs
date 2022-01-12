@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace SlowFox.Constructors.Receivers
 {
-    internal class ConstructorGeneratorReceiver : ISyntaxContextReceiver
+    internal class MockGeneratorReceiver : ISyntaxContextReceiver
     {
-        private const string InjectableClassAttributeName1 = "SlowFox.InjectDependenciesAttribute";
-        private const string InjectableClassAttributeName2 = "SlowFox.InjectDependencies";
-        private const string InjectableClassAttributeName3 = "InjectDependencies";
+        private const string InjectableClassAttributeName1 = "SlowFox.InjectMocksAttribute";
+        private const string InjectableClassAttributeName2 = "SlowFox.InjectMocks";
+        private const string InjectableClassAttributeName3 = "InjectMocks";
 
         public List<KeyValuePair<ClassDeclarationSyntax, AttributeSyntax>> ClassesToAugment { get; private set; } = new List<KeyValuePair<ClassDeclarationSyntax, AttributeSyntax>>();
 
@@ -28,8 +28,8 @@ namespace SlowFox.Constructors.Receivers
                 }
 
                 var attribute = cds
-                    .AttributeLists
-                    .SelectMany(p => p.Attributes)
+                    .DescendantNodes()
+                    .OfType<AttributeSyntax>()
                     .Where(p => p.DescendantTokens().Any(dt => dt.IsKind(SyntaxKind.IdentifierToken) && dt.Parent != null && matches(context.SemanticModel.GetTypeInfo(dt.Parent).Type?.ToString())))
                     .FirstOrDefault();
 

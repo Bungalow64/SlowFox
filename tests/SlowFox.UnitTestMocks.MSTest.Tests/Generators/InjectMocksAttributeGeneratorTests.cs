@@ -1,13 +1,13 @@
-using SlowFox.Constructors.Generators;
-using SlowFox.Constructors.Tests.Base;
+using SlowFox.UnitTestMocks.MSTest.Tests.Base;
 using System.Threading.Tasks;
 using Xunit;
 using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
+using SlowFox.UnitTestMocks.MSTest.Generators;
 
-namespace SlowFox.Constructors.Tests.Generators
+namespace SlowFox.UnitTestMocks.MSTest.Tests.Generators
 {
-    public class InjectDependenciesAttributeGeneratorTests : BaseTest<InjectDependenciesAttributeGenerator>
+    public class InjectMocksAttributeGeneratorTests : BaseTest<InjectMocksAttributeGenerator>
     {
         [Fact]
         public async Task AttributeBuilds()
@@ -17,14 +17,14 @@ namespace SlowFox.Constructors.Tests.Generators
 namespace SlowFox
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class InjectDependenciesAttribute : Attribute
+    public sealed class InjectMocksAttribute : Attribute
     {
-        public Type[] Types { get; set; }
-        public InjectDependenciesAttribute() { }
-        public InjectDependenciesAttribute(params Type[] types) => Types = types;
+        public Type Type { get; set; }
+        public InjectMocksAttribute() { }
+        public InjectMocksAttribute(Type type) => Type = type;
     }
 }";
-            await AssertGeneration(generated, "SlowFox.Constructors.Generators.InjectDependenciesAttribute.Generated.cs");
+            await AssertGeneration(generated, "SlowFox.UnitTestMocks.MSTest.Generators.InjectMocksAttribute.Generated.cs");
         }
 
         [Fact]

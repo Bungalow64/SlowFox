@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SlowFox.Constructors.Definitions
+namespace SlowFox.UnitTestMocks.MSTest.Definitions
 {
     internal class ParentNamespace
     {

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SlowFox.Constructors.Receivers
+namespace SlowFox.UnitTestMocks.MSTest.Receivers
 {
     internal class MockGeneratorReceiver : ISyntaxContextReceiver
     {

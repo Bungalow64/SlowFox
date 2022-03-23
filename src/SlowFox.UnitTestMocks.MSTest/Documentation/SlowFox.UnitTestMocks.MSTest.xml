@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>SlowFox.Constructors</name>
+        <name>SlowFox.UnitTestMocks.MSTest</name>
     </assembly>
     <members>
         <member name="T:SlowFox.UnitTestMocks.MSTest.Generators.InjectMocksAttributeGenerator">

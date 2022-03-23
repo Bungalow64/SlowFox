@@ -2,9 +2,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
-using SlowFox.Constructors.Receivers;
 using SlowFox.UnitTestMocks.MSTest.Definitions;
 using SlowFox.UnitTestMocks.MSTest.Logic;
+using SlowFox.UnitTestMocks.MSTest.Receivers;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -39,7 +39,7 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
         private static readonly DiagnosticDescriptor MissingDependencyDiagnostic = new DiagnosticDescriptor(
             id: "SFMK003",
             title: "A required dependency has not been found",
-            messageFormat: "{0} is required, but it has not been found",
+            messageFormat: "{1} is required in {0}, but it has not been found",
             category: "Design",
             DiagnosticSeverity.Warning,
             helpLinkUri: "https://github.com/Bungalow64/SlowFox/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md",

@@ -80,4 +80,62 @@ namespace Logic.Readers.Tests
 }";
         await AssertFullGeneration(generated, "Logic.Readers.Tests.UserReaderTests.Generated.cs", classFile1, classFile2);
     }
+
+    [Fact]
+    public async Task Class_ValueTypeDependencies_AddValuesToCreateMethod()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers.Tests
+{
+    [InjectMocks(typeof(UserReader))]
+    public partial class UserReaderTests { }
+}";
+
+        var classFile2 =
+@"namespace Logic.IO
+{
+    public class UserReader
+    {
+        private readonly IDatabase _database;
+        private readonly int _index;
+        private readonly string _name;
+
+        public UserReader(IDatabase database, int index, string name)
+        {
+            _database = database;
+            _index = index;
+            _name = name;
+        }
+    }
+
+    public interface IDatabase { }
+}";
+
+        var generated =
+@"using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+
+namespace Logic.Readers.Tests
+{
+    public partial class UserReaderTests
+    {
+        private Mock<Logic.IO.IDatabase> _database;
+
+        [TestInitialize]
+        public void Init()
+        {
+            _database = new Mock<Logic.IO.IDatabase>(MockBehavior.Strict);
+        }
+
+        private Logic.IO.UserReader Create(int index, string name)
+        {
+            return new Logic.IO.UserReader(_database.Object, index, name);
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.Tests.UserReaderTests.Generated.cs", classFile1, classFile2);
+    }
 }

@@ -34,6 +34,12 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
         /// <inheritdoc/>
         public void Execute(GeneratorExecutionContext context)
         {
+#if DEBUG
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                //System.Diagnostics.Debugger.Launch();
+            }
+#endif 
             var syntaxReceiver = (MockGeneratorReceiver)context.SyntaxContextReceiver;
 
             foreach (var targetClass in syntaxReceiver.ClassesToAugment)
@@ -101,16 +107,16 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
                     var fieldPrefix = config.SkipUnderscore ? string.Empty : "_";
                     string mockBehavior = config.UseLoose ? "Loose" : "Strict";
 
-                    string methodSignature = $"private {targetSymbol.ContainingNamespace}.{targetSymbol.Name} Create()";
-                    string methodBody = $"return new {targetSymbol.ContainingNamespace}.{targetSymbol.Name}({string.Join($", ", types.Select(p => $"{fieldPrefix}{p.parameterName}.Object"))});";
+                    string methodSignature = $"private {targetSymbol.ContainingNamespace}.{targetSymbol.Name} Create({string.Join(", ", types.Where(p => !p.type.CanBeMocked()).Select(p => $"{p.type} {p.parameterName}"))})";
+                    string methodBody = $"return new {targetSymbol.ContainingNamespace}.{targetSymbol.Name}({string.Join($", ", types.Select(p => p.type.CanBeMocked() ? $"{fieldPrefix}{p.parameterName}.Object" : $"{p.parameterName}"))});";
 
                     var newClass = new ClassWriter
                     {
                         UsingNamespaces = new List<string> { "using Microsoft.VisualStudio.TestTools.UnitTesting;", "using Moq;" },
                         Namespaces = namespaceValues,
                         ClassName = targetClass.Key.Identifier.Text,
-                        Members = types.Select(p => $"private Mock<{p.type}> {fieldPrefix}{p.parameterName};").ToList(),
-                        ParameterAssignments = types.Select(p => $"{fieldPrefix}{p.parameterName} = new Mock<{p.type}>(MockBehavior.{mockBehavior});").ToList(),
+                        Members = types.Where(p => p.type.CanBeMocked()).Select(p => $"private Mock<{p.type}> {fieldPrefix}{p.parameterName};").ToList(),
+                        ParameterAssignments = types.Where(p => p.type.CanBeMocked()).Select(p => $"{fieldPrefix}{p.parameterName} = new Mock<{p.type}>(MockBehavior.{mockBehavior});").ToList(),
                         ParentClasses = parentClasses,
                         Modifier = targetClass.Key.GetModifiers(),
                         MethodSignature = methodSignature,

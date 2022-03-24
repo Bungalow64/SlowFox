@@ -14,3 +14,7 @@ This is a warning because the type referenced in the InjectMocksAttribute is not
 
 A required dependency has not been found.  The warning will indicate which package is required.  Please install it from NuGet.
 
+## SFMK004 Invalid Config Option
+
+An unexpected value has been found for a configuration option.  Check the documentation for the expected values.
+

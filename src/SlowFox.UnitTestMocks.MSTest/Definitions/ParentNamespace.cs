@@ -7,7 +7,7 @@ namespace SlowFox.UnitTestMocks.MSTest.Definitions
     internal class ParentNamespace
     {
         public string NamespaceName { get; set; }
-        public List<string> UsingDirectives { get; set; } = new List<string>();
+        public IEnumerable<string> UsingDirectives { get; set; } = new List<string>();
 
         public ParentNamespace(BaseNamespaceDeclarationSyntax syntax)
         {
@@ -16,7 +16,7 @@ namespace SlowFox.UnitTestMocks.MSTest.Definitions
                 return;
             }
             NamespaceName = syntax.Name.ToString();
-            UsingDirectives = syntax.ChildNodes().OfType<UsingDirectiveSyntax>().Select(p => p.ToFullString()).ToList();
+            UsingDirectives = syntax.ChildNodes().OfType<UsingDirectiveSyntax>().Select(p => p.ToFullString());
         }
     }
 }

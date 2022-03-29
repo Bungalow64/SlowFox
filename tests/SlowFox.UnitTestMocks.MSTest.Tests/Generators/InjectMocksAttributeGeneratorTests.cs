@@ -23,8 +23,16 @@ namespace SlowFox
         public InjectMocksAttribute() { }
         public InjectMocksAttribute(Type type) => Type = type;
     }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class ExcludeMocksAttribute : Attribute
+    {
+        public Type[] Types { get; set; }
+        public ExcludeMocksAttribute() { }
+        public ExcludeMocksAttribute(params Type[] types) => Types = types;
+    }
 }";
-            await AssertGeneration(generated, "SlowFox.UnitTestMocks.MSTest.Generators.InjectMocksAttribute.Generated.cs");
+            await AssertGeneration(generated, "SlowFox.UnitTestMocks.MSTest.Generators.Attributes.Generated.cs");
         }
 
         [Fact]

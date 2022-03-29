@@ -4,14 +4,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ExternalProject.Net6.UnitTestMocks.MSTest.Sample.Tests.DependencyTypeTests
 {
     [TestClass]
-    [SlowFox.InjectMocks(typeof(NonInterfaceDependency))]
-    public partial class NonInterfaceDependencyTests
+    [SlowFox.InjectMocks(typeof(IntDependency))]
+    public partial class IntDependencyTests
     {
         [TestMethod]
         public void Create_ObjectsExist()
         {
             const int index = 1001;
-            NonInterfaceDependency model = Create(index);
+            IntDependency model = Create(index);
 
             Assert.IsNotNull(model);
             Assert.IsNotNull(_userReader);

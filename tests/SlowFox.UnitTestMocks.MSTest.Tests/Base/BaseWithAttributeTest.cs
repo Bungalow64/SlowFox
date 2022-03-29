@@ -7,7 +7,7 @@ namespace SlowFox.UnitTestMocks.MSTest.Tests.Base
     public abstract class BaseWithAttributeTest<TGenerator1> : BaseMultiTest<TGenerator1, InjectMocksAttributeGenerator>
         where TGenerator1 : ISourceGenerator, new()
     {
-        private const string _expectedAttributeFileName = "SlowFox.UnitTestMocks.MSTest.Generators.InjectMocksAttribute.Generated.cs";
+        private const string _expectedAttributeFileName = "SlowFox.UnitTestMocks.MSTest.Generators.Attributes.Generated.cs";
         private const string _expectedAttributeContents = @"using System;
 
 namespace SlowFox
@@ -18,6 +18,14 @@ namespace SlowFox
         public Type Type { get; set; }
         public InjectMocksAttribute() { }
         public InjectMocksAttribute(Type type) => Type = type;
+    }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class ExcludeMocksAttribute : Attribute
+    {
+        public Type[] Types { get; set; }
+        public ExcludeMocksAttribute() { }
+        public ExcludeMocksAttribute(params Type[] types) => Types = types;
     }
 }";
         protected string ExpectedAttributeFileName => _expectedAttributeFileName;

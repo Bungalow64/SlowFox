@@ -1,7 +1,7 @@
 using ExternalProject.Net5.UnitTestMocks.MSTest.Sample.NamespaceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ExternalProject.Net5.UnitTestMocks.MSTest.Sample.MultipleDependenciesTests.Tests
+namespace ExternalProject.Net5.UnitTestMocks.MSTest.Sample.MultipleDependenciesTests
 {
     [SlowFox.InjectMocks(typeof(DuplicateDependency))]
     [TestClass]

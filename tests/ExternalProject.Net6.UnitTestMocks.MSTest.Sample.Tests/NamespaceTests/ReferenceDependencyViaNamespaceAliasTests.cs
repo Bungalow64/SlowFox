@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ExternalProject.Net6.UnitTestMocks.MSTest.Sample.NamespaceTests.Tests
+namespace ExternalProject.Net6.UnitTestMocks.MSTest.Sample.NamespaceTests
 {
     [SlowFox.InjectMocks(typeof(ReferenceDependencyViaNamespaceAlias))]
     [TestClass]

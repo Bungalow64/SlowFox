@@ -24,6 +24,8 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
         private const string NamespaceMoq = "Moq";
         private const string NamespaceMSTest = "Microsoft.VisualStudio.TestPlatform.TestFramework";
         private const string UnknownText = "Unknown";
+        private const string AttributeNamespace = "SlowFox";
+        private const string ExcludeMocksAttributeName = "ExcludeMocks";
 
         /// <inheritdoc/>
         public void Initialize(GeneratorInitializationContext context)
@@ -73,6 +75,41 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
                         continue;
                     }
 
+                    var excludedRawTypes = targetClass
+                        .Key
+                        .FindAttributes(semanticModel, AttributeNamespace, ExcludeMocksAttributeName)
+                        .Select(p => p.ArgumentList)
+                        .SelectMany(p => p.Arguments)
+                        .Select(p => p.Expression)
+                        .ToList();
+
+                    var excludedTypes = excludedRawTypes
+                        .OfType<TypeOfExpressionSyntax>()
+                        .Select(p => semanticModel.GetTypeInfo((IdentifierNameSyntax)p.Type).Type)
+                        .Where(p => !(p is null))
+                        .ToList();
+
+                    excludedTypes
+                        .AddRange(excludedRawTypes
+                        .OfType<ArrayCreationExpressionSyntax>()
+                        .SelectMany(p => p.Initializer.Expressions.OfType<TypeOfExpressionSyntax>())
+                        .Select(p => semanticModel.GetTypeInfo((IdentifierNameSyntax)p.Type).Type)
+                        .Where(p => !(p is null)));
+
+                    excludedTypes
+                        .AddRange(excludedRawTypes
+                        .OfType<ImplicitArrayCreationExpressionSyntax>()
+                        .SelectMany(p => p.Initializer.Expressions.OfType<TypeOfExpressionSyntax>())
+                        .Select(p => semanticModel.GetTypeInfo((IdentifierNameSyntax)p.Type).Type)
+                        .Where(p => !(p is null)));
+
+                    excludedTypes
+                        .AddRange(excludedRawTypes
+                        .OfType<ImplicitStackAllocArrayCreationExpressionSyntax>()
+                        .SelectMany(p => p.Initializer.Expressions.OfType<TypeOfExpressionSyntax>())
+                        .Select(p => semanticModel.GetTypeInfo((IdentifierNameSyntax)p.Type).Type)
+                        .Where(p => !(p is null)));
+
                     List<ParentNamespace> namespaceValues = targetType.Identifier.Parent.GetNamespace();
 
                     if (!(context.Compilation.GetSemanticModel(targetType.SyntaxTree).GetSymbolInfo(targetType).Symbol is INamedTypeSymbol targetSymbol))
@@ -107,16 +144,21 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
                     var fieldPrefix = config.SkipUnderscore ? string.Empty : "_";
                     string mockBehavior = config.UseLoose ? "Loose" : "Strict";
 
-                    string methodSignature = $"private {targetSymbol.ContainingNamespace}.{targetSymbol.Name} Create({string.Join(", ", types.Where(p => !p.type.CanBeMocked()).Select(p => $"{p.type} {p.parameterName}"))})";
-                    string methodBody = $"return new {targetSymbol.ContainingNamespace}.{targetSymbol.Name}({string.Join($", ", types.Select(p => p.type.CanBeMocked() ? $"{fieldPrefix}{p.parameterName}.Object" : $"{p.parameterName}"))});";
+                    bool isToBeMocked(ITypeSymbol type)
+                    {
+                        return type.CanBeMocked() && !excludedTypes.Contains(type);
+                    }
+
+                    string methodSignature = $"private {targetSymbol.ContainingNamespace}.{targetSymbol.Name} Create({string.Join(", ", types.Where(p => !isToBeMocked(p.type)).Select(p => $"{p.type} {p.parameterName}"))})";
+                    string methodBody = $"return new {targetSymbol.ContainingNamespace}.{targetSymbol.Name}({string.Join($", ", types.Select(p => isToBeMocked(p.type) ? $"{fieldPrefix}{p.parameterName}.Object" : $"{p.parameterName}"))});";
 
                     var newClass = new ClassWriter
                     {
                         UsingNamespaces = new List<string> { "using Microsoft.VisualStudio.TestTools.UnitTesting;", "using Moq;" },
                         Namespaces = namespaceValues,
                         ClassName = targetClass.Key.Identifier.Text,
-                        Members = types.Where(p => p.type.CanBeMocked()).Select(p => $"private Mock<{p.type}> {fieldPrefix}{p.parameterName};").ToList(),
-                        ParameterAssignments = types.Where(p => p.type.CanBeMocked()).Select(p => $"{fieldPrefix}{p.parameterName} = new Mock<{p.type}>(MockBehavior.{mockBehavior});").ToList(),
+                        Members = types.Where(p => isToBeMocked(p.type)).Select(p => $"private Mock<{p.type}> {fieldPrefix}{p.parameterName};").ToList(),
+                        ParameterAssignments = types.Where(p => isToBeMocked(p.type)).Select(p => $"{fieldPrefix}{p.parameterName} = new Mock<{p.type}>(MockBehavior.{mockBehavior});").ToList(),
                         ParentClasses = parentClasses,
                         Modifier = targetClass.Key.GetModifiers(),
                         MethodSignature = methodSignature,

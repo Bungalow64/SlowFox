@@ -2,12 +2,12 @@
 
 namespace ExternalProject.Net6.UnitTestMocks.MSTest.Sample.DependencyTypeTests;
 
-public class NonInterfaceDependency
+public class IntDependency
 {
     private readonly IUserReader _userReader;
     private readonly int _index;
 
-    public NonInterfaceDependency(IUserReader userReader, int index)
+    public IntDependency(IUserReader userReader, int index)
     {
         _userReader = userReader;
         _index = index;

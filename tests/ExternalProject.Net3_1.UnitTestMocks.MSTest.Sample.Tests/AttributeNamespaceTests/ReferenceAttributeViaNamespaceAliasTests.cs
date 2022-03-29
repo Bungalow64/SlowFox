@@ -2,7 +2,7 @@ using ExternalProject.Net3_1.UnitTestMocks.MSTest.Sample.NamespaceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using I = SlowFox;
 
-namespace ExternalProject.Net3_1.UnitTestMocks.MSTest.Sample.AttributeNamespaceTests.Tests
+namespace ExternalProject.Net3_1.UnitTestMocks.MSTest.Sample.AttributeNamespaceTests
 {
     [I.InjectMocks(typeof(ReferenceDependencyViaFullType))]
     [TestClass]

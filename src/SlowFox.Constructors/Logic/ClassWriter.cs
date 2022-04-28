@@ -1,4 +1,4 @@
-﻿using SlowFox.Constructors.Generators.Definitions;
+﻿using SlowFox.Constructors.Definitions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +8,13 @@ namespace SlowFox.Constructors.Logic
     internal class ClassWriter
     {
         public string ClassName { get; set; }
-        public List<ParentNamespace> Namespaces { get; set; }
-        public List<string> UsingNamespaces { get; set; }
-        public List<string> Parameters { get; set; }
-        public List<string> ParameterAssignments { get; set; }
-        public List<string> Members { get; set; }
+        public List<ParentNamespace> Namespaces { get; set; } = new List<ParentNamespace>();
+        public List<string> UsingNamespaces { get; set; } = new List<string>();
+        public List<string> Parameters { get; set; } = new List<string>();
+        public List<string> ParameterAssignments { get; set; } = new List<string>();
+        public List<string> Members { get; set; } = new List<string>();
         public bool IsNested => ParentClasses?.Any() ?? false;
-        public List<(string className, string modifiers)> ParentClasses { get; set; }
+        public List<(string className, string modifiers)> ParentClasses { get; set; } = new List<(string className, string modifiers)>();
         public string Modifier { get; set; }
 
         private string GetIndentation(int tabIndex) => string.Concat(Enumerable.Repeat("    ", tabIndex));

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SlowFox.Constructors.Logic;
 using System.Collections.Generic;
 
-namespace SlowFox.Constructors.Generators.Definitions
+namespace SlowFox.Constructors.Definitions
 {
     internal class TypeDetails
     {

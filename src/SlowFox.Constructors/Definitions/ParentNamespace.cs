@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SlowFox.Constructors.Generators.Definitions
+namespace SlowFox.Constructors.Definitions
 {
     internal class ParentNamespace
     {

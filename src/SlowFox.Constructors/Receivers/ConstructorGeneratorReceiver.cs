@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SlowFox.Constructors.Generators.Receivers
+namespace SlowFox.Constructors.Receivers
 {
     internal class ConstructorGeneratorReceiver : ISyntaxContextReceiver
     {

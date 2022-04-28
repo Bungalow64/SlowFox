@@ -24,7 +24,7 @@ namespace SlowFox
         public InjectDependenciesAttribute(params Type[] types) => Types = types;
     }
 }";
-            await AssertGeneration(generated, "InjectDependenciesAttribute.Generated.cs");
+            await AssertGeneration(generated, "SlowFox.Constructors.Generators.InjectDependenciesAttribute.Generated.cs");
         }
 
         [Fact]

@@ -1,0 +1,5 @@
+root = true
+
+[*.cs]
+slowfox_generation.unit_test_mocks.mstest.use_loose = true
+

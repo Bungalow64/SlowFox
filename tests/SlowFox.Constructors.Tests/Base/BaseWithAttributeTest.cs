@@ -7,7 +7,7 @@ namespace SlowFox.Constructors.Tests.Base
     public abstract class BaseWithAttributeTest<TGenerator1> : BaseMultiTest<TGenerator1, InjectDependenciesAttributeGenerator>
         where TGenerator1 : ISourceGenerator, new()
     {
-        private const string _expectedAttributeFileName = "InjectDependenciesAttribute.Generated.cs";
+        private const string _expectedAttributeFileName = "SlowFox.Constructors.Generators.InjectDependenciesAttribute.Generated.cs";
         private const string _expectedAttributeContents = @"using System;
 
 namespace SlowFox

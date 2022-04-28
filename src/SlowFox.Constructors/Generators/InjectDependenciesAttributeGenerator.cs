@@ -32,7 +32,7 @@ namespace SlowFox
     }
 }";
             context.AddSource(
-                "InjectDependenciesAttribute.Generated",
+                "SlowFox.Constructors.Generators.InjectDependenciesAttribute.Generated.cs",
                 SourceText.From(code, Encoding.UTF8)
             );
         }

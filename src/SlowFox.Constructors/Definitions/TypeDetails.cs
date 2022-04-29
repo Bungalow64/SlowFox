@@ -9,6 +9,7 @@ namespace SlowFox.Constructors.Definitions
     internal class TypeDetails
     {
         public string TypeName { get; set; }
+        public string ShortTypeName { get; set; }
         public string Name { get; set; }
         public bool IsNullable { get; set; }
         public bool RequiresPrefix => TypeName.Replace("?", "") == Name;
@@ -34,22 +35,23 @@ namespace SlowFox.Constructors.Definitions
             switch (typeSyntax)
             {
                 case IdentifierNameSyntax identifierNameSyntax:
-                    TypeName = identifierNameSyntax.Identifier.Text;
-                    Name = NameGenerator.GetName(TypeName, existingNames);
+                    ShortTypeName = identifierNameSyntax.Identifier.Text;
+                    Name = NameGenerator.GetName(ShortTypeName, existingNames);
                     break;
                 case NullableTypeSyntax nullableTypeSyntax:
-                    TypeName = nullableTypeSyntax.GetText().ToString();
-                    Name = NameGenerator.GetName(TypeName, existingNames);
+                    ShortTypeName = nullableTypeSyntax.GetText().ToString();
+                    Name = NameGenerator.GetName(ShortTypeName, existingNames);
                     break;
                 case QualifiedNameSyntax qualifiedNameSyntax:
-                    TypeName = qualifiedNameSyntax.GetText().ToString();
-                    Name = NameGenerator.GetName(TypeName, existingNames);
+                    ShortTypeName = qualifiedNameSyntax.GetText().ToString();
+                    Name = NameGenerator.GetName(ShortTypeName, existingNames);
                     break;
                 default:
-                    TypeName = typeSyntax.ToString();
+                    ShortTypeName = typeSyntax.ToString();
                     Name = typeSyntax.ToString();
                     break;
             }
+
             if (semanticModel != null)
             {
                 var type = semanticModel.GetTypeInfo(typeSyntax).Type;
@@ -58,6 +60,9 @@ namespace SlowFox.Constructors.Definitions
                 {
                     IsNullable = type.IsReferenceType;
                 }
+
+                //TypeName = type?.ToString() ?? ShortTypeName;
+                TypeName = ShortTypeName;
             }
         }
     }

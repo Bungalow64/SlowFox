@@ -18,6 +18,16 @@ namespace SlowFox.Constructors.Logic
                 typeName = typeName.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).Last();
             }
 
+            if (typeName == "I")
+            {
+                typeName = "i";
+            }
+
+            if (typeName.StartsWith("@", StringComparison.OrdinalIgnoreCase))
+            {
+                typeName = typeName.Trim('@');
+            }
+
             if (typeName.StartsWith("I", StringComparison.Ordinal))
             {
                 typeName = $"{typeName.Substring(1, typeName.Length - 1)}";

@@ -16,6 +16,7 @@ namespace SlowFox.Constructors.Logic
         public bool IsNested => ParentClasses?.Any() ?? false;
         public List<(string className, string modifiers)> ParentClasses { get; set; } = new List<(string className, string modifiers)>();
         public string Modifier { get; set; }
+        public List<(string type, string name, bool baseOnly)> BaseParameters { get; set; } = new List<(string type, string name, bool baseOnly)>();
 
         private string GetIndentation(int tabIndex) => string.Concat(Enumerable.Repeat("    ", tabIndex));
 
@@ -54,10 +55,22 @@ namespace SlowFox.Constructors.Logic
             string wrapStart = BuildWrapStart(nestedClassIndent);
             string wrapEnd = BuildWrapEnd(nestedClassIndent);
 
+            string baseClass = string.Empty;
+            string baseParameters = string.Empty;
+            if (BaseParameters.Any())
+            {
+                string join = Parameters.Any() ? ", " : string.Empty;
+                if (BaseParameters.Any(p => !p.baseOnly))
+                {
+                    baseParameters = $@"{string.Join(", ", BaseParameters.Where(p => !p.baseOnly).Select(p => $"{p.type} {p.name}"))}{join}";
+                }
+                baseClass = $" : base({string.Join(", ", BaseParameters.Select(p => p.name))})";
+            }
+
             string built = $@"{outerNamespaceList}{BuildNamespaceStart()}{wrapStart}{classIndent}    {Modifier} class {ClassName}
 {classIndent}    {{
 {propertyList}
-{classIndent}        public {ClassName}({parameterList})
+{classIndent}        public {ClassName}({baseParameters}{parameterList}){baseClass}
 {classIndent}        {{
 {assignments}
 {classIndent}        }}

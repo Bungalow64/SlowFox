@@ -143,6 +143,53 @@ namespace SlowFox.Constructors.Generators
                         .Select(p => p.ToFullString())
                         .ToList();
 
+                    var baseParameters = new List<BaseParameter>();
+
+                    if (!(targetClass.Key.BaseList is null))
+                    {
+                        foreach (var baseType in targetClass.Key.BaseList.Types)
+                        {
+                            var type = baseType.Type;
+
+                            var actualType = semanticModel.GetTypeInfo(type).Type;
+
+                            if (actualType is INamedTypeSymbol namedType)
+                            {
+                                var firstConstructor = namedType.InstanceConstructors.FirstOrDefault();
+
+                                if (!(firstConstructor is null))
+                                {
+                                    var parameters = firstConstructor.Parameters;
+
+                                    if (parameters.Any())
+                                    {
+                                        baseParameters = parameters.Select(p => new BaseParameter(p.Name, p.Type, false)).ToList();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    if (baseParameters.Any())
+                    {
+                        foreach (var type in types)
+                        {
+                            var actualType = semanticModel.GetTypeInfo(type).Type;
+
+                            if (!(actualType is null))
+                            {
+                                var matches = baseParameters.FirstOrDefault(p => !p.AlreadyParameter && SymbolEqualityComparer.Default.Equals(p.Type, actualType));
+
+                                if (!(matches is null))
+                                {
+                                    matches.AlreadyParameter = true;
+                                }
+                            }
+                        }
+                    }
+
                     List<ParentNamespace> namespaceValues = GetNamespace(targetClass.Key.Identifier.Parent);
                     List<(string className, string modifiers)> parentClasses = GetParentClasses(targetClass.Key.Identifier.Parent?.Parent);
 
@@ -184,7 +231,8 @@ namespace SlowFox.Constructors.Generators
                         Parameters = names.Select(p => $"{p.TypeName} {p.InputName}").ToList(),
                         ParameterAssignments = names.Select(p => $"{getConstructorFieldName(p)} = {p.InputName}{getNullCheck(p)};").ToList(),
                         ParentClasses = parentClasses,
-                        Modifier = GetModifiers(targetClass.Key)
+                        Modifier = GetModifiers(targetClass.Key),
+                        BaseParameters = baseParameters.Select(p => (p.Type.ToString(), p.Name, p.AlreadyParameter)).ToList()
                     };
 
                     SourceText sourceText = SourceText.From(newClass.Render(), Encoding.UTF8);
@@ -194,6 +242,20 @@ namespace SlowFox.Constructors.Generators
                 {
                     context.ReportDiagnostic(Diagnostic.Create(UnexpectedErrorDiagnostic, targetClass.Value.GetLocation(), targetClass.Key.Identifier.Value, ex.Message, ex.StackTrace));
                 }
+            }
+        }
+
+        private class BaseParameter
+        {
+            public string Name { get; set; }
+            public ITypeSymbol Type { get; set; }
+            public bool AlreadyParameter { get; set; }
+
+            public BaseParameter(string name, ITypeSymbol type, bool alreadyParameter)
+            {
+                Name = name;
+                Type = type;
+                AlreadyParameter = alreadyParameter;
             }
         }
     }

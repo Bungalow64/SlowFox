@@ -128,7 +128,7 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
                         context.ReportDiagnostic(Diagnostic.Create(Diagnostics.MissingDependencyDiagnostic, targetClass.Value.GetLocation(), targetClass.Key.Identifier.Value, NamespaceMSTest));
                     }
 
-                    ImmutableArray<IParameterSymbol> parameters = targetSymbol.Constructors.FirstOrDefault()?.Parameters ?? new ImmutableArray<IParameterSymbol>();
+                    ImmutableArray<IParameterSymbol> parameters = targetSymbol.InstanceConstructors.FirstOrDefault()?.Parameters ?? new ImmutableArray<IParameterSymbol>();
                     List<(string parameterName, ITypeSymbol type)> types = parameters.Select(p => (p.Name, p.Type)).ToList();
 
                     List<(string className, string modifiers)> parentClasses = targetClass.Key.Identifier.Parent?.Parent.GetParentClasses();

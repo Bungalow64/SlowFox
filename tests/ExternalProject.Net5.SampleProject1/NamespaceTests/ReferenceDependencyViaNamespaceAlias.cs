@@ -1,6 +1,6 @@
-﻿using I = ExternalProject.Net6.SampleProject1.InjectableDependencies;
+﻿using I = ExternalProject.Net5.SampleProject1.InjectableDependencies;
 
-namespace ExternalProject.Net6.SampleProject1.NamespaceTests
+namespace ExternalProject.Net5.SampleProject1.NamespaceTests
 {
     [SlowFox.InjectDependencies(typeof(I.IUserReader))]
     public partial class ReferenceDependencyViaNamespaceAlias

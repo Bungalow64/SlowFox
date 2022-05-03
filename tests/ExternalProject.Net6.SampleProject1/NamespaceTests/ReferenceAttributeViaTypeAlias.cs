@@ -6,5 +6,6 @@ namespace ExternalProject.Net6.SampleProject1.NamespaceTests
     [I.InjectDependencies(typeof(IUserReader))]
     public partial class ReferenceAttributeViaTypeAlias
     {
+        public IUserReader Dependency => _userReader;
     }
 }

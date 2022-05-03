@@ -3,7 +3,7 @@
 namespace ExternalProject.Net5.SampleProject1.NamespaceTests
 {
     [SlowFox.InjectDependencies(typeof(IUserReader))]
-    public partial class ReferenceAttributeViaFullType
+    public partial class ReferenceDependencyViaType
     {
         public IUserReader Dependency => _userReader;
     }

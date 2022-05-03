@@ -3,11 +3,11 @@
 namespace ExternalProject.Net6.SampleProject1.WithinFolder
 {
     [InjectDependencies(typeof(IDataReader))]
-    public partial class Class1
+    public partial class WithinFolderClass
     {
-        public static Class1 BuildSelf()
+        public static WithinFolderClass BuildSelf()
         {
-            return new Class1(null);
+            return new WithinFolderClass(null);
         }
     }
 

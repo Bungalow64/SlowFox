@@ -1804,5 +1804,48 @@ namespace Logic.Readers
 }";
         await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
     }
+
+    [Fact]
+    public async Task AbstractClass_WithAttribute_GenerateProtectedConstructor()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IDatabase))]
+    public abstract partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers
+{
+    public abstract partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        protected UserReader(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 }
 

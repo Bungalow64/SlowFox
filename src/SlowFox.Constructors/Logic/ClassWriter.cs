@@ -16,7 +16,10 @@ namespace SlowFox.Constructors.Logic
         public bool IsNested => ParentClasses?.Any() ?? false;
         public List<(string className, string modifiers)> ParentClasses { get; set; } = new List<(string className, string modifiers)>();
         public string Modifier { get; set; }
-        public List<(string type, string name, bool baseOnly)> BaseParameters { get; set; } = new List<(string type, string name, bool baseOnly)>();
+        public List<BaseParameter> BaseParameters { get; set; } = new List<BaseParameter>();
+        public bool GenerateProtectedConstructor { get; set; }
+        public string OutputName { get; set; }
+        public List<TypeDetails> ParameterTypes { get; set; } = new List<TypeDetails>();
 
         private string GetIndentation(int tabIndex) => string.Concat(Enumerable.Repeat("    ", tabIndex));
 
@@ -47,7 +50,7 @@ namespace SlowFox.Constructors.Logic
 
             if (propertyList.Length > 0)
             {
-                propertyList += Environment.NewLine;
+                propertyList = $"{Environment.NewLine}{propertyList}{Environment.NewLine}";
             }
 
             string parameterList = $@"{string.Join(", ", Parameters)}";
@@ -60,17 +63,18 @@ namespace SlowFox.Constructors.Logic
             if (BaseParameters.Any())
             {
                 string join = Parameters.Any() ? ", " : string.Empty;
-                if (BaseParameters.Any(p => !p.baseOnly))
+                if (BaseParameters.Any(p => !p.AlreadyParameter))
                 {
-                    baseParameters = $@"{string.Join(", ", BaseParameters.Where(p => !p.baseOnly).Select(p => $"{p.type} {p.name}"))}{join}";
+                    baseParameters = $@"{string.Join(", ", BaseParameters.Where(p => !p.AlreadyParameter).Select(p => $"{p.Type} {p.Name}"))}{join}";
                 }
-                baseClass = $" : base({string.Join(", ", BaseParameters.Select(p => p.name))})";
+                baseClass = $" : base({string.Join(", ", BaseParameters.Select(p => p.Name))})";
             }
 
+            string accessModifier = GenerateProtectedConstructor ? "protected" : "public";
+
             string built = $@"{outerNamespaceList}{BuildNamespaceStart()}{wrapStart}{classIndent}    {Modifier} class {ClassName}
-{classIndent}    {{
-{propertyList}
-{classIndent}        public {ClassName}({baseParameters}{parameterList}){baseClass}
+{classIndent}    {{{propertyList}
+{classIndent}        {accessModifier} {ClassName}({baseParameters}{parameterList}){baseClass}
 {classIndent}        {{
 {assignments}
 {classIndent}        }}

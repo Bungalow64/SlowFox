@@ -15,6 +15,7 @@ namespace SlowFox.Constructors.Definitions
         public bool RequiresPrefix => TypeName.Replace("?", "") == Name;
         public string InputName => RequiresPrefix ? $"@{Name}" : Name;
         public string FieldPrefix { get; set; }
+        public ITypeSymbol Type { get; set; }
         public string MemberName
         {
             get
@@ -54,11 +55,11 @@ namespace SlowFox.Constructors.Definitions
 
             if (semanticModel != null)
             {
-                var type = semanticModel.GetTypeInfo(typeSyntax).Type;
+                Type = semanticModel.GetTypeInfo(typeSyntax).Type;
 
-                if (type != null)
+                if (Type != null)
                 {
-                    IsNullable = type.IsReferenceType;
+                    IsNullable = Type.IsReferenceType;
                 }
 
                 //TypeName = type?.ToString() ?? ShortTypeName;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using SlowFox.Constructors.Generators;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SlowFox.Constructors.Tests.Base
@@ -25,15 +26,19 @@ namespace SlowFox
 
         protected Task AssertFullGeneration(string generatorOutput, string generatorFilename, params string[] code)
         {
-            return AssertGeneration(generatorOutput, _expectedAttributeContents, generatorFilename, _expectedAttributeFileName, code);
+            return AssertMultipleGenerations(new Dictionary<string, string> { { generatorFilename, generatorOutput } }, new Dictionary<string, string> { { _expectedAttributeFileName, _expectedAttributeContents } }, code);
         }
         protected Task AssertGenerationTwoOutputs(string generatorOutput1, string generatorFilename1, string generatorOutput2, string generatorFilename2, params string[] code)
         {
-            return AssertTwoGeneration(generatorOutput1, generatorOutput2, _expectedAttributeContents, generatorFilename1, generatorFilename2, _expectedAttributeFileName, code);
+            return AssertMultipleGenerations(new Dictionary<string, string> { { generatorFilename1, generatorOutput1 }, { generatorFilename2, generatorOutput2 } }, new Dictionary<string, string> { { _expectedAttributeFileName, _expectedAttributeContents } }, code);
         }
-        protected Task AssertNoGeneration(string code)
+        protected Task AssertNoGeneration(params string[] code)
         {
-            return AssertNoSecondaryGeneration(_expectedAttributeContents, _expectedAttributeFileName, code);
+            return AssertMultipleGenerations(new Dictionary<string, string>(), new Dictionary<string, string> { { _expectedAttributeFileName, _expectedAttributeContents } }, code);
+        }
+        protected Task AssertMultipleGenerations(IDictionary<string, string> primaryGeneratorOutputs, params string[] code)
+        {
+            return AssertMultipleGenerations(primaryGeneratorOutputs, new Dictionary<string, string> { { _expectedAttributeFileName, _expectedAttributeContents } }, code);
         }
     }
 }

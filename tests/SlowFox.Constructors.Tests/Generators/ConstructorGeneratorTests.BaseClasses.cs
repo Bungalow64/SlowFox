@@ -732,5 +732,185 @@ namespace Logic.Readers
             { "Logic.Readers.BaseReaderB.Generated.cs", generatedBaseReaderB }
         }, classFile1, classFile2);
     }
+
+    [Fact]
+    public async Task BaseClass_ActualNamespaces_GenerateConstructorWithMultipleDependencies()
+    {
+        var classFile1 =
+@"using ExternalProject.Net6.SampleProject1.InjectableDependencies;
+
+namespace ExternalProject.Net6.SampleProject1.BaseClasses
+{
+    public abstract class AbstractBaseClassWithMultipleDependencies
+    {
+        private readonly IUserReader _userReader;
+        private readonly IUserWriter _userWriter;
+
+        public AbstractBaseClassWithMultipleDependencies(IUserReader userReader, IUserWriter userWriter)
+        {
+            _userReader = userReader;
+            _userWriter = userWriter;
+        }
+
+        public IUserReader UserReader => _userReader;
+        public IUserWriter UserWriter => _userWriter;
+    }
+}";
+
+        var classFile2 =
+@"namespace ExternalProject.Net6.SampleProject1.BaseClasses
+{
+    [SlowFox.InjectDependencies(typeof(IDataReader))]
+    public partial class DerivedBaseClassWithMultipleDependencies : AbstractBaseClassWithMultipleDependencies
+    {
+        public IDataReader DataReader => _dataReader;
+    }
+}";
+
+        var classFile3 =
+@"namespace ExternalProject.Net6.SampleProject1.InjectableDependencies
+{
+    public interface IUserReader { }
+    public interface IUserWriter { }
+}";
+
+        var classFile4 =
+@"namespace ExternalProject.Net6.SampleProject1;
+
+public interface IDataReader { }
+";
+
+        var generatedDerivedBaseClassWithMultipleDependencies =
+@"namespace ExternalProject.Net6.SampleProject1.BaseClasses
+{
+    public partial class DerivedBaseClassWithMultipleDependencies
+    {
+        private readonly IDataReader _dataReader;
+
+        public DerivedBaseClassWithMultipleDependencies(ExternalProject.Net6.SampleProject1.InjectableDependencies.IUserReader userReader, ExternalProject.Net6.SampleProject1.InjectableDependencies.IUserWriter userWriter, IDataReader dataReader) : base(userReader, userWriter)
+        {
+            _dataReader = dataReader;
+        }
+    }
+}";
+
+        await AssertMultipleGenerations(new Dictionary<string, string>
+        {
+            { "ExternalProject.Net6.SampleProject1.BaseClasses.DerivedBaseClassWithMultipleDependencies.Generated.cs", generatedDerivedBaseClassWithMultipleDependencies }
+        }, classFile1, classFile2, classFile3, classFile4);
+    }
+
+    [Fact]
+    public async Task BaseClass_ActualNamespaces_MultipleDerivedTypes_GenerateConstructorWithMultipleDependencies()
+    {
+        var classFile1 =
+@"using ExternalProject.Net6.SampleProject1.InjectableDependencies;
+
+namespace ExternalProject.Net6.SampleProject1.BaseClasses
+{
+    public abstract class AbstractBaseClassWithMultipleDependencies
+    {
+        private readonly IUserReader _userReader;
+        private readonly IUserWriter _userWriter;
+
+        public AbstractBaseClassWithMultipleDependencies(IUserReader userReader, IUserWriter userWriter)
+        {
+            _userReader = userReader;
+            _userWriter = userWriter;
+        }
+
+        public IUserReader UserReader => _userReader;
+        public IUserWriter UserWriter => _userWriter;
+    }
+
+    [SlowFox.InjectDependencies(typeof(IUserWriter))]
+    public partial class DerivedBaseClassWithDeepMatchingDependency : DerivedBaseClassWithMultipleDependencies
+    {
+    }
+
+    [SlowFox.InjectDependencies(typeof(IDataReader2))]
+    public partial class DerivedNestedBaseClassWithDependency : DerivedBaseClassWithMultipleDependencies
+    {
+        public IDataReader2 DataReader2 => _dataReader2;
+    }
+}";
+
+        var classFile2 =
+@"namespace ExternalProject.Net6.SampleProject1.BaseClasses
+{
+    [SlowFox.InjectDependencies(typeof(IDataReader))]
+    public partial class DerivedBaseClassWithMultipleDependencies : AbstractBaseClassWithMultipleDependencies
+    {
+        public IDataReader DataReader => _dataReader;
+    }
+}";
+
+        var classFile3 =
+@"namespace ExternalProject.Net6.SampleProject1.InjectableDependencies
+{
+    public interface IUserReader { }
+    public interface IUserWriter { }
+}";
+
+        var classFile4 =
+@"namespace ExternalProject.Net6.SampleProject1;
+
+public interface IDataReader { }
+public interface IDataReader2 { }
+";
+
+        var generatedDerivedBaseClassWithDeepMatchingDependency =
+@"using ExternalProject.Net6.SampleProject1.InjectableDependencies;
+
+namespace ExternalProject.Net6.SampleProject1.BaseClasses
+{
+    public partial class DerivedBaseClassWithDeepMatchingDependency
+    {
+        private readonly IUserWriter _userWriter;
+
+        public DerivedBaseClassWithDeepMatchingDependency(ExternalProject.Net6.SampleProject1.InjectableDependencies.IUserReader userReader, ExternalProject.Net6.SampleProject1.IDataReader dataReader, IUserWriter userWriter) : base(userReader, userWriter, dataReader)
+        {
+            _userWriter = userWriter;
+        }
+    }
+}";
+
+        var generatedDerivedNestedBaseClassWithDependency =
+@"using ExternalProject.Net6.SampleProject1.InjectableDependencies;
+
+namespace ExternalProject.Net6.SampleProject1.BaseClasses
+{
+    public partial class DerivedNestedBaseClassWithDependency
+    {
+        private readonly IDataReader2 _dataReader2;
+
+        public DerivedNestedBaseClassWithDependency(ExternalProject.Net6.SampleProject1.InjectableDependencies.IUserReader userReader, ExternalProject.Net6.SampleProject1.InjectableDependencies.IUserWriter userWriter, ExternalProject.Net6.SampleProject1.IDataReader dataReader, IDataReader2 dataReader2) : base(userReader, userWriter, dataReader)
+        {
+            _dataReader2 = dataReader2;
+        }
+    }
+}";
+
+        var generatedDerivedBaseClassWithMultipleDependencies =
+@"namespace ExternalProject.Net6.SampleProject1.BaseClasses
+{
+    public partial class DerivedBaseClassWithMultipleDependencies
+    {
+        private readonly IDataReader _dataReader;
+
+        public DerivedBaseClassWithMultipleDependencies(ExternalProject.Net6.SampleProject1.InjectableDependencies.IUserReader userReader, ExternalProject.Net6.SampleProject1.InjectableDependencies.IUserWriter userWriter, IDataReader dataReader) : base(userReader, userWriter)
+        {
+            _dataReader = dataReader;
+        }
+    }
+}";
+
+        await AssertMultipleGenerations(new Dictionary<string, string>
+        {
+            { "ExternalProject.Net6.SampleProject1.BaseClasses.DerivedBaseClassWithDeepMatchingDependency.Generated.cs", generatedDerivedBaseClassWithDeepMatchingDependency },
+            { "ExternalProject.Net6.SampleProject1.BaseClasses.DerivedNestedBaseClassWithDependency.Generated.cs", generatedDerivedNestedBaseClassWithDependency },
+            { "ExternalProject.Net6.SampleProject1.BaseClasses.DerivedBaseClassWithMultipleDependencies.Generated.cs", generatedDerivedBaseClassWithMultipleDependencies }
+        }, classFile1, classFile2, classFile3, classFile4);
+    }
 }
 

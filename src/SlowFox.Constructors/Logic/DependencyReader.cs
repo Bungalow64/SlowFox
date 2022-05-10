@@ -36,7 +36,7 @@ namespace SlowFox.Constructors.Logic
                 {
                     List<TypeDetails> parameterTypes = baseTargetClass.GeneratedClass.ParameterTypes;
 
-                    baseParameters = baseTargetClass.GeneratedClass.BaseParameters.Union(parameterTypes.Select(p => new BaseParameter(p.Name, p.Type, false))).ToList();
+                    baseParameters = baseTargetClass.GeneratedClass.BaseParameters.Select(p => p.Clone()).Union(parameterTypes.Select(p => new BaseParameter(p.Name, p.Type, false))).ToList();
                 }
             }
             else if (!(classDeclaration.BaseList is null))

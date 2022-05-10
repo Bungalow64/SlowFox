@@ -1,4 +1,4 @@
-﻿namespace ExternalProject.Net5.SampleProject1.Others
+﻿namespace ExternalProject.Net5.SampleProject1
 {
     public interface IDataReader2 { }
 }

@@ -32,6 +32,12 @@
             <param name="type"></param>
             <param name="alreadyParameter"></param>
         </member>
+        <member name="M:SlowFox.Constructors.Definitions.BaseParameter.Clone">
+            <summary>
+            Clones the object
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:SlowFox.Constructors.Generators.ConstructorGenerator">
             <summary>
             Source generator for generating constructors

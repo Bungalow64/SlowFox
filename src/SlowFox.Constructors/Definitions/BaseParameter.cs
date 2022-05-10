@@ -32,5 +32,13 @@ namespace SlowFox.Constructors.Definitions
             Type = type;
             AlreadyParameter = alreadyParameter;
         }
+        /// <summary>
+        /// Clones the object
+        /// </summary>
+        /// <returns></returns>
+        public BaseParameter Clone()
+        {
+            return new BaseParameter(Name, Type, AlreadyParameter);
+        }
     }
 }

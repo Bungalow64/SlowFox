@@ -1,4 +1,4 @@
-﻿using SlowFox.UnitTestMocks.MSTest.Definitions;
+﻿using SlowFox.Core.Definitions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

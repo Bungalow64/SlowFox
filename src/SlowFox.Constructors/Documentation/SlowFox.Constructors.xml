@@ -4,40 +4,6 @@
         <name>SlowFox.Constructors</name>
     </assembly>
     <members>
-        <member name="T:SlowFox.Constructors.Definitions.BaseParameter">
-            <summary>
-            Defines a parameter used in a base class
-            </summary>
-        </member>
-        <member name="P:SlowFox.Constructors.Definitions.BaseParameter.Name">
-            <summary>
-            The name of the parameter
-            </summary>
-        </member>
-        <member name="P:SlowFox.Constructors.Definitions.BaseParameter.Type">
-            <summary>
-            The type of the parameter
-            </summary>
-        </member>
-        <member name="P:SlowFox.Constructors.Definitions.BaseParameter.AlreadyParameter">
-            <summary>
-            Whether the type already exists as a dependency in the parent class
-            </summary>
-        </member>
-        <member name="M:SlowFox.Constructors.Definitions.BaseParameter.#ctor(System.String,Microsoft.CodeAnalysis.ITypeSymbol,System.Boolean)">
-            <summary>
-            Creates a new instance
-            </summary>
-            <param name="name"></param>
-            <param name="type"></param>
-            <param name="alreadyParameter"></param>
-        </member>
-        <member name="M:SlowFox.Constructors.Definitions.BaseParameter.Clone">
-            <summary>
-            Clones the object
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:SlowFox.Constructors.Generators.ConstructorGenerator">
             <summary>
             Source generator for generating constructors
@@ -48,22 +14,6 @@
         </member>
         <member name="M:SlowFox.Constructors.Generators.ConstructorGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
             <inheritdoc/>
-        </member>
-        <member name="T:SlowFox.Constructors.Generators.InjectDependenciesAttributeGenerator">
-            <summary>
-            Source generator for generating the attribute to be used for identifying classes to have a constructor automatically generated
-            </summary>
-        </member>
-        <member name="M:SlowFox.Constructors.Generators.InjectDependenciesAttributeGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SlowFox.Constructors.Generators.InjectDependenciesAttributeGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
-            <inheritdoc/>
-        </member>
-        <member name="T:SlowFox.Constructors.Logic.DependencyReader">
-            <summary>
-            Detects details of all dependencies
-            </summary>
         </member>
     </members>
 </doc>

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SlowFox.Core</name>
+    </assembly>
+    <members>
+        <member name="T:SlowFox.InjectDependenciesAttribute">
+            <summary>
+            The attribute used to inject dependencies into a class
+            </summary>
+        </member>
+        <member name="P:SlowFox.InjectDependenciesAttribute.Types">
+            <summary>
+            The list of types to be injected
+            </summary>
+        </member>
+        <member name="M:SlowFox.InjectDependenciesAttribute.#ctor">
+            <summary>
+            The default constructor for the attribute, defining no types to be injected
+            </summary>
+        </member>
+        <member name="M:SlowFox.InjectDependenciesAttribute.#ctor(System.Type[])">
+            <summary>
+            The constructor for the attribute, defining one or more types to be injected
+            </summary>
+            <param name="types">The array of types to be injected</param>
+        </member>
+        <member name="T:SlowFox.Core.Definitions.BaseParameter">
+            <summary>
+            Defines a parameter used in a base class
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.BaseParameter.Name">
+            <summary>
+            The name of the parameter
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.BaseParameter.Type">
+            <summary>
+            The type of the parameter
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.BaseParameter.AlreadyParameter">
+            <summary>
+            Whether the type already exists as a dependency in the parent class
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.BaseParameter.#ctor(System.String,Microsoft.CodeAnalysis.ITypeSymbol,System.Boolean)">
+            <summary>
+            Creates a new instance
+            </summary>
+            <param name="name"></param>
+            <param name="type"></param>
+            <param name="alreadyParameter"></param>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.BaseParameter.Clone">
+            <summary>
+            Clones the object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SlowFox.Core.Definitions.ParentNamespace">
+            <summary>
+            The definition of a parent namespace
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.ParentNamespace.NamespaceName">
+            <summary>
+            The name of the namespace
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.ParentNamespace.UsingDirectives">
+            <summary>
+            The collection of using directives for the namespace
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.ParentNamespace.#ctor(Microsoft.CodeAnalysis.CSharp.Syntax.BaseNamespaceDeclarationSyntax)">
+            <summary>
+            Constructs a new <see cref="T:SlowFox.Core.Definitions.ParentNamespace"/> instance
+            </summary>
+            <param name="syntax"></param>
+        </member>
+        <member name="T:SlowFox.Core.Logic.DependencyReader">
+            <summary>
+            Detects details of all dependencies
+            </summary>
+        </member>
+        <member name="T:SlowFox.Core.Logic.NameGenerator">
+            <summary>
+            A static helper class to generate property and parameter names
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Logic.NameGenerator.GetName(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Gets the name based on the type provided
+            </summary>
+            <param name="typeName">The name of the type</param>
+            <param name="usedNames">The list of names already used, to avoid conflicts</param>
+            <returns>Returns the generated name</returns>
+        </member>
+    </members>
+</doc>

@@ -21,6 +21,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\SlowFox.Constructors\SlowFox.Constructors.csproj" />
+		<ProjectReference Include="..\SlowFox.Tests.Core\SlowFox.Tests.Core.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using SlowFox.UnitTestMocks.MSTest.Configuration;
-using SlowFox.UnitTestMocks.MSTest.Definitions;
+using SlowFox.Core.Definitions;
 using SlowFox.UnitTestMocks.MSTest.Extensions;
 using SlowFox.UnitTestMocks.MSTest.Logic;
 using SlowFox.UnitTestMocks.MSTest.Receivers;
@@ -36,13 +36,12 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
         /// <inheritdoc/>
         public void Execute(GeneratorExecutionContext context)
         {
-#if DEBUG
-            if (!System.Diagnostics.Debugger.IsAttached)
+            if (!(context.SyntaxContextReceiver is MockGeneratorReceiver syntaxReceiver))
             {
-                //System.Diagnostics.Debugger.Launch();
+                return;
             }
-#endif 
-            var syntaxReceiver = (MockGeneratorReceiver)context.SyntaxContextReceiver;
+
+            syntaxReceiver.ClassesToInject.Process(null, context, skipSourceGeneration: true);
 
             foreach (var targetClass in syntaxReceiver.ClassesToAugment)
             {
@@ -50,17 +49,30 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
                 {
                     var semanticModel = context.Compilation.GetSemanticModel(targetClass.Key.SyntaxTree);
 
-                    IdentifierNameSyntax targetType = targetClass
+                    TypeSyntax targetType = targetClass
                         .Value
                         .ArgumentList
                         ?.Arguments
                         .Select(p => p.Expression)
                         .OfType<TypeOfExpressionSyntax>()
                         .Select(p => p.Type)
-                        .OfType<IdentifierNameSyntax>()
                         .FirstOrDefault();
 
-                    if (targetType is null)
+
+                    List<ParentNamespace> namespaceValues;
+                    string typeName;
+
+                    if (targetType is IdentifierNameSyntax identifierNameSyntax)
+                    {
+                        namespaceValues = identifierNameSyntax.GetNamespace();
+                        typeName = identifierNameSyntax.Identifier.ToString();
+                    }
+                    else if (targetType is QualifiedNameSyntax qualifiedNameSyntax)
+                    {
+                        namespaceValues = qualifiedNameSyntax.GetNamespace();
+                        typeName = qualifiedNameSyntax.Right.Identifier.ToString();
+                    }
+                    else
                     {
                         var type = targetClass
                             .Value
@@ -71,7 +83,11 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
                             .Select(p => p.Type)
                             .FirstOrDefault();
 
-                        context.ReportDiagnostic(Diagnostic.Create(Diagnostics.NoTypeDiagnostic, targetClass.Value.GetLocation(), targetClass.Key.Identifier.Value, type?.Kind().ToString() ?? UnknownText));
+                        if (!(type is null))
+                        {
+                            context.ReportDiagnostic(Diagnostic.Create(Diagnostics.NoTypeDiagnostic, targetClass.Value.GetLocation(), targetClass.Key.Identifier.Value, type.Kind().ToString()));
+                        }
+
                         continue;
                     }
 
@@ -110,8 +126,6 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
                         .Select(p => semanticModel.GetTypeInfo((IdentifierNameSyntax)p.Type).Type)
                         .Where(p => !(p is null)));
 
-                    List<ParentNamespace> namespaceValues = targetType.Identifier.Parent.GetNamespace();
-
                     if (!(context.Compilation.GetSemanticModel(targetType.SyntaxTree).GetSymbolInfo(targetType).Symbol is INamedTypeSymbol targetSymbol))
                     {
                         context.ReportDiagnostic(Diagnostic.Create(Diagnostics.NoTypeDiagnostic, targetClass.Value.GetLocation(), targetClass.Key.Identifier.Value, targetType?.Kind().ToString() ?? UnknownText));
@@ -128,15 +142,35 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
                         context.ReportDiagnostic(Diagnostic.Create(Diagnostics.MissingDependencyDiagnostic, targetClass.Value.GetLocation(), targetClass.Key.Identifier.Value, NamespaceMSTest));
                     }
 
+                    List<(string parameterName, ITypeSymbol type)> types;
+
                     ImmutableArray<IParameterSymbol> parameters = targetSymbol.InstanceConstructors.FirstOrDefault()?.Parameters ?? new ImmutableArray<IParameterSymbol>();
-                    List<(string parameterName, ITypeSymbol type)> types = parameters.Select(p => (p.Name, p.Type)).ToList();
+                    types = parameters.Select(p => (p.Name, p.Type)).ToList();
+
+                    if (!types.Any())
+                    {
+                        var injectClass = syntaxReceiver.ClassesToInject.Classes.FirstOrDefault(p => p.Matches(semanticModel.GetTypeInfo(targetType).Type?.ToString()));
+                        if (!(injectClass is null))
+                        {
+                            types = injectClass.GeneratedClass.ParameterTypes.Select(p => (p.Name, p.Type)).ToList();
+                        }
+                    }
 
                     List<(string className, string modifiers)> parentClasses = targetClass.Key.Identifier.Parent?.Parent.GetParentClasses();
-                    string outputName = $"{targetClass.Key.Identifier.Text}";
+
                     if (parentClasses.Any())
                     {
                         parentClasses.Reverse();
-                        outputName = string.Join("-", parentClasses.Select(p => p.className)) + "-" + outputName;
+                    }
+
+                    string GenerateOutputName(string separator = "-")
+                    {
+                        string outputName = $"{targetClass.Key.Identifier.Text}";
+                        if (parentClasses.Any())
+                        {
+                            outputName = string.Join(separator, parentClasses.Select(p => p.className)) + separator + outputName;
+                        }
+                        return outputName;
                     }
 
                     var config = new CustomConfiguration(context, targetClass);
@@ -149,14 +183,14 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
                         return type.CanBeMocked() && !excludedTypes.Contains(type);
                     }
 
-                    string methodSignature = $"private {targetSymbol.ContainingNamespace}.{targetSymbol.Name} Create({string.Join(", ", types.Where(p => !isToBeMocked(p.type)).Select(p => $"{p.type} {p.parameterName}"))})";
-                    string methodBody = $"return new {targetSymbol.ContainingNamespace}.{targetSymbol.Name}({string.Join($", ", types.Select(p => isToBeMocked(p.type) ? $"{fieldPrefix}{p.parameterName}.Object" : $"{p.parameterName}"))});";
+                    string methodSignature = $"private {targetSymbol} Create({string.Join(", ", types.Where(p => !isToBeMocked(p.type)).Select(p => $"{p.type} {p.parameterName}"))})";
+                    string methodBody = $"return new {targetSymbol}({string.Join($", ", types.Select(p => isToBeMocked(p.type) ? $"{fieldPrefix}{p.parameterName}.Object" : $"{p.parameterName}"))});";
 
                     var newClass = new ClassWriter
                     {
                         UsingNamespaces = new List<string> { "using Microsoft.VisualStudio.TestTools.UnitTesting;", "using Moq;" },
                         Namespaces = namespaceValues,
-                        ClassName = targetClass.Key.Identifier.Text,
+                        ClassName = GenerateOutputName("."),
                         Members = types.Where(p => isToBeMocked(p.type)).Select(p => $"private Mock<{p.type}> {fieldPrefix}{p.parameterName};").ToList(),
                         ParameterAssignments = types.Where(p => isToBeMocked(p.type)).Select(p => $"{fieldPrefix}{p.parameterName} = new Mock<{p.type}>(MockBehavior.{mockBehavior});").ToList(),
                         ParentClasses = parentClasses,
@@ -167,7 +201,7 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
 
                     SourceText sourceText = SourceText.From(newClass.Render(), Encoding.UTF8);
 
-                    context.AddSource($"{string.Join(".", namespaceValues.Select(p => p.NamespaceName))}.{outputName}.Generated.cs", sourceText);
+                    context.AddSource($"{string.Join(".", namespaceValues.Select(p => p.NamespaceName))}.{GenerateOutputName()}.Generated.cs", sourceText);
                 }
                 catch (Exception ex)
                 {

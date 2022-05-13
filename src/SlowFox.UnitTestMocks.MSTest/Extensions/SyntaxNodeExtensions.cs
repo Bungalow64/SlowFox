@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using SlowFox.UnitTestMocks.MSTest.Definitions;
+using SlowFox.Core.Definitions;
 using System.Collections.Generic;
 
 namespace SlowFox.UnitTestMocks.MSTest.Extensions

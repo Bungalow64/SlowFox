@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using SlowFox.Constructors.Definitions;
-using SlowFox.Constructors.Logic;
+using SlowFox.Core.Definitions;
+using SlowFox.Core.Logic;
 
 namespace SlowFox.Constructors.Receivers
 {

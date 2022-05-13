@@ -23,6 +23,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\SlowFox.UnitTestMocks.MSTest\SlowFox.UnitTestMocks.MSTest.csproj" />
+		<ProjectReference Include="..\SlowFox.Tests.Core\SlowFox.Tests.Core.csproj" />
 	</ItemGroup>
 
 </Project>

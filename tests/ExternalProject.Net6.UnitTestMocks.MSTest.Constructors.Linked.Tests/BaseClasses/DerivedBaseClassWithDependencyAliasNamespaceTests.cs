@@ -1,4 +1,4 @@
-﻿using ExternalProject.Net6.SampleProject1.BaseClasses;
+﻿using ExternalProject.Net6.Constructors.Sample.BaseClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExternalProject.Net6.UnitTestMocks.MSTest.Constructors.Linked.Tests.BaseClasses

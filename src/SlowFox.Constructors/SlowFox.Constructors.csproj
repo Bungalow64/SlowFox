@@ -6,7 +6,7 @@
 		<RootNamespace>SlowFox.Constructors</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
-		<Version>0.1.26</Version>
+		<Version>0.1.27</Version>
 		<Authors>Bungalow64</Authors>
 		<Company>Bungalow64 Technologies Ltd</Company>
 		<Product>SlowFox Constructor Generation</Product>
@@ -50,6 +50,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\SlowFox.Core\SlowFox.Core.csproj"/>
+	  <ProjectReference Include="..\SlowFox.Core\SlowFox.Core.csproj" />
 	</ItemGroup>
 </Project>

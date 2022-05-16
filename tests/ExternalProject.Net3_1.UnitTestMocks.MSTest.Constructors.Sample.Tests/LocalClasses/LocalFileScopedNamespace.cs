@@ -1,4 +1,4 @@
-﻿using ExternalProject.Net3_1.SampleProject1;
+﻿using ExternalProject.Net3_1.Constructors.Sample;
 
 namespace ExternalProject.Net3_1.UnitTestMocks.MSTest.Constructors.Sample.Tests.LocalClasses
 {

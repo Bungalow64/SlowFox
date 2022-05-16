@@ -1,8 +1,11 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using SlowFox.Core.Configuration.Abstract;
+using SlowFox.Core.Configuration.Constructors;
 using SlowFox.Core.Definitions;
-using System;
+using SlowFox.Core.Extensions;
+using SlowFox.Core.Logic.Constructor;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,12 +21,9 @@ namespace SlowFox.Core.Logic
         private const string InjectableClassAttributeName2 = "SlowFox.InjectDependencies";
         private const string InjectableClassAttributeName3 = "InjectDependencies";
 
-        public static ClassWriter Read(GeneratorExecutionContext context, ClassDeclarationSyntax classDeclaration, AttributeSyntax attribute, TargetClass baseTargetClass)
+        public static ClassWriter Read(GeneratorExecutionContext context, IDiagnosticGenerator diagnosticGenerator, ClassDeclarationSyntax classDeclaration, AttributeSyntax attribute, TargetClass baseTargetClass)
         {
             var semanticModel = context.Compilation.GetSemanticModel(classDeclaration.SyntaxTree);
-
-            bool skipUnderscore = false;
-            bool includeNullCheck = false;
 
             var baseParameters = new List<BaseParameter>();
 
@@ -96,18 +96,7 @@ namespace SlowFox.Core.Logic
                 }
             }
 
-            var options = context.AnalyzerConfigOptions.GetOptions(classDeclaration.SyntaxTree);
-            if (options != null)
-            {
-                if (options.TryGetValue($"{RootConfig}skip_underscores", out string skipUnderscoreValue))
-                {
-                    skipUnderscore = skipUnderscoreValue.Equals("true", StringComparison.OrdinalIgnoreCase);
-                }
-                if (options.TryGetValue($"{RootConfig}include_nullcheck", out string includeNullcheckValue))
-                {
-                    includeNullCheck = includeNullcheckValue.Equals("true", StringComparison.OrdinalIgnoreCase);
-                }
-            }
+            var config = new CustomConfiguration(context, RootConfig, classDeclaration, attribute, diagnosticGenerator);
 
             List<string> namespaces =
                 classDeclaration.SyntaxTree
@@ -118,10 +107,10 @@ namespace SlowFox.Core.Logic
                 .Select(p => p.ToFullString())
                 .ToList();
 
-            List<ParentNamespace> namespaceValues = GetNamespace(classDeclaration.Identifier.Parent);
-            List<(string className, string modifiers)> parentClasses = GetParentClasses(classDeclaration.Identifier.Parent?.Parent);
+            List<ParentNamespace> namespaceValues = classDeclaration.Identifier.Parent.GetNamespace();
+            List<(string className, string modifiers)> parentClasses = classDeclaration.Identifier.Parent?.Parent.GetParentClasses();
 
-            var fieldPrefix = skipUnderscore ? string.Empty : "_";
+            var fieldPrefix = config.SkipUnderscore ? string.Empty : "_";
             var usedNames = new List<string>();
             var names = types.Select(p => new TypeDetails(semanticModel, p, usedNames, fieldPrefix)).ToList();
 
@@ -136,7 +125,7 @@ namespace SlowFox.Core.Logic
             string getNullCheck(TypeDetails typeDetails)
             {
                 var nullCheck = "";
-                if (includeNullCheck && typeDetails.IsNullable)
+                if (config.IncludeNullCheck && typeDetails.IsNullable)
                 {
                     nullCheck = $" ?? throw new System.ArgumentNullException(nameof({typeDetails.Name}))";
                 }
@@ -167,7 +156,7 @@ namespace SlowFox.Core.Logic
                 Parameters = names.Select(p => $"{p.TypeName} {p.InputName}").ToList(),
                 ParameterAssignments = names.Select(p => $"{getConstructorFieldName(p)} = {p.InputName}{getNullCheck(p)};").ToList(),
                 ParentClasses = parentClasses,
-                Modifier = GetModifiers(classDeclaration),
+                Modifier = classDeclaration.GetModifiers(),
                 BaseParameters = baseParameters,
                 GenerateProtectedConstructor = classDeclaration.Modifiers.Any(p => p.Value?.Equals("abstract") ?? false),
                 OutputName = $"{string.Join(".", namespaceValues.Select(p => p.NamespaceName))}.{GenerateOutputName()}.Generated.cs",
@@ -218,53 +207,6 @@ namespace SlowFox.Core.Logic
             }
 
             return (null, null, null);
-        }
-
-        private static List<ParentNamespace> GetNamespace(SyntaxNode parent)
-        {
-            List<ParentNamespace> namespaces = new List<ParentNamespace>();
-
-            while (parent != null)
-            {
-                if (parent is BaseNamespaceDeclarationSyntax namespaceDeclaration)
-                {
-                    namespaces.Add(new ParentNamespace(namespaceDeclaration));
-                }
-                parent = parent.Parent;
-            }
-
-            namespaces.Reverse();
-            return namespaces;
-        }
-
-        private static string GetModifiers(ClassDeclarationSyntax classDeclarationSyntax)
-        {
-            string modifier = string.Empty;
-            if (classDeclarationSyntax != null && classDeclarationSyntax.Modifiers != null && classDeclarationSyntax.Modifiers.Any())
-            {
-                modifier = string.Join(" ", classDeclarationSyntax.Modifiers.Select(p => p.Text));
-            }
-            if (modifier.IndexOf("partial") < 1)
-            {
-                modifier += " partial";
-            }
-            return modifier;
-        }
-
-        private static List<(string className, string modifiers)> GetParentClasses(SyntaxNode parent)
-        {
-            var names = new List<(string className, string modifiers)>();
-
-            while (parent != null && !(parent is NamespaceDeclarationSyntax))
-            {
-                if (parent is ClassDeclarationSyntax classDeclarationSyntax)
-                {
-                    names.Add((classDeclarationSyntax.Identifier.Text, GetModifiers(classDeclarationSyntax)));
-                }
-                parent = parent.Parent;
-            }
-
-            return names;
         }
     }
 }

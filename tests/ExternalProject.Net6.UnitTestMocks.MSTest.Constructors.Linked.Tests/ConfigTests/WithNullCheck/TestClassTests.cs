@@ -1,4 +1,4 @@
-﻿using ExternalProject.Net6.SampleProject1.ConfigTests.WithNullCheck;
+﻿using ExternalProject.Net6.Constructors.Sample.ConfigTests.WithNullCheck;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExternalProject.Net6.UnitTestMocks.MSTest.Constructors.Linked.Tests.ConfigTests.WithNullCheck

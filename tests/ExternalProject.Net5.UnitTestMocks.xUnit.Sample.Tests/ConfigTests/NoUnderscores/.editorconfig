@@ -1,0 +1,5 @@
+root = true
+
+[*.cs]
+slowfox_generation.unit_test_mocks.xunit.skip_underscores = true
+

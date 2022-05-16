@@ -35,6 +35,10 @@ namespace SlowFox.Tests.Core.Base
         {
             return AssertGeneration(primaryGeneratorOutputs, AppendAttribute(code));
         }
+        protected Task AssertGenerationWithConfig(string generatorOutput, string generatorFilename, string config, params string[] code)
+        {
+            return AssertGenerationWithConfig(new Dictionary<string, string> { { generatorFilename, generatorOutput } }, config, AppendAttribute(code));
+        }
 
         private string[] AppendAttribute(string[] code)
         {

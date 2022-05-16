@@ -31,10 +31,20 @@ namespace SlowFox.Tests.Core.Base
 
         protected Task AssertGeneration(IDictionary<string, string> primaryGeneratorOutputs, params string[] code)
         {
-            return AssertGeneration(primaryGeneratorOutputs, Array.Empty<DiagnosticResult>(), code);
+            return AssertGeneration(primaryGeneratorOutputs, null, Array.Empty<DiagnosticResult>(), code);
         }
 
-        protected async Task AssertGeneration(IDictionary<string, string> primaryGeneratorOutputs, DiagnosticResult[] expectedDiagnostics, params string[] code)
+        protected Task AssertGenerationWithConfig(IDictionary<string, string> primaryGeneratorOutputs, string config, params string[] code)
+        {
+            return AssertGeneration(primaryGeneratorOutputs, config, Array.Empty<DiagnosticResult>(), code);
+        }
+
+        protected Task AssertGeneration(IDictionary<string, string> primaryGeneratorOutputs, DiagnosticResult[] expectedDiagnostics, params string[] code)
+        {
+            return AssertGeneration(primaryGeneratorOutputs, null, expectedDiagnostics, code);
+        }
+
+        protected async Task AssertGeneration(IDictionary<string, string> primaryGeneratorOutputs, string config, DiagnosticResult[] expectedDiagnostics, params string[] code)
         {
             var tester = new CSharpSourceGeneratorVerifier<TGenerator>.Test();
             foreach (string codeItem in code)
@@ -49,9 +59,14 @@ namespace SlowFox.Tests.Core.Base
             {
                 tester.TestState.AdditionalReferences.Add(MetadataReference.CreateFromFile(reference));
             }
-            foreach(var diagnostic in expectedDiagnostics)
+            foreach (var diagnostic in expectedDiagnostics)
             {
                 tester.TestState.ExpectedDiagnostics.Add(diagnostic);
+            }
+
+            if (config is not null)
+            {
+                tester.TestState.AnalyzerConfigFiles.Add(("/.editorconfig", config));
             }
 
             await tester.RunAsync();

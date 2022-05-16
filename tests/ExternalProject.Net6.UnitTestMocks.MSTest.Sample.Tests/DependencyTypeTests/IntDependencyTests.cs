@@ -1,4 +1,4 @@
-﻿using ExternalProject.Net6.UnitTestMocks.MSTest.Sample.DependencyTypeTests;
+﻿using ExternalProject.Net6.UnitTestMocks.Sample.DependencyTypeTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExternalProject.Net6.UnitTestMocks.MSTest.Sample.Tests.DependencyTypeTests

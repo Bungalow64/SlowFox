@@ -1,5 +1,5 @@
-using ExternalProject.Net5.UnitTestMocks.MSTest.Sample.InjectableDependencies;
-using ExternalProject.Net5.UnitTestMocks.MSTest.Sample.NamespaceTests;
+using ExternalProject.Net5.UnitTestMocks.Sample.InjectableDependencies;
+using ExternalProject.Net5.UnitTestMocks.Sample.MultipleDependenciesTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 

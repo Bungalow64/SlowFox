@@ -9,11 +9,5 @@
             Source generator for generating mocks
             </summary>
         </member>
-        <member name="M:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
-            <inheritdoc/>
-        </member>
     </members>
 </doc>

@@ -1,4 +1,4 @@
-﻿using ExternalProject.Net5.SampleProject1.NamespaceTests;
+﻿using ExternalProject.Net5.Constructors.Sample.NamespaceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExternalProject.Net5.UnitTestMocks.MSTest.Constructors.Linked.Tests.NamespaceTests

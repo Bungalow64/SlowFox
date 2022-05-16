@@ -7,13 +7,13 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
 		<PackageReference Include="MSTest.TestAdapter" Version="2.2.7" />
-		<PackageReference Include="MSTest.TestFramework" Version="2.2.7" />
+		<PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
 		<PackageReference Include="coverlet.collector" Version="3.1.0" />
 		<PackageReference Include="SlowFox.UnitTestMocks.MSTest" Version="0.*-*" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ExternalProject.Net5.SampleProject1\ExternalProject.Net5.SampleProject1.csproj" />
+	  <ProjectReference Include="..\ExternalProject.Net5.Constructors.Sample\ExternalProject.Net5.Constructors.Sample.csproj" />
 	</ItemGroup>
 
 </Project>

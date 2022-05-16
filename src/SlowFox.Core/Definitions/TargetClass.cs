@@ -1,6 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using SlowFox.Core.Configuration.Abstract;
 using SlowFox.Core.Logic;
+using SlowFox.Core.Logic.Constructor;
 
 namespace SlowFox.Core.Definitions
 {
@@ -40,7 +42,7 @@ namespace SlowFox.Core.Definitions
             BaseType = baseType;
         }
 
-        internal void Process(GeneratorExecutionContext context, TargetClasses classes)
+        internal void Process(GeneratorExecutionContext context, IDiagnosticGenerator diagnosticGenerator, TargetClasses classes)
         {
             if (!IsPending || IsProcessing)
             {
@@ -53,11 +55,11 @@ namespace SlowFox.Core.Definitions
                 if (!(BaseClass is null))
                 {
                     IsProcessing = true;
-                    BaseClass.Process(context, classes);
+                    BaseClass.Process(context, diagnosticGenerator, classes);
                 }
             }
 
-            GeneratedClass = DependencyReader.Read(context, ClassDeclarationSyntax, AttributeSyntax, BaseClass);
+            GeneratedClass = DependencyReader.Read(context, diagnosticGenerator, ClassDeclarationSyntax, AttributeSyntax, BaseClass);
             IsPending = false;
         }
     }

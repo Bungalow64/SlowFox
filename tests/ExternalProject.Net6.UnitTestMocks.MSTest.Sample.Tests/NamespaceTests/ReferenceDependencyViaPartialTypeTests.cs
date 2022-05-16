@@ -1,3 +1,4 @@
+using ExternalProject.Net6.UnitTestMocks.Sample.NamespaceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExternalProject.Net6.UnitTestMocks.MSTest.Sample.NamespaceTests

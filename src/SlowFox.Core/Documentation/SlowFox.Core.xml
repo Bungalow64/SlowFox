@@ -98,5 +98,11 @@
             <param name="usedNames">The list of names already used, to avoid conflicts</param>
             <returns>Returns the generated name</returns>
         </member>
+        <member name="M:SlowFox.Core.UnitTestMocks.Generators.BaseMockGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SlowFox.Core.UnitTestMocks.Generators.BaseMockGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
+            <inheritdoc/>
+        </member>
     </members>
 </doc>

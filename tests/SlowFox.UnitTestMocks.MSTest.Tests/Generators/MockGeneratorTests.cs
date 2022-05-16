@@ -888,4 +888,256 @@ namespace Logic.Readers.Tests
 
         await AssertFullGeneration(generated, "Logic.Readers.Tests.InnerClassTests.Generated.cs", expectedDiagnostic, classFile1, classFile2);
     }
+
+    [Fact]
+    public async Task Class_WithSkipUnderscoreFalse_GenerateWithUnderscores()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers.Tests
+{
+    [InjectMocks(typeof(UserReader))]
+    public partial class UserReaderTests { }
+}
+
+namespace Logic.IO
+{
+    public class UserReader
+    {
+        private readonly IDatabase _database;
+        private readonly IFileReader _fileReader;
+
+        public UserReader(IDatabase database, IFileReader fileReader)
+        {
+            _database = database;
+            _fileReader = fileReader;
+        }
+    }
+
+    public interface IDatabase { }
+    public interface IFileReader { }
+}";
+
+        var config =
+@"
+is_global = true
+slowfox_generation.unit_test_mocks.mstest.skip_underscores = false
+";
+        var generated =
+@"using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+
+namespace Logic.Readers.Tests
+{
+    public partial class UserReaderTests
+    {
+        private Mock<Logic.IO.IDatabase> _database;
+        private Mock<Logic.IO.IFileReader> _fileReader;
+
+        [TestInitialize]
+        public void Init()
+        {
+            _database = new Mock<Logic.IO.IDatabase>(MockBehavior.Strict);
+            _fileReader = new Mock<Logic.IO.IFileReader>(MockBehavior.Strict);
+        }
+
+        private Logic.IO.UserReader Create()
+        {
+            return new Logic.IO.UserReader(_database.Object, _fileReader.Object);
+        }
+    }
+}";
+        await AssertGenerationWithConfig(generated, "Logic.Readers.Tests.UserReaderTests.Generated.cs", config, classFile1);
+    }
+
+    [Fact]
+    public async Task Class_WithSkipUnderscoreTrue_GenerateWithoutUnderscores()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers.Tests
+{
+    [InjectMocks(typeof(UserReader))]
+    public partial class UserReaderTests { }
+}
+
+namespace Logic.IO
+{
+    public class UserReader
+    {
+        private readonly IDatabase _database;
+        private readonly IFileReader _fileReader;
+
+        public UserReader(IDatabase database, IFileReader fileReader)
+        {
+            _database = database;
+            _fileReader = fileReader;
+        }
+    }
+
+    public interface IDatabase { }
+    public interface IFileReader { }
+}";
+
+        var config =
+@"
+is_global = true
+slowfox_generation.unit_test_mocks.mstest.skip_underscores = true
+";
+        var generated =
+@"using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+
+namespace Logic.Readers.Tests
+{
+    public partial class UserReaderTests
+    {
+        private Mock<Logic.IO.IDatabase> database;
+        private Mock<Logic.IO.IFileReader> fileReader;
+
+        [TestInitialize]
+        public void Init()
+        {
+            database = new Mock<Logic.IO.IDatabase>(MockBehavior.Strict);
+            fileReader = new Mock<Logic.IO.IFileReader>(MockBehavior.Strict);
+        }
+
+        private Logic.IO.UserReader Create()
+        {
+            return new Logic.IO.UserReader(database.Object, fileReader.Object);
+        }
+    }
+}";
+        await AssertGenerationWithConfig(generated, "Logic.Readers.Tests.UserReaderTests.Generated.cs", config, classFile1);
+    }
+
+    [Fact]
+    public async Task Class_WithUseLooseFalse_GenerateAsStrict()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers.Tests
+{
+    [InjectMocks(typeof(UserReader))]
+    public partial class UserReaderTests { }
+}
+
+namespace Logic.IO
+{
+    public class UserReader
+    {
+        private readonly IDatabase _database;
+        private readonly IFileReader _fileReader;
+
+        public UserReader(IDatabase database, IFileReader fileReader)
+        {
+            _database = database;
+            _fileReader = fileReader;
+        }
+    }
+
+    public interface IDatabase { }
+    public interface IFileReader { }
+}";
+
+        var config =
+@"
+is_global = true
+slowfox_generation.unit_test_mocks.mstest.use_loose = false
+";
+        var generated =
+@"using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+
+namespace Logic.Readers.Tests
+{
+    public partial class UserReaderTests
+    {
+        private Mock<Logic.IO.IDatabase> _database;
+        private Mock<Logic.IO.IFileReader> _fileReader;
+
+        [TestInitialize]
+        public void Init()
+        {
+            _database = new Mock<Logic.IO.IDatabase>(MockBehavior.Strict);
+            _fileReader = new Mock<Logic.IO.IFileReader>(MockBehavior.Strict);
+        }
+
+        private Logic.IO.UserReader Create()
+        {
+            return new Logic.IO.UserReader(_database.Object, _fileReader.Object);
+        }
+    }
+}";
+        await AssertGenerationWithConfig(generated, "Logic.Readers.Tests.UserReaderTests.Generated.cs", config, classFile1);
+    }
+
+    [Fact]
+    public async Task Class_WithUseLooseTrue_GenerateAsLoose()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers.Tests
+{
+    [InjectMocks(typeof(UserReader))]
+    public partial class UserReaderTests { }
+}
+
+namespace Logic.IO
+{
+    public class UserReader
+    {
+        private readonly IDatabase _database;
+        private readonly IFileReader _fileReader;
+
+        public UserReader(IDatabase database, IFileReader fileReader)
+        {
+            _database = database;
+            _fileReader = fileReader;
+        }
+    }
+
+    public interface IDatabase { }
+    public interface IFileReader { }
+}";
+
+        var config =
+@"
+is_global = true
+slowfox_generation.unit_test_mocks.mstest.use_loose = true
+";
+        var generated =
+@"using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+
+namespace Logic.Readers.Tests
+{
+    public partial class UserReaderTests
+    {
+        private Mock<Logic.IO.IDatabase> _database;
+        private Mock<Logic.IO.IFileReader> _fileReader;
+
+        [TestInitialize]
+        public void Init()
+        {
+            _database = new Mock<Logic.IO.IDatabase>(MockBehavior.Loose);
+            _fileReader = new Mock<Logic.IO.IFileReader>(MockBehavior.Loose);
+        }
+
+        private Logic.IO.UserReader Create()
+        {
+            return new Logic.IO.UserReader(_database.Object, _fileReader.Object);
+        }
+    }
+}";
+        await AssertGenerationWithConfig(generated, "Logic.Readers.Tests.UserReaderTests.Generated.cs", config, classFile1);
+    }
 }

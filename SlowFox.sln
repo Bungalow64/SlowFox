@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Constructors", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Constructors.Tests", "tests\SlowFox.Constructors.Tests\SlowFox.Constructors.Tests.csproj", "{CE642FBB-60B4-43B9-9ADE-83C1341FC523}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.SampleProject1", "tests\ExternalProject.Net5.SampleProject1\ExternalProject.Net5.SampleProject1.csproj", "{1AEBC9D4-B627-4215-B4BE-9D8714E9196C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.Constructors.Sample", "tests\ExternalProject.Net5.Constructors.Sample\ExternalProject.Net5.Constructors.Sample.csproj", "{1AEBC9D4-B627-4215-B4BE-9D8714E9196C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Generators", "1.Generators", "{95A76331-56BB-410B-BE6C-67035E2F0EDC}"
 EndProject
@@ -17,11 +17,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.NuGet", "1.NuGet", "{E646
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.SampleSolutions", "3.SampleSolutions", "{0FAB3773-CADC-4721-9A6F-E1885E3FF208}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.SampleProject1.Tests", "tests\ExternalProject.Net5.SampleProject1.Tests\ExternalProject.Net5.SampleProject1.Tests.csproj", "{0C23F7DC-7AF0-4F02-BAC2-62FCF69E1C4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.Constructors.Sample.Tests", "tests\ExternalProject.Net5.Constructors.Sample.Tests\ExternalProject.Net5.Constructors.Sample.Tests.csproj", "{0C23F7DC-7AF0-4F02-BAC2-62FCF69E1C4C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.SampleProject1", "tests\ExternalProject.Net6.SampleProject1\ExternalProject.Net6.SampleProject1.csproj", "{867AC94D-0C2D-439A-BFA2-F8AB0A5CB0A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.Constructors.Sample", "tests\ExternalProject.Net6.Constructors.Sample\ExternalProject.Net6.Constructors.Sample.csproj", "{867AC94D-0C2D-439A-BFA2-F8AB0A5CB0A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.SampleProject1.Tests", "tests\ExternalProject.Net6.SampleProject1.Tests\ExternalProject.Net6.SampleProject1.Tests.csproj", "{4CE5AFB2-EE1D-465D-B28A-CA38D21478DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.Constructors.Sample.Tests", "tests\ExternalProject.Net6.Constructors.Sample.Tests\ExternalProject.Net6.Constructors.Sample.Tests.csproj", "{4CE5AFB2-EE1D-465D-B28A-CA38D21478DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net5", "Net5", "{1D82D6CF-3080-4A5D-BCA9-B45370AD7EDF}"
 EndProject
@@ -29,9 +29,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net6", "Net6", "{7967BA9B-7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net3.1", "Net3.1", "{5196FD4E-F414-465C-96DD-5C0CADFD0ED7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.SampleProject1", "tests\ExternalProject.Net3_1.SampleProject1\ExternalProject.Net3_1.SampleProject1.csproj", "{0FBE39EE-C787-4622-BC73-94540BF8E189}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.Constructors.Sample", "tests\ExternalProject.Net3_1.Constructors.Sample\ExternalProject.Net3_1.Constructors.Sample.csproj", "{0FBE39EE-C787-4622-BC73-94540BF8E189}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.SampleProject1.Tests", "tests\ExternalProject.Net3_1.SampleProject1.Tests\ExternalProject.Net3_1.SampleProject1.Tests.csproj", "{950B198D-8935-4B2E-B6BA-3ACEACC5839C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.Constructors.Sample.Tests", "tests\ExternalProject.Net3_1.Constructors.Sample.Tests\ExternalProject.Net3_1.Constructors.Sample.Tests.csproj", "{950B198D-8935-4B2E-B6BA-3ACEACC5839C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.UnitTestMocks.MSTest", "src\SlowFox.UnitTestMocks.MSTest\SlowFox.UnitTestMocks.MSTest.csproj", "{2AEBCD23-071E-4AD8-A5C6-DE418446D035}"
 EndProject
@@ -45,21 +45,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net6", "Net6", "{3464D1F5-F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.UnitTestMocks.MSTest.Sample.Tests", "tests\ExternalProject.Net6.UnitTestMocks.MSTest.Sample.Tests\ExternalProject.Net6.UnitTestMocks.MSTest.Sample.Tests.csproj", "{3DCB4566-6E1D-4E93-8007-05A8B286ABF4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.UnitTestMocks.MSTest.Sample", "tests\ExternalProject.Net6.UnitTestMocks.MSTest.Sample\ExternalProject.Net6.UnitTestMocks.MSTest.Sample.csproj", "{26EB7B24-7C01-42A3-BD4C-660AA6E89484}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.UnitTestMocks.Sample", "tests\ExternalProject.Net6.UnitTestMocks.Sample\ExternalProject.Net6.UnitTestMocks.Sample.csproj", "{26EB7B24-7C01-42A3-BD4C-660AA6E89484}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net5", "Net5", "{282358C2-0ECF-4920-9BDC-FBF73E89C6C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.UnitTestMocks.MSTest.Sample", "tests\ExternalProject.Net5.UnitTestMocks.MSTest.Sample\ExternalProject.Net5.UnitTestMocks.MSTest.Sample.csproj", "{83450C69-7EBA-435C-9BC0-8503F7303057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.UnitTestMocks.Sample", "tests\ExternalProject.Net5.UnitTestMocks.Sample\ExternalProject.Net5.UnitTestMocks.Sample.csproj", "{83450C69-7EBA-435C-9BC0-8503F7303057}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.UnitTestMocks.MSTest.Sample.Tests", "tests\ExternalProject.Net5.UnitTestMocks.MSTest.Sample.Tests\ExternalProject.Net5.UnitTestMocks.MSTest.Sample.Tests.csproj", "{8D18C7F7-9D9E-445D-B5F9-C4EED10AE7BC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Net3.1", "Net3.1", "{F4DBDAD4-FE8D-48F3-8D3B-AA1872EF4A41}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.UnitTestMocks.MSTest.Sample", "tests\ExternalProject.Net3_1.UnitTestMocks.MSTest.Sample\ExternalProject.Net3_1.UnitTestMocks.MSTest.Sample.csproj", "{32E230D1-1B30-4021-BBE2-CCC9F12A6B68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.UnitTestMocks.Sample", "tests\ExternalProject.Net3_1.UnitTestMocks.Sample\ExternalProject.Net3_1.UnitTestMocks.Sample.csproj", "{32E230D1-1B30-4021-BBE2-CCC9F12A6B68}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.UnitTestMocks.MSTest.Sample.Tests", "tests\ExternalProject.Net3_1.UnitTestMocks.MSTest.Sample.Tests\ExternalProject.Net3_1.UnitTestMocks.MSTest.Sample.Tests.csproj", "{B4A02F7B-CE30-49CF-8240-887AB1CE821C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalProject.Net6.UnitTestMocks.MSTest.Constructors.Sample.Tests", "tests\ExternalProject.Net6.UnitTestMocks.MSTest.Constructors.Sample.Tests\ExternalProject.Net6.UnitTestMocks.MSTest.Constructors.Sample.Tests.csproj", "{DF5E9DED-062D-49D5-A0C0-D0C4D56DC3C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.UnitTestMocks.MSTest.Constructors.Sample.Tests", "tests\ExternalProject.Net6.UnitTestMocks.MSTest.Constructors.Sample.Tests\ExternalProject.Net6.UnitTestMocks.MSTest.Constructors.Sample.Tests.csproj", "{DF5E9DED-062D-49D5-A0C0-D0C4D56DC3C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Core", "src\SlowFox.Core\SlowFox.Core.csproj", "{98F46F8E-8893-4688-8E14-9957C6B31D43}"
 EndProject
@@ -78,6 +78,28 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.UnitTestMocks.MSTest.Constructors.Linked.Tests", "tests\ExternalProject.Net3_1.UnitTestMocks.MSTest.Constructors.Linked.Tests\ExternalProject.Net3_1.UnitTestMocks.MSTest.Constructors.Linked.Tests.csproj", "{CCB347CA-5199-428E-A5AD-0FCEA272B9BB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.UnitTestMocks.MSTest.Constructors.Linked.Tests", "tests\ExternalProject.Net5.UnitTestMocks.MSTest.Constructors.Linked.Tests\ExternalProject.Net5.UnitTestMocks.MSTest.Constructors.Linked.Tests.csproj", "{CCD135E0-1FBF-4199-9542-8FBDA1426EF2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.UnitTestMocks.xUnit", "src\SlowFox.UnitTestMocks.xUnit\SlowFox.UnitTestMocks.xUnit.csproj", "{67D8F05F-1973-4555-8DA5-EF7DCD06B823}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.UnitTestMocks.xUnit.Tests", "tests\SlowFox.UnitTestMocks.xUnit.Tests\SlowFox.UnitTestMocks.xUnit.Tests.csproj", "{B9C9B015-8284-4310-BEC3-6BD3E12140C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.UnitTestMocks.xUnit.Sample.Tests", "tests\ExternalProject.Net6.UnitTestMocks.xUnit.Sample.Tests\ExternalProject.Net6.UnitTestMocks.xUnit.Sample.Tests.csproj", "{630B2B5E-4863-4BAD-871B-93F60DAC7225}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.UnitTestMocks.xUnit.Constructors.Sample.Tests", "tests\ExternalProject.Net6.UnitTestMocks.xUnit.Constructors.Sample.Tests\ExternalProject.Net6.UnitTestMocks.xUnit.Constructors.Sample.Tests.csproj", "{0D8EF9CA-E7A3-4D72-A16A-FF67BBA944CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.UnitTestMocks.xUnit.Constructors.Linked.Tests", "tests\ExternalProject.Net6.UnitTestMocks.xUnit.Constructors.Linked.Tests\ExternalProject.Net6.UnitTestMocks.xUnit.Constructors.Linked.Tests.csproj", "{B66F14F7-4E19-4993-9D96-B968A4F6D8CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.UnitTestMocks.xUnit.Constructors.Linked.Tests", "tests\ExternalProject.Net5.UnitTestMocks.xUnit.Constructors.Linked.Tests\ExternalProject.Net5.UnitTestMocks.xUnit.Constructors.Linked.Tests.csproj", "{BA94D977-1AE8-4BEA-8012-FF581F112B14}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.UnitTestMocks.xUnit.Constructors.Sample.Tests", "tests\ExternalProject.Net5.UnitTestMocks.xUnit.Constructors.Sample.Tests\ExternalProject.Net5.UnitTestMocks.xUnit.Constructors.Sample.Tests.csproj", "{4F2E0EBD-83BC-4A48-B491-5F8125DBAEA2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.UnitTestMocks.xUnit.Sample.Tests", "tests\ExternalProject.Net5.UnitTestMocks.xUnit.Sample.Tests\ExternalProject.Net5.UnitTestMocks.xUnit.Sample.Tests.csproj", "{DB304D00-BDFF-47C6-921E-C1000F556CDD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net5.UnitTestMocks.xUnit.Constructors.Linked.Tests", "tests\ExternalProject.Net3_1.UnitTestMocks.xUnit.Constructors.Linked.Tests\ExternalProject.Net5.UnitTestMocks.xUnit.Constructors.Linked.Tests.csproj", "{758CF4C6-4E54-47A6-80C6-CDD0EB577A9F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.UnitTestMocks.xUnit.Constructors.Sample.Tests", "tests\ExternalProject.Net3_1.UnitTestMocks.xUnit.Constructors.Sample.Tests\ExternalProject.Net3_1.UnitTestMocks.xUnit.Constructors.Sample.Tests.csproj", "{52F1CF2F-8CCC-4235-89E2-3FA884482CB1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.UnitTestMocks.xUnit.Sample.Tests", "tests\ExternalProject.Net3_1.UnitTestMocks.xUnit.Sample.Tests\ExternalProject.Net3_1.UnitTestMocks.xUnit.Sample.Tests.csproj", "{9FCD33C0-79A6-4ACB-8E88-556647127F94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,6 +203,50 @@ Global
 		{CCD135E0-1FBF-4199-9542-8FBDA1426EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCD135E0-1FBF-4199-9542-8FBDA1426EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCD135E0-1FBF-4199-9542-8FBDA1426EF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67D8F05F-1973-4555-8DA5-EF7DCD06B823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67D8F05F-1973-4555-8DA5-EF7DCD06B823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67D8F05F-1973-4555-8DA5-EF7DCD06B823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67D8F05F-1973-4555-8DA5-EF7DCD06B823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9C9B015-8284-4310-BEC3-6BD3E12140C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9C9B015-8284-4310-BEC3-6BD3E12140C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9C9B015-8284-4310-BEC3-6BD3E12140C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9C9B015-8284-4310-BEC3-6BD3E12140C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{630B2B5E-4863-4BAD-871B-93F60DAC7225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{630B2B5E-4863-4BAD-871B-93F60DAC7225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{630B2B5E-4863-4BAD-871B-93F60DAC7225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{630B2B5E-4863-4BAD-871B-93F60DAC7225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D8EF9CA-E7A3-4D72-A16A-FF67BBA944CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D8EF9CA-E7A3-4D72-A16A-FF67BBA944CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D8EF9CA-E7A3-4D72-A16A-FF67BBA944CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D8EF9CA-E7A3-4D72-A16A-FF67BBA944CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B66F14F7-4E19-4993-9D96-B968A4F6D8CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B66F14F7-4E19-4993-9D96-B968A4F6D8CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B66F14F7-4E19-4993-9D96-B968A4F6D8CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B66F14F7-4E19-4993-9D96-B968A4F6D8CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA94D977-1AE8-4BEA-8012-FF581F112B14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA94D977-1AE8-4BEA-8012-FF581F112B14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA94D977-1AE8-4BEA-8012-FF581F112B14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA94D977-1AE8-4BEA-8012-FF581F112B14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F2E0EBD-83BC-4A48-B491-5F8125DBAEA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F2E0EBD-83BC-4A48-B491-5F8125DBAEA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F2E0EBD-83BC-4A48-B491-5F8125DBAEA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F2E0EBD-83BC-4A48-B491-5F8125DBAEA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB304D00-BDFF-47C6-921E-C1000F556CDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB304D00-BDFF-47C6-921E-C1000F556CDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB304D00-BDFF-47C6-921E-C1000F556CDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB304D00-BDFF-47C6-921E-C1000F556CDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{758CF4C6-4E54-47A6-80C6-CDD0EB577A9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{758CF4C6-4E54-47A6-80C6-CDD0EB577A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{758CF4C6-4E54-47A6-80C6-CDD0EB577A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{758CF4C6-4E54-47A6-80C6-CDD0EB577A9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F1CF2F-8CCC-4235-89E2-3FA884482CB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F1CF2F-8CCC-4235-89E2-3FA884482CB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F1CF2F-8CCC-4235-89E2-3FA884482CB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F1CF2F-8CCC-4235-89E2-3FA884482CB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FCD33C0-79A6-4ACB-8E88-556647127F94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FCD33C0-79A6-4ACB-8E88-556647127F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FCD33C0-79A6-4ACB-8E88-556647127F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FCD33C0-79A6-4ACB-8E88-556647127F94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,6 +286,17 @@ Global
 		{DE39CDBC-3F69-48EC-9834-BE550875C41B} = {3464D1F5-F12A-4E9F-B65C-26E6AE72B4CB}
 		{CCB347CA-5199-428E-A5AD-0FCEA272B9BB} = {F4DBDAD4-FE8D-48F3-8D3B-AA1872EF4A41}
 		{CCD135E0-1FBF-4199-9542-8FBDA1426EF2} = {282358C2-0ECF-4920-9BDC-FBF73E89C6C0}
+		{67D8F05F-1973-4555-8DA5-EF7DCD06B823} = {95A76331-56BB-410B-BE6C-67035E2F0EDC}
+		{B9C9B015-8284-4310-BEC3-6BD3E12140C1} = {6238711A-68AD-48A4-B332-5985E7978EC7}
+		{630B2B5E-4863-4BAD-871B-93F60DAC7225} = {3464D1F5-F12A-4E9F-B65C-26E6AE72B4CB}
+		{0D8EF9CA-E7A3-4D72-A16A-FF67BBA944CC} = {3464D1F5-F12A-4E9F-B65C-26E6AE72B4CB}
+		{B66F14F7-4E19-4993-9D96-B968A4F6D8CC} = {3464D1F5-F12A-4E9F-B65C-26E6AE72B4CB}
+		{BA94D977-1AE8-4BEA-8012-FF581F112B14} = {282358C2-0ECF-4920-9BDC-FBF73E89C6C0}
+		{4F2E0EBD-83BC-4A48-B491-5F8125DBAEA2} = {282358C2-0ECF-4920-9BDC-FBF73E89C6C0}
+		{DB304D00-BDFF-47C6-921E-C1000F556CDD} = {282358C2-0ECF-4920-9BDC-FBF73E89C6C0}
+		{758CF4C6-4E54-47A6-80C6-CDD0EB577A9F} = {F4DBDAD4-FE8D-48F3-8D3B-AA1872EF4A41}
+		{52F1CF2F-8CCC-4235-89E2-3FA884482CB1} = {F4DBDAD4-FE8D-48F3-8D3B-AA1872EF4A41}
+		{9FCD33C0-79A6-4ACB-8E88-556647127F94} = {F4DBDAD4-FE8D-48F3-8D3B-AA1872EF4A41}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACC25F40-F46F-4534-8287-48AA983A694F}

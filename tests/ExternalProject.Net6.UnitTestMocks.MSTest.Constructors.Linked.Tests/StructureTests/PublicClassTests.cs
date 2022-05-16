@@ -1,4 +1,4 @@
-﻿using ExternalProject.Net6.SampleProject1.StructureTests;
+﻿using ExternalProject.Net6.Constructors.Sample.StructureTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExternalProject.Net6.UnitTestMocks.MSTest.Constructors.Linked.Tests.NamespaceTests;

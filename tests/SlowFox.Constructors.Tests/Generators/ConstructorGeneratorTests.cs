@@ -1,7 +1,5 @@
-using Microsoft.CodeAnalysis.Text;
 using SlowFox.Constructors.Generators;
 using SlowFox.Constructors.Tests.Base;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -630,18 +628,8 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpSourceGeneratorVerifier<ConstructorGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1, classFile2, ExpectedAttributeContents },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1, classFile2);
     }
 
     [Fact]
@@ -678,18 +666,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpSourceGeneratorVerifier<ConstructorGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1, ExpectedAttributeContents },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -726,18 +703,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpSourceGeneratorVerifier<ConstructorGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1, ExpectedAttributeContents },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -773,18 +739,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpSourceGeneratorVerifier<ConstructorGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1, ExpectedAttributeContents },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -821,18 +776,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpSourceGeneratorVerifier<ConstructorGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1, ExpectedAttributeContents },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -868,18 +812,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpSourceGeneratorVerifier<ConstructorGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1, ExpectedAttributeContents },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -915,18 +848,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpSourceGeneratorVerifier<ConstructorGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1, ExpectedAttributeContents },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -961,18 +883,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpSourceGeneratorVerifier<ConstructorGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1, ExpectedAttributeContents },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -1007,18 +918,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpSourceGeneratorVerifier<ConstructorGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1, ExpectedAttributeContents },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]

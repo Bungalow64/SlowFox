@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using SlowFox.Core.Configuration.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,13 +26,13 @@ namespace SlowFox.Core.Definitions
             return Classes.FirstOrDefault(p => p.Matches(context, type));
         }
 
-        public void Process(DiagnosticDescriptor UnexpectedErrorDiagnostic, GeneratorExecutionContext context, bool skipSourceGeneration = false)
+        public void Process(IDiagnosticGenerator diagnosticGenerator, GeneratorExecutionContext context, bool skipSourceGeneration = false)
         {
             foreach (var @class in Classes)
             {
                 try
                 {
-                    @class.Process(context, this);
+                    @class.Process(context, diagnosticGenerator, this);
 
                     if (!skipSourceGeneration && !(@class.GeneratedClass is null))
                     {
@@ -41,9 +42,9 @@ namespace SlowFox.Core.Definitions
                 }
                 catch (Exception ex)
                 {
-                    if (!(UnexpectedErrorDiagnostic is null))
+                    if (diagnosticGenerator.HasUnexpectedErrorDiagnostic)
                     {
-                        context.ReportDiagnostic(Diagnostic.Create(UnexpectedErrorDiagnostic, @class.AttributeSyntax.GetLocation(), @class.ClassDeclarationSyntax.Identifier.Value, ex.Message, ex.StackTrace));
+                        context.ReportDiagnostic(Diagnostic.Create(diagnosticGenerator.UnexpectedErrorDiagnostic, @class.AttributeSyntax.GetLocation(), @class.ClassDeclarationSyntax.Identifier.Value, ex.Message, ex.StackTrace));
                     }
                 }
             }

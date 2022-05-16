@@ -1,5 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
+using SlowFox.Constructors.Diagnostics;
 using SlowFox.Constructors.Receivers;
+using SlowFox.Core.Configuration.Abstract;
 
 namespace SlowFox.Constructors.Generators
 {
@@ -9,14 +11,7 @@ namespace SlowFox.Constructors.Generators
     [Generator]
     public sealed partial class ConstructorGenerator : ISourceGenerator
     {
-        private static readonly DiagnosticDescriptor UnexpectedErrorDiagnostic = new DiagnosticDescriptor(
-            id: "SFCT001",
-            title: "Couldn't generate constructor",
-            messageFormat: "Couldn't generate the constructor for object '{0}'.  {1} {2}.",
-            category: "Design",
-            DiagnosticSeverity.Warning,
-            helpLinkUri: "https://github.com/Bungalow64/SlowFox/src/SlowFox.Constructors/Documentation/RuleDocumentation.md",
-            isEnabledByDefault: true);
+        private readonly IDiagnosticGenerator diagnostics = new DiagnosticGenerator();
 
         /// <inheritdoc/>
         public void Initialize(GeneratorInitializationContext context)
@@ -32,7 +27,7 @@ namespace SlowFox.Constructors.Generators
                 return;
             }
 
-            syntaxReceiver.ClassesToAugment.Process(UnexpectedErrorDiagnostic, context);
+            syntaxReceiver.ClassesToAugment.Process(diagnostics, context);
         }
     }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SlowFox.UnitTestMocks.NUnit</name>
+    </assembly>
+    <members>
+        <member name="T:SlowFox.UnitTestMocks.NUnit.Generators.MockGenerator">
+            <summary>
+            Source generator for generating mocks
+            </summary>
+        </member>
+    </members>
+</doc>

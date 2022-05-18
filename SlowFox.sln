@@ -65,8 +65,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Core", "src\SlowFox
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Core", "0.Core", "{A6E582BF-5672-4F2F-B722-AB5D7F53E4F1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Tests.Core", "tests\SlowFox.Tests.Core\SlowFox.Tests.Core.csproj", "{BC39C81B-96B6-4F77-AF6B-F4801390334A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base", "Base", "{87581FA7-0D2E-4219-B66F-47BC4B3D152D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.UnitTestMocks.MSTest.Constructors.Sample.Tests", "tests\ExternalProject.Net3_1.UnitTestMocks.MSTest.Constructors.Sample.Tests\ExternalProject.Net3_1.UnitTestMocks.MSTest.Constructors.Sample.Tests.csproj", "{17653E3E-6C99-4336-99B6-659BC6309C07}"
@@ -105,7 +103,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.UnitTestMocks.NUnit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.UnitTestMocks.NUnit.Tests", "tests\SlowFox.UnitTestMocks.NUnit.Tests\SlowFox.UnitTestMocks.NUnit.Tests.csproj", "{4FF40E6C-0068-47BB-B222-A1CBB5BC4804}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalProject.Net6.UnitTestMocks.NUnit.Sample.Tests", "tests\ExternalProject.Net6.UnitTestMocks.NUnit.Sample.Tests\ExternalProject.Net6.UnitTestMocks.NUnit.Sample.Tests.csproj", "{81A28F16-570C-41CB-AE2E-0120AAB6ED9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.UnitTestMocks.NUnit.Sample.Tests", "tests\ExternalProject.Net6.UnitTestMocks.NUnit.Sample.Tests\ExternalProject.Net6.UnitTestMocks.NUnit.Sample.Tests.csproj", "{81A28F16-570C-41CB-AE2E-0120AAB6ED9F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net6.UnitTestMocks.NUnit.Constructors.Sample.Tests", "tests\ExternalProject.Net6.UnitTestMocks.NUnit.Constructors.Sample.Tests\ExternalProject.Net6.UnitTestMocks.NUnit.Constructors.Sample.Tests.csproj", "{86F995BB-7DD9-4453-A407-F7E9EE63C5D0}"
 EndProject
@@ -122,6 +120,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.UnitTestMocks.NUnit.Constructors.Sample.Tests", "tests\ExternalProject.Net3_1.UnitTestMocks.NUnit.Constructors.Sample.Tests\ExternalProject.Net3_1.UnitTestMocks.NUnit.Constructors.Sample.Tests.csproj", "{68A990BD-A904-4BB2-9DFB-51BEFF95119A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.Tests", "tests\ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.Tests\ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.Tests.csproj", "{A5ED2398-56AA-4836-9C4F-FDD6401C2B97}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Core.Tests", "tests\SlowFox.Core.Tests\SlowFox.Core.Tests.csproj", "{6DFA8FB2-45E1-47C5-92DE-E73BFB93A729}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Constructors.Shared", "src\SlowFox.Constructors.Shared\SlowFox.Constructors.Shared.csproj", "{A2E5D1E5-DF12-4FAB-BCE2-B2B73DA43EAE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.UnitTestMocks.Shared", "src\SlowFox.UnitTestMocks.Shared\SlowFox.UnitTestMocks.Shared.csproj", "{5AC193B8-0B42-4D8A-94FF-0CAF2F0526E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlowFox.Tests.Shared", "tests\SlowFox.Tests.Shared\SlowFox.Tests.Shared.csproj", "{51820B93-9E92-4092-9C31-EF107BC513FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -201,10 +207,6 @@ Global
 		{98F46F8E-8893-4688-8E14-9957C6B31D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98F46F8E-8893-4688-8E14-9957C6B31D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98F46F8E-8893-4688-8E14-9957C6B31D43}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC39C81B-96B6-4F77-AF6B-F4801390334A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC39C81B-96B6-4F77-AF6B-F4801390334A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC39C81B-96B6-4F77-AF6B-F4801390334A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC39C81B-96B6-4F77-AF6B-F4801390334A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17653E3E-6C99-4336-99B6-659BC6309C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17653E3E-6C99-4336-99B6-659BC6309C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17653E3E-6C99-4336-99B6-659BC6309C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -313,6 +315,22 @@ Global
 		{A5ED2398-56AA-4836-9C4F-FDD6401C2B97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5ED2398-56AA-4836-9C4F-FDD6401C2B97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5ED2398-56AA-4836-9C4F-FDD6401C2B97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DFA8FB2-45E1-47C5-92DE-E73BFB93A729}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DFA8FB2-45E1-47C5-92DE-E73BFB93A729}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DFA8FB2-45E1-47C5-92DE-E73BFB93A729}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DFA8FB2-45E1-47C5-92DE-E73BFB93A729}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2E5D1E5-DF12-4FAB-BCE2-B2B73DA43EAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E5D1E5-DF12-4FAB-BCE2-B2B73DA43EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E5D1E5-DF12-4FAB-BCE2-B2B73DA43EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E5D1E5-DF12-4FAB-BCE2-B2B73DA43EAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AC193B8-0B42-4D8A-94FF-0CAF2F0526E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AC193B8-0B42-4D8A-94FF-0CAF2F0526E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AC193B8-0B42-4D8A-94FF-0CAF2F0526E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AC193B8-0B42-4D8A-94FF-0CAF2F0526E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51820B93-9E92-4092-9C31-EF107BC513FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51820B93-9E92-4092-9C31-EF107BC513FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51820B93-9E92-4092-9C31-EF107BC513FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51820B93-9E92-4092-9C31-EF107BC513FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -345,7 +363,6 @@ Global
 		{B4A02F7B-CE30-49CF-8240-887AB1CE821C} = {F4DBDAD4-FE8D-48F3-8D3B-AA1872EF4A41}
 		{DF5E9DED-062D-49D5-A0C0-D0C4D56DC3C1} = {3464D1F5-F12A-4E9F-B65C-26E6AE72B4CB}
 		{98F46F8E-8893-4688-8E14-9957C6B31D43} = {A6E582BF-5672-4F2F-B722-AB5D7F53E4F1}
-		{BC39C81B-96B6-4F77-AF6B-F4801390334A} = {87581FA7-0D2E-4219-B66F-47BC4B3D152D}
 		{87581FA7-0D2E-4219-B66F-47BC4B3D152D} = {6238711A-68AD-48A4-B332-5985E7978EC7}
 		{17653E3E-6C99-4336-99B6-659BC6309C07} = {F4DBDAD4-FE8D-48F3-8D3B-AA1872EF4A41}
 		{B3330925-E8C5-454F-ABA3-3753DE26C55D} = {282358C2-0ECF-4920-9BDC-FBF73E89C6C0}
@@ -374,6 +391,10 @@ Global
 		{44BDC023-81D7-4872-8750-EA6D1E4E968E} = {F4DBDAD4-FE8D-48F3-8D3B-AA1872EF4A41}
 		{68A990BD-A904-4BB2-9DFB-51BEFF95119A} = {F4DBDAD4-FE8D-48F3-8D3B-AA1872EF4A41}
 		{A5ED2398-56AA-4836-9C4F-FDD6401C2B97} = {F4DBDAD4-FE8D-48F3-8D3B-AA1872EF4A41}
+		{6DFA8FB2-45E1-47C5-92DE-E73BFB93A729} = {6238711A-68AD-48A4-B332-5985E7978EC7}
+		{A2E5D1E5-DF12-4FAB-BCE2-B2B73DA43EAE} = {A6E582BF-5672-4F2F-B722-AB5D7F53E4F1}
+		{5AC193B8-0B42-4D8A-94FF-0CAF2F0526E9} = {A6E582BF-5672-4F2F-B722-AB5D7F53E4F1}
+		{51820B93-9E92-4092-9C31-EF107BC513FD} = {87581FA7-0D2E-4219-B66F-47BC4B3D152D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACC25F40-F46F-4534-8287-48AA983A694F}

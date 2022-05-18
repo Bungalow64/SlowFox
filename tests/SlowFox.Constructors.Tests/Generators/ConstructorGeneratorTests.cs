@@ -1738,5 +1738,236 @@ namespace Logic.Readers
 }";
         await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
     }
+
+    [Fact]
+    public async Task Class_WithGenericType_GenerateMemberWithCorrectName()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IList<IDatabase>))]
+    public partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IList<IDatabase> _databaseList;
+
+        public UserReader(IList<IDatabase> databaseList)
+        {
+            _databaseList = databaseList;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithTupleType_GenerateMemberWithCorrectName()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof((IDatabase, IReader)))]
+    public partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+    public interface IReader { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly (IDatabase, IReader) _databaseReader;
+
+        public UserReader((IDatabase, IReader) databaseReader)
+        {
+            _databaseReader = databaseReader;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithNamedTupleType_GenerateMemberWithCorrectName()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof((IDatabase db, IReader read)))]
+    public partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+    public interface IReader { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly (IDatabase db, IReader read) _databaseReader;
+
+        public UserReader((IDatabase db, IReader read) databaseReader)
+        {
+            _databaseReader = databaseReader;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithTupleTypeInGenerics_GenerateMemberWithCorrectName()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IRepository<(IDatabase, IReader)>))]
+    public partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+    public interface IReader { }
+    public interface IRepository<T> { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IRepository<(IDatabase, IReader)> _databaseReaderRepository;
+
+        public UserReader(IRepository<(IDatabase, IReader)> databaseReaderRepository)
+        {
+            _databaseReaderRepository = databaseReaderRepository;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithNamedTupleTypeInGenerics_GenerateMemberWithCorrectName()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IRepository<(IDatabase db, IReader read)>))]
+    public partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+    public interface IReader { }
+    public interface IRepository<T> { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IRepository<(IDatabase db, IReader read)> _databaseReaderRepository;
+
+        public UserReader(IRepository<(IDatabase db, IReader read)> databaseReaderRepository)
+        {
+            _databaseReaderRepository = databaseReaderRepository;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
 }
 

@@ -37,21 +37,13 @@ namespace SlowFox.Core.Definitions
             {
                 case IdentifierNameSyntax identifierNameSyntax:
                     ShortTypeName = identifierNameSyntax.Identifier.Text;
-                    Name = NameGenerator.GetName(ShortTypeName, existingNames);
-                    break;
-                case NullableTypeSyntax nullableTypeSyntax:
-                    ShortTypeName = nullableTypeSyntax.GetText().ToString();
-                    Name = NameGenerator.GetName(ShortTypeName, existingNames);
-                    break;
-                case QualifiedNameSyntax qualifiedNameSyntax:
-                    ShortTypeName = qualifiedNameSyntax.GetText().ToString();
-                    Name = NameGenerator.GetName(ShortTypeName, existingNames);
                     break;
                 default:
-                    ShortTypeName = typeSyntax.ToString();
-                    Name = typeSyntax.ToString();
+                    ShortTypeName = typeSyntax.GetText().ToString();
                     break;
             }
+
+            Name = NameGenerator.GetName(ShortTypeName, existingNames);
 
             if (semanticModel != null)
             {

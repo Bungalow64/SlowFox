@@ -6,7 +6,7 @@
 		<RootNamespace>SlowFox.UnitTestMocks.MSTest</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
-		<Version>0.1.14</Version>
+		<Version>0.1.15</Version>
 		<Authors>Bungalow64</Authors>
 		<Company>Bungalow64 Technologies Ltd</Company>
 		<Product>SlowFox Unit Test Mock Generation (using MSTest)</Product>
@@ -52,5 +52,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\SlowFox.Core\SlowFox.Core.csproj" />
+		<ProjectReference Include="..\SlowFox.UnitTestMocks.Shared\SlowFox.UnitTestMocks.Shared.csproj" />
 	</ItemGroup>
 </Project>

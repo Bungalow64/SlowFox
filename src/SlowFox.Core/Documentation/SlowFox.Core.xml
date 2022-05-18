@@ -4,27 +4,6 @@
         <name>SlowFox.Core</name>
     </assembly>
     <members>
-        <member name="T:SlowFox.InjectDependenciesAttribute">
-            <summary>
-            The attribute used to inject dependencies into a class
-            </summary>
-        </member>
-        <member name="P:SlowFox.InjectDependenciesAttribute.Types">
-            <summary>
-            The list of types to be injected
-            </summary>
-        </member>
-        <member name="M:SlowFox.InjectDependenciesAttribute.#ctor">
-            <summary>
-            The default constructor for the attribute, defining no types to be injected
-            </summary>
-        </member>
-        <member name="M:SlowFox.InjectDependenciesAttribute.#ctor(System.Type[])">
-            <summary>
-            The constructor for the attribute, defining one or more types to be injected
-            </summary>
-            <param name="types">The array of types to be injected</param>
-        </member>
         <member name="T:SlowFox.Core.Definitions.BaseParameter">
             <summary>
             Defines a parameter used in a base class

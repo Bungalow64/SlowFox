@@ -1,16 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<AssemblyName>SlowFox.Core</AssemblyName>
-		<RootNamespace>SlowFox.Core</RootNamespace>
+		<AssemblyName>SlowFox.UnitTestMocks.Shared</AssemblyName>
+		<RootNamespace>SlowFox.UnitTestMocks.Shared</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.1.8</Version>
+		<Version>0.1.0</Version>
 		<Authors>Bungalow64</Authors>
 		<Company>Bungalow64 Technologies Ltd</Company>
-		<Product>SlowFox Core</Product>
+		<Product>SlowFox Unit Test Mock Generation (Shared)</Product>
 		<Description>
-			The core libraries supporting the SlowFox source generators.
+			The shared library supporting the SlowFox Unit Test Mock source generators.
 		</Description>
 		<PackageTags>slowfox;source;generator</PackageTags>
 		<PackageIcon>Bungalow64.png</PackageIcon>
@@ -30,7 +30,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<DocumentationFile>Documentation\SlowFox.Core.xml</DocumentationFile>
+		<DocumentationFile>Documentation\SlowFox.UnitTestMocks.Shared.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -1,5 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
-using SlowFox.Tests.Core.Base;
+using SlowFox.Tests.Shared.Base;
 using System.Collections.Generic;
 
 namespace SlowFox.Constructors.Tests.Base

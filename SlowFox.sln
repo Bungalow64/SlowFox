@@ -127,7 +127,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Constructors.Shared
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.UnitTestMocks.Shared", "src\SlowFox.UnitTestMocks.Shared\SlowFox.UnitTestMocks.Shared.csproj", "{5AC193B8-0B42-4D8A-94FF-0CAF2F0526E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlowFox.Tests.Shared", "tests\SlowFox.Tests.Shared\SlowFox.Tests.Shared.csproj", "{51820B93-9E92-4092-9C31-EF107BC513FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlowFox.Tests.Shared", "tests\SlowFox.Tests.Shared\SlowFox.Tests.Shared.csproj", "{51820B93-9E92-4092-9C31-EF107BC513FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.SolutionFiles", "4.SolutionFiles", "{E0003FA2-D49B-409B-A49F-D7AE133FBD7E}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builds", "Builds", "{C11DC810-E206-49D0-8F32-602731F38A78}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines-publish-internal.yml = azure-pipelines-publish-internal.yml
+		azure-pipelines-publish-prerelease.yml = azure-pipelines-publish-prerelease.yml
+		azure-pipelines-publish.yml = azure-pipelines-publish.yml
+		azure-pipelines.yml = azure-pipelines.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -395,6 +408,7 @@ Global
 		{A2E5D1E5-DF12-4FAB-BCE2-B2B73DA43EAE} = {A6E582BF-5672-4F2F-B722-AB5D7F53E4F1}
 		{5AC193B8-0B42-4D8A-94FF-0CAF2F0526E9} = {A6E582BF-5672-4F2F-B722-AB5D7F53E4F1}
 		{51820B93-9E92-4092-9C31-EF107BC513FD} = {87581FA7-0D2E-4219-B66F-47BC4B3D152D}
+		{C11DC810-E206-49D0-8F32-602731F38A78} = {E0003FA2-D49B-409B-A49F-D7AE133FBD7E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACC25F40-F46F-4534-8287-48AA983A694F}

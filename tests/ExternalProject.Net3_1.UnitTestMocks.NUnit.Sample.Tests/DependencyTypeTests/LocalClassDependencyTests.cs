@@ -25,7 +25,7 @@ namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.Tests.DependencyType
 
             LocalClassDependency model = Create();
 
-            Assert.AreEqual("Jamie", model.GetLocalClass().Name);
+            Assert.That(model.GetLocalClass().Name, Is.EqualTo("Jamie"));
         }
     }
 }

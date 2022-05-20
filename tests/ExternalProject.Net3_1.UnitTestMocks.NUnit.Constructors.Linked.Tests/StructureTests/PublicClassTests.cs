@@ -12,7 +12,7 @@ namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Constructors.Linked.Tests.N
         {
             PublicClass model = Create();
 
-            Assert.AreEqual(_dataReader.Object, model.DataReader);
+            Assert.That(model.DataReader, Is.EqualTo(_dataReader.Object));
         }
     }
 }

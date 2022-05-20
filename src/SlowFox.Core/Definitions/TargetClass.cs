@@ -1,8 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SlowFox.Core.Configuration.Abstract;
-using SlowFox.Core.Logic;
-using SlowFox.Core.Logic.Constructor;
+using SlowFox.Core.GeneratorLogic.Constructor.Logic;
 
 namespace SlowFox.Core.Definitions
 {

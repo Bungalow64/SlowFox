@@ -11,6 +11,6 @@ public partial class FileScopedNamespaceTests
     {
         FileScopedNamespace model = Create();
 
-        Assert.AreEqual(_dataReader.Object, model.DataReader);
+        Assert.That(model.DataReader, Is.EqualTo(_dataReader.Object));
     }
 }

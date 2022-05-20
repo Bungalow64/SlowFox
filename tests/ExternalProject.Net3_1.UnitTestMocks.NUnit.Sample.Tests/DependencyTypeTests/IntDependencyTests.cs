@@ -25,10 +25,10 @@ namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.Tests.DependencyType
             const int index = 1001;
             var model = Create(index);
 
-            Assert.AreEqual("Jamie", model.GetName());
+            Assert.That(model.GetName(), Is.EqualTo("Jamie"));
             _userReader.Verify(p => p.GetName(), Moq.Times.Once);
 
-            Assert.AreEqual(index, model.GetIndex());
+            Assert.That(model.GetIndex(), Is.EqualTo(index));
         }
     }
 }

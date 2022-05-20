@@ -12,7 +12,7 @@ namespace ExternalProject.Net5.UnitTestMocks.NUnit.Constructors.Linked.Tests.Nam
         {
             ReferenceDependencyViaTypeAliasAsI model = Create();
 
-            Assert.AreEqual(_i.Object, model.Dependency);
+            Assert.That(model.Dependency, Is.EqualTo(_i.Object));
         }
     }
 }

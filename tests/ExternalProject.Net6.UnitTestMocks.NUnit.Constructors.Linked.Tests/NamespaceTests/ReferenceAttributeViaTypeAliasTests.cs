@@ -11,6 +11,6 @@ public partial class ReferenceAttributeViaTypeAliasTests
     {
         ReferenceAttributeViaTypeAlias model = Create();
 
-        Assert.AreEqual(_userReader.Object, model.Dependency);
+        Assert.That(model.Dependency, Is.EqualTo(_userReader.Object));
     }
 }

@@ -11,9 +11,9 @@ namespace ExternalProject.Net6.UnitTestMocks.NUnit.Constructors.Linked.Tests.Bas
         {
             DerivedNestedInjectedBaseClassWithDependency model = Create();
 
-            Assert.AreEqual(_userWriter.Object, model.UserWriter);
-            Assert.AreEqual(_userReader.Object, model.UserReader);
-            Assert.AreEqual(_dataReader2.Object, model.DataReader2);
+            Assert.That(model.UserWriter, Is.EqualTo(_userWriter.Object));
+            Assert.That(model.UserReader, Is.EqualTo(_userReader.Object));
+            Assert.That(model.DataReader2, Is.EqualTo(_dataReader2.Object));
         }
     }
 }

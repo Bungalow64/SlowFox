@@ -23,7 +23,7 @@ namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.ConfigTests.UsingDef
 
             var name = Create().GetName();
 
-            Assert.AreEqual("Jamie", name);
+            Assert.That(name, Is.EqualTo("Jamie"));
             _userReader.Verify(p => p.GetName(), Moq.Times.Once);
         }
     }

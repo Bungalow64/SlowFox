@@ -15,5 +15,18 @@
         <member name="M:SlowFox.Constructors.Generators.ConstructorGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
             <inheritdoc/>
         </member>
+        <member name="T:SlowFox.Constructors.Receivers.ConstructorGeneratorReceiver">
+            <summary>
+            The receiver for generating constructors
+            </summary>
+        </member>
+        <member name="P:SlowFox.Constructors.Receivers.ConstructorGeneratorReceiver.ClassesToAugment">
+            <summary>
+            The list of classes that have been detected as needing generation
+            </summary>
+        </member>
+        <member name="M:SlowFox.Constructors.Receivers.ConstructorGeneratorReceiver.OnVisitSyntaxNode(Microsoft.CodeAnalysis.GeneratorSyntaxContext)">
+            <inheritdoc/>
+        </member>
     </members>
 </doc>

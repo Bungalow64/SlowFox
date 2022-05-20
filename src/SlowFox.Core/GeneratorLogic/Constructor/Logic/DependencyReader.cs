@@ -2,14 +2,13 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SlowFox.Core.Configuration.Abstract;
-using SlowFox.Core.Configuration.Constructors;
 using SlowFox.Core.Definitions;
 using SlowFox.Core.Extensions;
-using SlowFox.Core.Logic.Constructor;
+using SlowFox.Core.GeneratorLogic.Constructor.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SlowFox.Core.Logic
+namespace SlowFox.Core.GeneratorLogic.Constructor.Logic
 {
     /// <summary>
     /// Detects details of all dependencies
@@ -21,6 +20,15 @@ namespace SlowFox.Core.Logic
         private const string InjectableClassAttributeName2 = "SlowFox.InjectDependencies";
         private const string InjectableClassAttributeName3 = "InjectDependencies";
 
+        /// <summary>
+        /// Reads and processes the dependencies
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="diagnosticGenerator"></param>
+        /// <param name="classDeclaration"></param>
+        /// <param name="attribute"></param>
+        /// <param name="baseTargetClass"></param>
+        /// <returns></returns>
         public static ClassWriter Read(GeneratorExecutionContext context, IDiagnosticGenerator diagnosticGenerator, ClassDeclarationSyntax classDeclaration, AttributeSyntax attribute, TargetClass baseTargetClass)
         {
             var semanticModel = context.Compilation.GetSemanticModel(classDeclaration.SyntaxTree);
@@ -167,6 +175,12 @@ namespace SlowFox.Core.Logic
             return newClass;
         }
 
+        /// <summary>
+        /// Finds the attribute for the class
+        /// </summary>
+        /// <param name="semanticModel"></param>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public static (ClassDeclarationSyntax, AttributeSyntax, ITypeSymbol) FindAttribute(SemanticModel semanticModel, SyntaxNode node)
         {
             bool matches(string type)

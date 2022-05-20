@@ -19,12 +19,12 @@ namespace ExternalProject.Net6.UnitTestMocks.NUnit.Sample.Tests.DependencyTypeTe
         {
             MixedSystemTypeDependencies model = Create(1001, "Jamie", 10, 20, 30, 40.4);
 
-            Assert.AreEqual(1001, model.GetIndex());
-            Assert.AreEqual("Jamie", model.GetName());
-            Assert.AreEqual(10, model.GetLongNumber());
-            Assert.AreEqual(20, model.GetInt32Number());
-            Assert.AreEqual(30, model.GetInt64Number());
-            Assert.AreEqual(40.4, model.GetDoubleNumber());
+            Assert.That(model.GetIndex(), Is.EqualTo(1001));
+            Assert.That(model.GetName(), Is.EqualTo("Jamie"));
+            Assert.That(model.GetLongNumber(), Is.EqualTo(10));
+            Assert.That(model.GetInt32Number(), Is.EqualTo(20));
+            Assert.That(model.GetInt64Number(), Is.EqualTo(30));
+            Assert.That(model.GetDoubleNumber(), Is.EqualTo(40.4));
         }
     }
 }

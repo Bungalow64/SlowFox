@@ -21,7 +21,7 @@ namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.ConfigTests.AsLoose
         {
             var name = Create().GetName();
 
-            Assert.AreEqual(null, name);
+            Assert.That(name, Is.EqualTo(null));
             _userReader.Verify(p => p.GetName(), Moq.Times.Once);
         }
     }

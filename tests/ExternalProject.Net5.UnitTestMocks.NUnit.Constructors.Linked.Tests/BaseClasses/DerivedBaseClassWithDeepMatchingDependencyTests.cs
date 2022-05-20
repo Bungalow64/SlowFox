@@ -12,9 +12,9 @@ namespace ExternalProject.Net5.UnitTestMocks.NUnit.Constructors.Linked.Tests.Bas
         {
             DerivedBaseClassWithDeepMatchingDependency model = Create();
 
-            Assert.AreEqual(_dataReader.Object, model.DataReader);
-            Assert.AreEqual(_userWriter.Object, model.UserWriter);
-            Assert.AreEqual(_userReader.Object, model.UserReader);
+            Assert.That(model.DataReader, Is.EqualTo(_dataReader.Object));
+            Assert.That(model.UserWriter, Is.EqualTo(_userWriter.Object));
+            Assert.That(model.UserReader, Is.EqualTo(_userReader.Object));
         }
     }
 }

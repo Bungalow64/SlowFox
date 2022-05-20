@@ -175,6 +175,35 @@ namespace MySampleProject
 }
 ```
 
+You are able to exclude specific types from being mocked, by using the `ExcludeMocks` attribute.  Any type specified within this attribute will be added as a parameter on the `Create` method, so you can provide a value from within your test:
+
+```csharp
+namespace MySampleProject
+{
+    [SlowFox.InjectMocks(typeof(UserHandler))]
+    [SlowFox.ExcludeMocks(typeof(ILogger))]
+    public partial class UserHandlerTests
+    {
+        [Fact]
+        public void VerifyAddUser()
+        {
+            _database
+                .Setup(p => p.Save(It.IsAny<User>()));
+
+            ILogger testLogger = BuildTestLogger();
+
+            UserHandler reader = Create(testLogger);
+
+            reader.CreateNewUser();
+
+            _database
+                .Verify(p => p.Save(It.IsAny<User>()), Times.Once);
+        }
+    }
+}
+```
+
+> Note that types that cannot be mocked (e.g., a static or sealed type) will automatically be excluded from being mocked, and will be treated in the same way as types specified in the `ExcludeMocks` attribute
 
 ### Configuration
 

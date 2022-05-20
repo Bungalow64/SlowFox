@@ -3,28 +3,66 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SlowFox.Core.Logic.UnitTestMocks
+namespace SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic
 {
+    /// <summary>
+    /// Builds the contents of the class
+    /// </summary>
     public class ClassWriter
     {
+        /// <summary>
+        /// The name of the class
+        /// </summary>
         public string ClassName { get; set; }
+        /// <summary>
+        /// The list of namespaces that the class belongs within
+        /// </summary>
         public List<ParentNamespace> Namespaces { get; set; } = new List<ParentNamespace>();
+        /// <summary>
+        /// The list of using declarations to be included
+        /// </summary>
         public List<string> UsingNamespaces { get; set; } = new List<string>();
-        public List<string> Parameters { get; set; } = new List<string>();
-        public List<string> ParameterAssignments { get; set; } = new List<string>();
+        /// <summary>
+        /// The list of assignments
+        /// </summary>
+        public List<string> Assignments { get; set; } = new List<string>();
+        /// <summary>
+        /// The list of class members
+        /// </summary>
         public List<string> Members { get; set; } = new List<string>();
-        public bool IsNested => ParentClasses?.Any() ?? false;
+        /// <summary>
+        /// The list of parent classes that the class belongs in
+        /// </summary>
         public List<(string className, string modifiers)> ParentClasses { get; set; } = new List<(string className, string modifiers)>();
+        /// <summary>
+        /// The modifier for the class
+        /// </summary>
         public string Modifier { get; set; }
+        /// <summary>
+        /// The method signature
+        /// </summary>
         public string MethodSignature { get; set; }
+        /// <summary>
+        /// The body of the method
+        /// </summary>
         public string MethodBody { get; set; }
+        /// <summary>
+        /// The attribute to be used for the init method
+        /// </summary>
         public string InitAttribute { get; set; }
+        /// <summary>
+        /// The name to be used for the init method
+        /// </summary>
         public string InitMethodName { get; set; }
-        public bool HasInitAttribute => !string.IsNullOrWhiteSpace(InitAttribute);
-        public bool HasInitMethodName => !string.IsNullOrWhiteSpace(InitMethodName);
 
+        private bool HasInitAttribute => !string.IsNullOrWhiteSpace(InitAttribute);
+        private bool HasInitMethodName => !string.IsNullOrWhiteSpace(InitMethodName);
         private string GetIndentation(int tabIndex) => string.Concat(Enumerable.Repeat("    ", tabIndex));
 
+        /// <summary>
+        /// Renders the class file
+        /// </summary>
+        /// <returns></returns>
         public string Render()
         {
             int nestedClasses = ParentClasses?.Count() ?? 0;
@@ -55,8 +93,7 @@ namespace SlowFox.Core.Logic.UnitTestMocks
                 propertyList += Environment.NewLine;
             }
 
-            string parameterList = $@"{string.Join(", ", Parameters)}";
-            string assignments = $@"{string.Join(Environment.NewLine, ParameterAssignments.Select(p => $"{assignmentIndent}{p}"))}";
+            string assignments = $@"{string.Join(Environment.NewLine, Assignments.Select(p => $"{assignmentIndent}{p}"))}";
             string wrapStart = BuildWrapStart(nestedClassIndent);
             string wrapEnd = BuildWrapEnd(nestedClassIndent);
 
@@ -79,7 +116,7 @@ namespace SlowFox.Core.Logic.UnitTestMocks
             }
             string initMethodName = HasInitMethodName ? $"void {InitMethodName}" : ClassName;
 
-            string built = $@"{ outerNamespaceList}{BuildNamespaceStart()}{wrapStart}{classIndent}    {Modifier} class {ClassName}
+            string built = $@"{outerNamespaceList}{BuildNamespaceStart()}{wrapStart}{classIndent}    {Modifier} class {ClassName}
 {classIndent}    {{
 {propertyList}{initAttributeContents}
 {classIndent}        public {initMethodName}()

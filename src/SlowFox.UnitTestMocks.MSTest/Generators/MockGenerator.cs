@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using SlowFox.Core.Configuration.Abstract;
-using SlowFox.Core.UnitTestMocks.Generators;
+using SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators;
 using SlowFox.UnitTestMocks.MSTest.Diagnostics;
 
 namespace SlowFox.UnitTestMocks.MSTest.Generators
@@ -18,11 +18,17 @@ namespace SlowFox.UnitTestMocks.MSTest.Generators
         private const string _initMethodName = "Init";
         private readonly IDiagnosticGenerator diagnostics = new DiagnosticGenerator();
 
+        /// <inheritdoc/>
         protected override string DependencyFilename => _dependencyFilename;
+        /// <inheritdoc/>
         protected override string CustomUsing => _customUsing;
+        /// <inheritdoc/>
         protected override string RootConfig => _rootConfig;
+        /// <inheritdoc/>
         protected override string InitAttribute => _initAttribute;
+        /// <inheritdoc/>
         protected override string InitMethodName => _initMethodName;
+        /// <inheritdoc/>
         protected override IDiagnosticGenerator Diagnostics => diagnostics;
     }
 }

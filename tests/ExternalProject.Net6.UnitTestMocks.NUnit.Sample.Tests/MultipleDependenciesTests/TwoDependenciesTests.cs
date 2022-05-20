@@ -31,8 +31,8 @@ namespace ExternalProject.Net6.UnitTestMocks.NUnit.Sample.MultipleDependenciesTe
             var model = Create();
             model.UpdateName("Jamie2");
 
-            Assert.AreEqual("Jamie", model.GetName());
-            Assert.AreEqual("Jamie2", requestedName);
+            Assert.That(model.GetName(), Is.EqualTo("Jamie"));
+            Assert.That(requestedName, Is.EqualTo("Jamie2"));
 
             _userReader.Verify(p => p.GetName(), Times.Once);
             _userWriter.Verify(p => p.UpdateName(It.IsAny<string>()), Times.Once);

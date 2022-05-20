@@ -2,8 +2,16 @@
 
 namespace SlowFox.Core.Extensions
 {
+    /// <summary>
+    /// The extension methods for <see cref="ITypeSymbol"/> objects
+    /// </summary>
     public static class ITypeSymbolExtensions
     {
+        /// <summary>
+        /// Whether the specified type can be mocked
+        /// </summary>
+        /// <param name="symbol"></param>
+        /// <returns></returns>
         public static bool CanBeMocked(this ITypeSymbol symbol)
         {
             if (!symbol.IsReferenceType)

@@ -26,8 +26,8 @@ namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.MultipleDependencies
 
             var model = Create();
 
-            Assert.AreEqual("Jamie1", model.GetName1());
-            Assert.AreEqual("Jamie2", model.GetName2());
+            Assert.That(model.GetName1(), Is.EqualTo("Jamie1"));
+            Assert.That(model.GetName2(), Is.EqualTo("Jamie2"));
 
             _userReader1.Verify(p => p.GetName(), Moq.Times.Once);
             _userReader2.Verify(p => p.GetName(), Moq.Times.Once);

@@ -12,7 +12,7 @@ namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Constructors.Linked.Tests.N
         {
             ReferenceDependencyViaRelativeType model = Create();
 
-            Assert.AreEqual(_userReader.Object, model.Dependency);
+            Assert.That(model.Dependency, Is.EqualTo(_userReader.Object));
         }
     }
 }

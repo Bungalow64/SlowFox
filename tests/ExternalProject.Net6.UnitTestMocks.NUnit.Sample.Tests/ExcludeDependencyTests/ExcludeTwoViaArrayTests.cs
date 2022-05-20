@@ -36,7 +36,7 @@ namespace ExternalProject.Net6.UnitTestMocks.NUnit.Sample.ExcludeDependencyTests
 
             ThreeDependencies model = Create(userReaderMock.Object, userCacheMock.Object);
 
-            Assert.AreEqual("Jamie", model.GetName());
+            Assert.That(model.GetName(), Is.EqualTo("Jamie"));
             model.ClearCache();
 
             userCacheMock

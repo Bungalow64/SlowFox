@@ -5,8 +5,16 @@ using System.Collections.Generic;
 
 namespace SlowFox.Core.Extensions
 {
+    /// <summary>
+    /// Extension methods for <see cref="SyntaxNode"/> objects
+    /// </summary>
     public static class SyntaxNodeExtensions
     {
+        /// <summary>
+        /// Gets the list of parent classes
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <returns></returns>
         public static List<(string className, string modifiers)> GetParentClasses(this SyntaxNode parent)
         {
             var names = new List<(string className, string modifiers)>();
@@ -23,6 +31,11 @@ namespace SlowFox.Core.Extensions
             return names;
         }
 
+        /// <summary>
+        /// Gets the list of namespaces in which the object is defined
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <returns></returns>
         public static List<ParentNamespace> GetNamespace(this SyntaxNode parent)
         {
             List<ParentNamespace> namespaces = new List<ParentNamespace>();

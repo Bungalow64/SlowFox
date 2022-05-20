@@ -3,6 +3,9 @@ using SlowFox.Core.Configuration;
 
 namespace SlowFox.UnitTestMocks.NUnit.Diagnostics
 {
+    /// <summary>
+    /// The diagnostics for the generator
+    /// </summary>
     public class DiagnosticGenerator : EmptyDiagnosticGenerator
     {
         private static readonly DiagnosticDescriptor _unexpectedErrorDiagnostic = new DiagnosticDescriptor(
@@ -41,20 +44,28 @@ namespace SlowFox.UnitTestMocks.NUnit.Diagnostics
             helpLinkUri: "https://github.com/Bungalow64/SlowFox/src/SlowFox.UnitTestMocks.NUnit/Documentation/RuleDocumentation.md",
             isEnabledByDefault: true);
 
+        /// <inheritdoc/>
         public override DiagnosticDescriptor UnexpectedErrorDiagnostic => _unexpectedErrorDiagnostic;
 
+        /// <inheritdoc/>
         public override DiagnosticDescriptor NoTypeDiagnostic => _noTypeDiagnostic;
 
+        /// <inheritdoc/>
         public override DiagnosticDescriptor MissingDependencyDiagnostic => _missingDependencyDiagnostic;
 
+        /// <inheritdoc/>
         public override DiagnosticDescriptor InvalidConfigOptionDiagnostic => _invalidConfigOptionDiagnostic;
 
-        public virtual bool HasUnexpectedErrorDiagnostic => true;
+        /// <inheritdoc/>
+        public override bool HasUnexpectedErrorDiagnostic => true;
 
-        public virtual bool HasInvalidConfigOptionDiagnostic => true;
+        /// <inheritdoc/>
+        public override bool HasInvalidConfigOptionDiagnostic => true;
 
-        public virtual bool HasNoTypeDiagnostic => true;
+        /// <inheritdoc/>
+        public override bool HasNoTypeDiagnostic => true;
 
-        public virtual bool HasMissingDependencyDiagnostic => true;
+        /// <inheritdoc/>
+        public override bool HasMissingDependencyDiagnostic => true;
     }
 }

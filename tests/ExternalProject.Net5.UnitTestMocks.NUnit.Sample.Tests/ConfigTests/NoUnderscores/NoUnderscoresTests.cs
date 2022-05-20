@@ -23,7 +23,7 @@ namespace ExternalProject.Net5.UnitTestMocks.NUnit.Sample.ConfigTests.NoUndersco
 
             var name = Create().GetName();
 
-            Assert.AreEqual("Jamie", name);
+            Assert.That(name, Is.EqualTo("Jamie"));
             userReader.Verify(p => p.GetName(), Moq.Times.Once);
         }
     }

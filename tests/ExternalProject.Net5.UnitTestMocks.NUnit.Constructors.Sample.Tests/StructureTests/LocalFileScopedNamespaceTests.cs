@@ -12,7 +12,7 @@ namespace ExternalProject.Net5.UnitTestMocks.NUnit.Constructors.Sample.Tests.Str
         {
             LocalFileScopedNamespace model = Create();
 
-            Assert.AreEqual(_dataReader.Object, model.DataReader);
+            Assert.That(model.DataReader, Is.EqualTo(_dataReader.Object));
         }
     }
 }

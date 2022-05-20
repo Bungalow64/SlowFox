@@ -7,8 +7,16 @@ using System.Linq;
 
 namespace SlowFox.Core.Extensions
 {
+    /// <summary>
+    /// The extension methods for <see cref="ClassDeclarationSyntax"/> objects
+    /// </summary>
     public static class ClassDeclarationSyntaxExtensions
     {
+        /// <summary>
+        /// Gets the modifiers for the given class
+        /// </summary>
+        /// <param name="classDeclarationSyntax"></param>
+        /// <returns></returns>
         public static string GetModifiers(this ClassDeclarationSyntax classDeclarationSyntax)
         {
             string modifier = string.Empty;
@@ -23,6 +31,14 @@ namespace SlowFox.Core.Extensions
             return modifier;
         }
 
+        /// <summary>
+        /// Finds the attributes on the given class
+        /// </summary>
+        /// <param name="classDeclarationSyntax"></param>
+        /// <param name="semanticModel"></param>
+        /// <param name="namespace"></param>
+        /// <param name="attributeName"></param>
+        /// <returns></returns>
         public static IEnumerable<AttributeSyntax> FindAttributes(this ClassDeclarationSyntax classDeclarationSyntax, SemanticModel semanticModel, string @namespace, string attributeName)
         {
             if (classDeclarationSyntax is null)

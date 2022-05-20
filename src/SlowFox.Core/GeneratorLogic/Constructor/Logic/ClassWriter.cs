@@ -3,27 +3,72 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SlowFox.Core.Logic.Constructor
+namespace SlowFox.Core.GeneratorLogic.Constructor.Logic
 {
+    /// <summary>
+    /// Builds the contents of the class
+    /// </summary>
     public class ClassWriter
     {
+        /// <summary>
+        /// The name of the class
+        /// </summary>
         public string ClassName { get; set; }
+        /// <summary>
+        /// The list of namespaces that the class belongs within
+        /// </summary>
         public List<ParentNamespace> Namespaces { get; set; } = new List<ParentNamespace>();
+        /// <summary>
+        /// The list of using declarations to be included
+        /// </summary>
         public List<string> UsingNamespaces { get; set; } = new List<string>();
+        /// <summary>
+        /// The list of parameter names to be used in the constructor
+        /// </summary>
         public List<string> Parameters { get; set; } = new List<string>();
+        /// <summary>
+        /// The list of parameter assignments
+        /// </summary>
         public List<string> ParameterAssignments { get; set; } = new List<string>();
+        /// <summary>
+        /// The list of class members
+        /// </summary>
         public List<string> Members { get; set; } = new List<string>();
-        public bool IsNested => ParentClasses?.Any() ?? false;
+        /// <summary>
+        /// The list of parent classes that the class belongs in
+        /// </summary>
         public List<(string className, string modifiers)> ParentClasses { get; set; } = new List<(string className, string modifiers)>();
+        /// <summary>
+        /// The modifier for the class
+        /// </summary>
         public string Modifier { get; set; }
+        /// <summary>
+        /// The list of base parameters
+        /// </summary>
         public List<BaseParameter> BaseParameters { get; set; } = new List<BaseParameter>();
+        /// <summary>
+        /// Whether the constructor should be protected
+        /// </summary>
         public bool GenerateProtectedConstructor { get; set; }
+        /// <summary>
+        /// The name of the file that is to be used to write the class definition to
+        /// </summary>
         public string OutputName { get; set; }
+        /// <summary>
+        /// The full name of the class
+        /// </summary>
         public string FullTypeName { get; set; }
+        /// <summary>
+        /// The list of parameter types
+        /// </summary>
         public List<TypeDetails> ParameterTypes { get; set; } = new List<TypeDetails>();
 
         private string GetIndentation(int tabIndex) => string.Concat(Enumerable.Repeat("    ", tabIndex));
 
+        /// <summary>
+        /// Renders the class file
+        /// </summary>
+        /// <returns></returns>
         public string Render()
         {
             int nestedClasses = ParentClasses?.Count() ?? 0;

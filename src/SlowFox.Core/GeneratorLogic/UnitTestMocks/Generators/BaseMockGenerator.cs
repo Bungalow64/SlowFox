@@ -4,19 +4,22 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using SlowFox.Core.Configuration;
 using SlowFox.Core.Configuration.Abstract;
-using SlowFox.Core.Configuration.UnitTestMocks;
 using SlowFox.Core.Definitions;
 using SlowFox.Core.Extensions;
-using SlowFox.Core.Logic.UnitTestMocks;
-using SlowFox.Core.UnitTestMocks.Receivers;
+using SlowFox.Core.GeneratorLogic.UnitTestMocks.Configuration;
+using SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic;
+using SlowFox.Core.GeneratorLogic.UnitTestMocks.Receivers;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 
-namespace SlowFox.Core.UnitTestMocks.Generators
+namespace SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators
 {
+    /// <summary>
+    /// The base mock generator for generating mock objects
+    /// </summary>
     public abstract class BaseMockGenerator : ISourceGenerator
     {
         private const string NamespaceMoq = "Moq";
@@ -25,11 +28,29 @@ namespace SlowFox.Core.UnitTestMocks.Generators
         private const string ExcludeMocksAttributeName = "ExcludeMocks";
         private readonly IDiagnosticGenerator noDiagnostics = new EmptyDiagnosticGenerator();
 
+        /// <summary>
+        /// The name of the test framework filename
+        /// </summary>
         protected abstract string DependencyFilename { get; }
+        /// <summary>
+        /// The using declaration that is to be included in the generated file
+        /// </summary>
         protected abstract string CustomUsing { get; }
+        /// <summary>
+        /// The root config value
+        /// </summary>
         protected abstract string RootConfig { get; }
+        /// <summary>
+        /// The name of the attribute to be used on the initialisation method (if any)
+        /// </summary>
         protected abstract string InitAttribute { get; }
+        /// <summary>
+        /// The name of the method to be used for initialisation (if any)
+        /// </summary>
         protected abstract string InitMethodName { get; }
+        /// <summary>
+        /// The diagnostics for the generator
+        /// </summary>
         protected abstract IDiagnosticGenerator Diagnostics { get; }
 
         /// <inheritdoc/>
@@ -197,7 +218,7 @@ namespace SlowFox.Core.UnitTestMocks.Generators
                         Namespaces = namespaceValues,
                         ClassName = GenerateOutputName("."),
                         Members = types.Where(p => isToBeMocked(p.type)).Select(p => $"private Mock<{p.type}> {fieldPrefix}{p.parameterName};").ToList(),
-                        ParameterAssignments = types.Where(p => isToBeMocked(p.type)).Select(p => $"{fieldPrefix}{p.parameterName} = new Mock<{p.type}>(MockBehavior.{mockBehavior});").ToList(),
+                        Assignments = types.Where(p => isToBeMocked(p.type)).Select(p => $"{fieldPrefix}{p.parameterName} = new Mock<{p.type}>(MockBehavior.{mockBehavior});").ToList(),
                         ParentClasses = parentClasses,
                         Modifier = targetClass.Key.GetModifiers(),
                         MethodSignature = methodSignature,

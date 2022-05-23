@@ -54,7 +54,7 @@ steps:
   continueOnError: true
   inputs:
     projects: |
-      **/External*/ExternalProject.Net6.Constructors.Sample.csproj
+      **/External*/*.csproj
     arguments: '--configuration $(BuildConfiguration) --no-restore /p:EmitCompilerGeneratedFiles=true /p:CompilerGeneratedFilesOutputPath=$(Build.BinariesDirectory)/GeneratedFiles'
 - task: ArchiveFiles@2
   inputs:
@@ -80,5 +80,5 @@ steps:
   inputs:
     command: test
     projects: |
-      **/External*/ExternalProject.Net6.Constructors.Sample.Tests.csproj
+      **/External*/*Tests.csproj
     arguments: '--configuration $(BuildConfiguration) --no-restore'

@@ -54,10 +54,10 @@ steps:
   inputs:
     projects: |
       **/External*/ExternalProject.Net6.Constructors.Sample.csproj
-    arguments: '--configuration $(BuildConfiguration) --no-restore'
+    arguments: '--configuration $(BuildConfiguration) --no-restore /p:EmitCompilerGeneratedFiles=true /p:CompilerGeneratedFilesOutputPath=$(Build.BinariesDirectory)/GeneratedFiles'
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '/Outputs'
+    rootFolderOrFile: '$(Build.BinariesDirectory)/GeneratedFiles'
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).Generated.zip' 
     verbose: true

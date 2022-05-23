@@ -55,6 +55,13 @@ steps:
     projects: |
       **/External*/ExternalProject.Net6.Constructors.Sample.csproj
     arguments: '--configuration $(BuildConfiguration) --no-restore'
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '/Outputs'
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).Generated.zip' 
+    verbose: true
+    condition: always()
 - task: UseDotNet@2
   displayName: 'Use .NET 3.1 Core SDK'
   inputs:

@@ -8,4 +8,8 @@
 		<PackageReference Include="SlowFox.Constructors" Version="0.*-*" />
 	</ItemGroup>
 
+	<PropertyGroup>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		<CompilerGeneratedFilesOutputPath>\Outputs\SlowFoxGenerations</CompilerGeneratedFilesOutputPath>
+	</PropertyGroup>
 </Project>

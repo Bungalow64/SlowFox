@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.Testing;
 using SlowFox.UnitTestMocks.xUnit.Generators;
 using SlowFox.UnitTestMocks.xUnit.Tests.Base;
+using System.IO;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -731,7 +732,7 @@ namespace Logic.Readers.Tests
 
         var expectedDiagnostic = DiagnosticResult
             .CompilerError("CS1729")
-            .WithSpan(@"SlowFox.UnitTestMocks.xUnit\SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator\Logic.Readers.Tests.UserReaderTests.Generated.cs", 19, 24, 19, 43)
+            .WithSpan(Path.Combine("SlowFox.UnitTestMocks.xUnit", "SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator", "Logic.Readers.Tests.UserReaderTests.Generated.cs"), 19, 24, 19, 43)
             .WithArguments("Logic.IO.UserReader", "2");
 
         await AssertFullGeneration(generated, "Logic.Readers.Tests.UserReaderTests.Generated.cs", expectedDiagnostic, classFile1, classFile2);
@@ -803,7 +804,7 @@ namespace Logic.Readers.Tests
 
         var expectedDiagnostic = DiagnosticResult
             .CompilerError("CS1729")
-            .WithSpan(@"SlowFox.UnitTestMocks.xUnit\SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator\Logic.Readers.Tests.UserReaderTests.Generated.cs", 19, 24, 19, 43)
+            .WithSpan(Path.Combine("SlowFox.UnitTestMocks.xUnit", "SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator", "Logic.Readers.Tests.UserReaderTests.Generated.cs"), 19, 24, 19, 43)
             .WithArguments("Logic.IO.UserReader", "2");
 
         await AssertFullGeneration(generated, "Logic.Readers.Tests.UserReaderTests.Generated.cs", expectedDiagnostic, classFile1, classFile2);
@@ -870,7 +871,7 @@ namespace Logic.Readers.Tests
 }";
         var expectedDiagnostic = DiagnosticResult
             .CompilerError("CS1729")
-            .WithSpan(@"SlowFox.UnitTestMocks.xUnit\SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator\Logic.Readers.Tests.InnerClassTests.Generated.cs", 17, 24, 17, 61)
+            .WithSpan(Path.Combine("SlowFox.UnitTestMocks.xUnit", "SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator", "Logic.Readers.Tests.InnerClassTests.Generated.cs"), 17, 24, 17, 61)
             .WithArguments("Logic.IO.NestedPublicClass.InnerClass", "1");
 
         await AssertFullGeneration(generated, "Logic.Readers.Tests.InnerClassTests.Generated.cs", expectedDiagnostic, classFile1, classFile2);

@@ -6,7 +6,7 @@
 		<RootNamespace>SlowFox.UnitTestMocks.NUnit</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
-		<Version>0.1.2</Version>
+		<Version>0.2.0</Version>
 		<Authors>Bungalow64</Authors>
 		<Company>Bungalow64 Technologies Ltd</Company>
 		<Product>SlowFox Unit Test Mock Generation (using NUnit)</Product>

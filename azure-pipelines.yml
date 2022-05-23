@@ -53,7 +53,7 @@ steps:
   displayName: Build (External)
   inputs:
     projects: |
-      **/External*/*.csproj
+      **/External*/ExternalProject.Net3_1.Constructors.Sample.csproj
     arguments: '--configuration $(BuildConfiguration) --no-restore'
 - task: UseDotNet@2
   displayName: 'Use .NET 3.1 Core SDK'
@@ -70,5 +70,5 @@ steps:
   inputs:
     command: test
     projects: |
-      **/External*/*Tests.csproj
+      **/External*/ExternalProject.Net3_1.Constructors.Sample.Tests.csproj
     arguments: '--configuration $(BuildConfiguration) --no-restore'

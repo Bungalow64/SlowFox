@@ -19,14 +19,14 @@ steps:
     projects: |
       src/**/*.csproj
     arguments: '--configuration $(BuildConfiguration)'
-- task: DotNetCoreCLI@2
-  displayName: Test (code)
-  inputs:
-    command: test
-    projects: |
-      **/*[Tt]ests/*.csproj
-      !**/External*/*.csproj
-    arguments: '--configuration $(BuildConfiguration)'
+- #task: DotNetCoreCLI@2
+  #displayName: Test (code)
+  #inputs:
+  #  command: test
+  #  projects: |
+  #    **/*[Tt]ests/*.csproj
+  #    !**/External*/*.csproj
+  #  arguments: '--configuration $(BuildConfiguration)'
 - task: DotNetCoreCLI@2
   displayName: Pack
   inputs:
@@ -34,7 +34,7 @@ steps:
     versioningScheme: byPrereleaseNumber
     requestedMajorVersion: 0
     requestedMinorVersion: 1
-    requestedPatchVersion: 0
+    requestedPatchVersion: 3
     packagesToPack: 'src/**/*.csproj'
 - task: DotNetCoreCLI@2
   displayName: Push
@@ -51,6 +51,7 @@ steps:
     vstsFeed: '46089223-147e-4f42-b802-450dfa09eb3b'
 - task: DotNetCoreCLI@2
   displayName: Build (External)
+  continueOnError: true
   inputs:
     projects: |
       **/External*/ExternalProject.Net6.Constructors.Sample.csproj
@@ -61,21 +62,20 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).Generated.zip' 
     verbose: true
-    condition: always()
-- task: UseDotNet@2
-  displayName: 'Use .NET 3.1 Core SDK'
-  inputs:
-    packageType: 'sdk'
-    version: '3.1.x'
-- task: UseDotNet@2
-  displayName: 'Use .NET 5 Core SDK'
-  inputs:
-    packageType: 'sdk'
-    version: '5.0.x'
-- task: DotNetCoreCLI@2
-  displayName: Test (External Projects)
-  inputs:
-    command: test
-    projects: |
-      **/External*/ExternalProject.Net6.Constructors.Sample.Tests.csproj
-    arguments: '--configuration $(BuildConfiguration) --no-restore'
+- #task: UseDotNet@2
+  #displayName: 'Use .NET 3.1 Core SDK'
+  #inputs:
+  #  packageType: 'sdk'
+  #  version: '3.1.x'
+- #task: UseDotNet@2
+  #displayName: 'Use .NET 5 Core SDK'
+  #inputs:
+  #  packageType: 'sdk'
+  #  version: '5.0.x'
+- #task: DotNetCoreCLI@2
+  #displayName: Test (External Projects)
+  #inputs:
+  #  command: test
+  #  projects: |
+  #    **/External*/ExternalProject.Net6.Constructors.Sample.Tests.csproj
+  #  arguments: '--configuration $(BuildConfiguration) --no-restore'

@@ -12,8 +12,8 @@ namespace ExternalProject.Net5.UnitTestMocks.NUnit.Sample.ConfigTests.UsingDefau
         {
             ReferenceDependencyViaUsing model = Create();
 
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(_userReader);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(_userReader, Is.Not.Null);
         }
 
         [Test]

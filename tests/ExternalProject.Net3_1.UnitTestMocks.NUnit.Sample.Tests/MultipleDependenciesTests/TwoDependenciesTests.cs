@@ -13,9 +13,9 @@ namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.MultipleDependencies
         {
             TwoDependencies model = Create();
 
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(_userReader);
-            Assert.IsNotNull(_userWriter);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(_userReader, Is.Not.Null);
+            Assert.That(_userWriter, Is.Not.Null);
         }
 
         [Test]

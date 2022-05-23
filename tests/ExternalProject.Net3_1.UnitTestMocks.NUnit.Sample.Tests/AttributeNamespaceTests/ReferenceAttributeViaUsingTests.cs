@@ -13,8 +13,8 @@ namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.AttributeNamespaceTe
         {
             ReferenceDependencyViaFullType model = Create();
 
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(_userReader);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(_userReader, Is.Not.Null);
         }
 
         [Test]

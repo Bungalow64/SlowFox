@@ -12,10 +12,10 @@ namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.MultipleDependencies
         {
             DuplicateDependency model = Create();
 
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(_userReader1);
-            Assert.IsNotNull(_userReader2);
-            Assert.IsNotNull(_userWriter);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(_userReader1, Is.Not.Null);
+            Assert.That(_userReader2, Is.Not.Null);
+            Assert.That(_userWriter, Is.Not.Null);
         }
 
         [Test]

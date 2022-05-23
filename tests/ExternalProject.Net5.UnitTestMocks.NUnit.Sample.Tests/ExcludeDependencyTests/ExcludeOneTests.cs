@@ -17,9 +17,9 @@ namespace ExternalProject.Net5.UnitTestMocks.NUnit.Sample.ExcludeDependencyTests
 
             ThreeDependencies model = Create(userCacheMock.Object);
 
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(_userReader);
-            Assert.IsNotNull(_userWriter);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(_userReader, Is.Not.Null);
+            Assert.That(_userWriter, Is.Not.Null);
         }
 
         [Test]

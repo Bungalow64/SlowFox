@@ -9,14 +9,33 @@ using System.Text;
 
 namespace SlowFox.Core.Definitions
 {
+    /// <summary>
+    /// The definition of a collection of classes
+    /// </summary>
     public class TargetClasses
     {
+        /// <summary>
+        /// The list of classes
+        /// </summary>
         public List<TargetClass> Classes { get; private set; } = new List<TargetClass>();
 
+        /// <summary>
+        /// Adds a new class
+        /// </summary>
+        /// <param name="classDeclarationSyntax"></param>
+        /// <param name="attributeSyntax"></param>
+        /// <param name="baseType"></param>
         public void Add(ClassDeclarationSyntax classDeclarationSyntax, AttributeSyntax attributeSyntax, ITypeSymbol baseType)
         {
             Classes.Add(new TargetClass(classDeclarationSyntax, attributeSyntax, baseType));
         }
+
+        /// <summary>
+        /// Finds a specific type within the list of classes
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public TargetClass Find(GeneratorExecutionContext context, ITypeSymbol type)
         {
             if (type is null)
@@ -26,6 +45,12 @@ namespace SlowFox.Core.Definitions
             return Classes.FirstOrDefault(p => p.Matches(context, type));
         }
 
+        /// <summary>
+        /// Processes each class
+        /// </summary>
+        /// <param name="diagnosticGenerator"></param>
+        /// <param name="context"></param>
+        /// <param name="skipSourceGeneration"></param>
         public void Process(IDiagnosticGenerator diagnosticGenerator, GeneratorExecutionContext context, bool skipSourceGeneration = false)
         {
             foreach (var @class in Classes)

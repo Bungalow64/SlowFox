@@ -175,7 +175,7 @@ namespace SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators
 
                     if (!types.Any())
                     {
-                        var injectClass = syntaxReceiver.ClassesToInject.Classes.FirstOrDefault(p => p.Matches(semanticModel.GetTypeInfo(targetType).Type?.ToString()));
+                        var injectClass = syntaxReceiver.ClassesToInject.Classes.FirstOrDefault(p => p.Matches(context, semanticModel.GetTypeInfo(targetType).Type));
                         if (!(injectClass is null))
                         {
                             types = injectClass.GeneratedClass.ParameterTypes.Select(p => (p.Name, p.Type)).ToList();

@@ -4,6 +4,23 @@
         <name>SlowFox.Constructors</name>
     </assembly>
     <members>
+        <member name="T:SlowFox.Constructors.Diagnostics.DiagnosticGenerator">
+            <summary>
+            The diagnostics for the generator
+            </summary>
+        </member>
+        <member name="P:SlowFox.Constructors.Diagnostics.DiagnosticGenerator.UnexpectedErrorDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Constructors.Diagnostics.DiagnosticGenerator.InvalidConfigOptionDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Constructors.Diagnostics.DiagnosticGenerator.HasUnexpectedErrorDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Constructors.Diagnostics.DiagnosticGenerator.HasInvalidConfigOptionDiagnostic">
+            <inheritdoc/>
+        </member>
         <member name="T:SlowFox.Constructors.Generators.ConstructorGenerator">
             <summary>
             Source generator for generating constructors

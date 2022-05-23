@@ -5,28 +5,36 @@ using SlowFox.Core.GeneratorLogic.Constructor.Logic;
 
 namespace SlowFox.Core.Definitions
 {
+    /// <summary>
+    /// Handles the definition of a target glass
+    /// </summary>
     public class TargetClass
     {
         internal ClassDeclarationSyntax ClassDeclarationSyntax { get; set; }
         internal AttributeSyntax AttributeSyntax { get; set; }
         internal ITypeSymbol BaseType { get; set; }
-        public ClassWriter GeneratedClass { get; set; }
         internal TargetClass BaseClass { get; set; }
         internal bool IsPending { get; set; } = true;
         internal bool IsProcessing { get; set; }
         internal bool HasBase => !(BaseType is null);
+        /// <summary>
+        /// The generated class
+        /// </summary>
+        public ClassWriter GeneratedClass { get; set; }
 
-        public bool Matches(string fullTypeName)
+        /// <summary>
+        /// Whether the supplied type matches the type
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        internal bool Matches(GeneratorExecutionContext context, ITypeSymbol type)
         {
-            if (string.IsNullOrWhiteSpace(fullTypeName))
+            if (type is null)
             {
                 return false;
             }
-            return GeneratedClass?.FullTypeName == $"{fullTypeName}";
-        }
 
-        internal bool Matches(GeneratorExecutionContext context, ITypeSymbol type)
-        {
             var semanticModel = context.Compilation.GetSemanticModel(ClassDeclarationSyntax.SyntaxTree);
 
             var currentType = semanticModel.GetDeclaredSymbol(ClassDeclarationSyntax);

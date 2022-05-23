@@ -168,7 +168,6 @@ namespace SlowFox.Core.GeneratorLogic.Constructor.Logic
                 BaseParameters = baseParameters,
                 GenerateProtectedConstructor = classDeclaration.Modifiers.Any(p => p.Value?.Equals("abstract") ?? false),
                 OutputName = $"{string.Join(".", namespaceValues.Select(p => p.NamespaceName))}.{GenerateOutputName()}.Generated.cs",
-                FullTypeName = $"{string.Join(".", namespaceValues.Select(p => p.NamespaceName))}.{GenerateOutputName(".")}",
                 ParameterTypes = names
             };
 

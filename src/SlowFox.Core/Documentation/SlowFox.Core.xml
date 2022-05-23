@@ -133,6 +133,117 @@
             </summary>
             <param name="syntax"></param>
         </member>
+        <member name="T:SlowFox.Core.Definitions.TargetClass">
+            <summary>
+            Handles the definition of a target glass
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TargetClass.GeneratedClass">
+            <summary>
+            The generated class
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.TargetClass.Matches(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Whether the supplied type matches the type
+            </summary>
+            <param name="context"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SlowFox.Core.Definitions.TargetClasses">
+            <summary>
+            The definition of a collection of classes
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TargetClasses.Classes">
+            <summary>
+            The list of classes
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.TargetClasses.Add(Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.CSharp.Syntax.AttributeSyntax,Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Adds a new class
+            </summary>
+            <param name="classDeclarationSyntax"></param>
+            <param name="attributeSyntax"></param>
+            <param name="baseType"></param>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.TargetClasses.Find(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Finds a specific type within the list of classes
+            </summary>
+            <param name="context"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.TargetClasses.Process(SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator,Microsoft.CodeAnalysis.GeneratorExecutionContext,System.Boolean)">
+            <summary>
+            Processes each class
+            </summary>
+            <param name="diagnosticGenerator"></param>
+            <param name="context"></param>
+            <param name="skipSourceGeneration"></param>
+        </member>
+        <member name="T:SlowFox.Core.Definitions.TypeDetails">
+            <summary>
+             The definition of a type
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.TypeName">
+            <summary>
+            The original name of the type
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.ShortTypeName">
+            <summary>
+            The short name of the type
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.Name">
+            <summary>
+            The generated name of the type
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.IsNullable">
+            <summary>
+            Whether the type is nullable
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.RequiresPrefix">
+            <summary>
+            Whether the type requires a prefix
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.InputName">
+            <summary>
+            The parameter name of the type
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.FieldPrefix">
+            <summary>
+            The prefix of the field
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.Type">
+            <summary>
+            The type object itself
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.MemberName">
+            <summary>
+            The member name of the type
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.TypeDetails.#ctor(Microsoft.CodeAnalysis.SemanticModel,Microsoft.CodeAnalysis.CSharp.Syntax.TypeSyntax,System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            The constructor
+            </summary>
+            <param name="semanticModel"></param>
+            <param name="typeSyntax"></param>
+            <param name="existingNames"></param>
+            <param name="fieldPrefix"></param>
+        </member>
         <member name="T:SlowFox.Core.Extensions.ClassDeclarationSyntaxExtensions">
             <summary>
             The extension methods for <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax"/> objects
@@ -269,11 +380,6 @@
         <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.OutputName">
             <summary>
             The name of the file that is to be used to write the class definition to
-            </summary>
-        </member>
-        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.FullTypeName">
-            <summary>
-            The full name of the class
             </summary>
         </member>
         <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.ParameterTypes">

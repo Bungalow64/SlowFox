@@ -55,10 +55,6 @@ namespace SlowFox.Core.GeneratorLogic.Constructor.Logic
         /// </summary>
         public string OutputName { get; set; }
         /// <summary>
-        /// The full name of the class
-        /// </summary>
-        public string FullTypeName { get; set; }
-        /// <summary>
         /// The list of parameter types
         /// </summary>
         public List<TypeDetails> ParameterTypes { get; set; } = new List<TypeDetails>();

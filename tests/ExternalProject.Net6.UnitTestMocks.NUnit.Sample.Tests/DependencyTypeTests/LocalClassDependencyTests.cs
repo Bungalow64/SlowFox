@@ -11,8 +11,8 @@ namespace ExternalProject.Net6.UnitTestMocks.NUnit.Sample.Tests.DependencyTypeTe
         {
             LocalClassDependency model = Create();
 
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(_localValue);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(_localValue, Is.Not.Null);
         }
 
         [Test]

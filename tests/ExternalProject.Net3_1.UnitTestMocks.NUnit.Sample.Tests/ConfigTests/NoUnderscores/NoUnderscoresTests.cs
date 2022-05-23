@@ -12,8 +12,8 @@ namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.ConfigTests.NoUnders
         {
             ReferenceDependencyViaUsing model = Create();
 
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(userReader);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(userReader, Is.Not.Null);
         }
 
         [Test]

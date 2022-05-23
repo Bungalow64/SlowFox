@@ -12,8 +12,8 @@ namespace ExternalProject.Net5.UnitTestMocks.NUnit.Sample.ConfigTests.NoUndersco
         {
             ReferenceDependencyViaUsing model = Create();
 
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(userReader);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(userReader, Is.Not.Null);
         }
 
         [Test]

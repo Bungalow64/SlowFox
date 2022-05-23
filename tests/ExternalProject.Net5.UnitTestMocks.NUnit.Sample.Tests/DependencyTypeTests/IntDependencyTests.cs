@@ -13,8 +13,8 @@ namespace ExternalProject.Net5.UnitTestMocks.NUnit.Sample.Tests.DependencyTypeTe
             const int index = 1001;
             IntDependency model = Create(index);
 
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(_userReader);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(_userReader, Is.Not.Null);
         }
 
         [Test]

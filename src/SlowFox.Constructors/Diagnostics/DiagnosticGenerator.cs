@@ -3,6 +3,9 @@ using SlowFox.Core.Configuration;
 
 namespace SlowFox.Constructors.Diagnostics
 {
+    /// <summary>
+    /// The diagnostics for the generator
+    /// </summary>
     public class DiagnosticGenerator : EmptyDiagnosticGenerator
     {
         private static readonly DiagnosticDescriptor _unexpectedErrorDiagnostic = new DiagnosticDescriptor(
@@ -23,12 +26,16 @@ namespace SlowFox.Constructors.Diagnostics
             helpLinkUri: "https://github.com/Bungalow64/SlowFox/src/SlowFox.Constructors/Documentation/RuleDocumentation.md",
             isEnabledByDefault: true);
 
+        /// <inheritdoc/>
         public override DiagnosticDescriptor UnexpectedErrorDiagnostic => _unexpectedErrorDiagnostic;
 
+        /// <inheritdoc/>
         public override DiagnosticDescriptor InvalidConfigOptionDiagnostic => _invalidConfigOptionDiagnostic;
 
+        /// <inheritdoc/>
         public override bool HasUnexpectedErrorDiagnostic => true;
 
+        /// <inheritdoc/>
         public override bool HasInvalidConfigOptionDiagnostic => true;
     }
 }

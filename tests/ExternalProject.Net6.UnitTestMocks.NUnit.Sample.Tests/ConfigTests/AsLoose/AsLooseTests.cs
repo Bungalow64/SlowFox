@@ -11,8 +11,8 @@ namespace ExternalProject.Net6.UnitTestMocks.NUnit.Sample.ConfigTests.AsLoose
         {
             ReferenceDependencyViaUsing model = Create();
 
-            Assert.IsNotNull(model);
-            Assert.IsNotNull(_userReader);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(_userReader, Is.Not.Null);
         }
 
         [Test]

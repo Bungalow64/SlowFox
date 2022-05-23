@@ -12,7 +12,7 @@ namespace ExternalProject.Net5.UnitTestMocks.NUnit.Sample.Tests.DependencyTypeTe
         {
             MixedSystemTypeDependencies model = Create(1001, "Jamie", 10, 20, 30, 40.4);
 
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
         }
 
         [Test]

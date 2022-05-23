@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SlowFox.UnitTestMocks.xUnit</name>
+    </assembly>
+    <members>
+        <member name="T:SlowFox.UnitTestMocks.xUnit.Diagnostics.DiagnosticGenerator">
+            <summary>
+            The diagnostics for the generator
+            </summary>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Diagnostics.DiagnosticGenerator.UnexpectedErrorDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Diagnostics.DiagnosticGenerator.NoTypeDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Diagnostics.DiagnosticGenerator.MissingDependencyDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Diagnostics.DiagnosticGenerator.InvalidConfigOptionDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Diagnostics.DiagnosticGenerator.HasUnexpectedErrorDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Diagnostics.DiagnosticGenerator.HasInvalidConfigOptionDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Diagnostics.DiagnosticGenerator.HasNoTypeDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Diagnostics.DiagnosticGenerator.HasMissingDependencyDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="T:SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator">
+            <summary>
+            Source generator for generating mocks
+            </summary>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator.DependencyFilename">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator.CustomUsing">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator.RootConfig">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator.InitAttribute">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator.InitMethodName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.xUnit.Generators.MockGenerator.Diagnostics">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

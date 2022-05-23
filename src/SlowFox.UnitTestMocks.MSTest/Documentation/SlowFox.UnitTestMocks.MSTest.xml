@@ -4,15 +4,33 @@
         <name>SlowFox.UnitTestMocks.MSTest</name>
     </assembly>
     <members>
-        <member name="T:SlowFox.UnitTestMocks.MSTest.Generators.InjectMocksAttributeGenerator">
+        <member name="T:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator">
             <summary>
-            Source generator for generating the attribute to be used for identifying classes to have mocks automatically generated
+            The diagnostics for the generator
             </summary>
         </member>
-        <member name="M:SlowFox.UnitTestMocks.MSTest.Generators.InjectMocksAttributeGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)">
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.UnexpectedErrorDiagnostic">
             <inheritdoc/>
         </member>
-        <member name="M:SlowFox.UnitTestMocks.MSTest.Generators.InjectMocksAttributeGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.NoTypeDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.MissingDependencyDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.InvalidConfigOptionDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.HasUnexpectedErrorDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.HasInvalidConfigOptionDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.HasNoTypeDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.HasMissingDependencyDiagnostic">
             <inheritdoc/>
         </member>
         <member name="T:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator">
@@ -20,10 +38,22 @@
             Source generator for generating mocks
             </summary>
         </member>
-        <member name="M:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)">
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator.DependencyFilename">
             <inheritdoc/>
         </member>
-        <member name="M:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator.CustomUsing">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator.RootConfig">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator.InitAttribute">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator.InitMethodName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator.Diagnostics">
             <inheritdoc/>
         </member>
     </members>

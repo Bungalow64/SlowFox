@@ -1,13 +1,11 @@
-using Microsoft.CodeAnalysis.Text;
 using SlowFox.Constructors.Generators;
 using SlowFox.Constructors.Tests.Base;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace SlowFox.Constructors.Tests.Generators;
 
-public class ConstructorGeneratorTests : BaseWithAttributeTest<ConstructorGenerator>
+public partial class ConstructorGeneratorTests : BaseConstructorTest<ConstructorGenerator>
 {
     [Fact]
     public async Task Class_WithAttribute_NoTypes_NothingCreated()
@@ -630,19 +628,8 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1, classFile2 },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
-                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1, classFile2);
     }
 
     [Fact]
@@ -679,19 +666,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1 },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
-                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -728,19 +703,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1 },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
-                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -776,19 +739,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1 },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
-                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -825,19 +776,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1 },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
-                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -873,19 +812,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1 },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
-                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -921,19 +848,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1 },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
-                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -968,19 +883,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1 },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
-                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -1015,19 +918,7 @@ namespace Logic.Readers
         }
     }
 }";
-        await new Verifiers.CSharpMultipleSourceGeneratorVerifier<ConstructorGenerator, InjectDependenciesAttributeGenerator>.Test
-        {
-            TestState =
-                {
-                    Sources = { classFile1 },
-                    AnalyzerConfigFiles = { ("/.editorconfig", config) },
-                    GeneratedSources =
-                    {
-                        (typeof(ConstructorGenerator), "Logic.Readers.UserReader.Generated.cs", SourceText.From(generated, Encoding.UTF8, SourceHashAlgorithm.Sha1)),
-                        (typeof(InjectDependenciesAttributeGenerator), ExpectedAttributeFileName, SourceText.From(ExpectedAttributeContents, Encoding.UTF8, SourceHashAlgorithm.Sha1))
-                    }
-                }
-        }.RunAsync();
+        await AssertGenerationWithConfig(generated, "Logic.Readers.UserReader.Generated.cs", config, classFile1);
     }
 
     [Fact]
@@ -1647,6 +1538,432 @@ namespace Logic.Readers
         public UserReader(IDatabase database)
         {
             _database = database;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithAttribute_WithTypeWithAliasAs_I_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
+@"using SlowFox;
+using I = ExternalProject.Helpers.IO.IDatabase;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(I))]
+    public partial class UserReader { }
+}";
+        var classFile2 = @"
+namespace ExternalProject.Helpers.IO
+{
+    public interface IDatabase { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using I = ExternalProject.Helpers.IO.IDatabase;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly I _i;
+
+        public UserReader(I i)
+        {
+            _i = i;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithAttribute_WithTypeWithAliasAs_i_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
+@"using SlowFox;
+using i = ExternalProject.Helpers.IO.IDatabase;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(i))]
+    public partial class UserReader { }
+}";
+        var classFile2 = @"
+namespace ExternalProject.Helpers.IO
+{
+    public interface IDatabase { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using i = ExternalProject.Helpers.IO.IDatabase;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly i _i;
+
+        public UserReader(i @i)
+        {
+            _i = @i;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithAttribute_WithTypeWithAliasAs_at_i_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
+@"using SlowFox;
+using @i = ExternalProject.Helpers.IO.IDatabase;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(@i))]
+    public partial class UserReader { }
+}";
+        var classFile2 = @"
+namespace ExternalProject.Helpers.IO
+{
+    public interface IDatabase { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using @i = ExternalProject.Helpers.IO.IDatabase;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly @i _i;
+
+        public UserReader(@i i)
+        {
+            _i = i;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithAttribute_WithTypeWithAliasAs__i_GenerateMemberAndConstructor()
+    {
+        var classFile1 =
+@"using SlowFox;
+using _i = ExternalProject.Helpers.IO.IDatabase;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(_i))]
+    public partial class UserReader { }
+}";
+        var classFile2 = @"
+namespace ExternalProject.Helpers.IO
+{
+    public interface IDatabase { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using _i = ExternalProject.Helpers.IO.IDatabase;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly _i __i;
+
+        public UserReader(_i @_i)
+        {
+            __i = @_i;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task AbstractClass_WithAttribute_GenerateProtectedConstructor()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IDatabase))]
+    public abstract partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers
+{
+    public abstract partial class UserReader
+    {
+        private readonly IDatabase _database;
+
+        protected UserReader(IDatabase database)
+        {
+            _database = database;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithGenericType_GenerateMemberWithCorrectName()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IList<IDatabase>))]
+    public partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IList<IDatabase> _databaseList;
+
+        public UserReader(IList<IDatabase> databaseList)
+        {
+            _databaseList = databaseList;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithTupleType_GenerateMemberWithCorrectName()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof((IDatabase, IReader)))]
+    public partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+    public interface IReader { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly (IDatabase, IReader) _databaseReader;
+
+        public UserReader((IDatabase, IReader) databaseReader)
+        {
+            _databaseReader = databaseReader;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithNamedTupleType_GenerateMemberWithCorrectName()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof((IDatabase db, IReader read)))]
+    public partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+    public interface IReader { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly (IDatabase db, IReader read) _databaseReader;
+
+        public UserReader((IDatabase db, IReader read) databaseReader)
+        {
+            _databaseReader = databaseReader;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithTupleTypeInGenerics_GenerateMemberWithCorrectName()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IRepository<(IDatabase, IReader)>))]
+    public partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+    public interface IReader { }
+    public interface IRepository<T> { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IRepository<(IDatabase, IReader)> _databaseReaderRepository;
+
+        public UserReader(IRepository<(IDatabase, IReader)> databaseReaderRepository)
+        {
+            _databaseReaderRepository = databaseReaderRepository;
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.UserReader.Generated.cs", classFile1, classFile2);
+    }
+
+    [Fact]
+    public async Task Class_WithNamedTupleTypeInGenerics_GenerateMemberWithCorrectName()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    [InjectDependencies(typeof(IRepository<(IDatabase db, IReader read)>))]
+    public partial class UserReader { }
+}
+";
+
+        var classFile2 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.IO
+{
+    public interface IDatabase { }
+    public interface IReader { }
+    public interface IRepository<T> { }
+}
+";
+
+        var generated =
+@"using SlowFox;
+using Logic.IO;
+using System.Collections.Generic;
+
+namespace Logic.Readers
+{
+    public partial class UserReader
+    {
+        private readonly IRepository<(IDatabase db, IReader read)> _databaseReaderRepository;
+
+        public UserReader(IRepository<(IDatabase db, IReader read)> databaseReaderRepository)
+        {
+            _databaseReaderRepository = databaseReaderRepository;
         }
     }
 }";

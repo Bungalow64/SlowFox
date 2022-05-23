@@ -1,0 +1,51 @@
+using NUnit.Framework;
+using ExternalProject.Net3_1.UnitTestMocks.Sample.InjectableDependencies;
+using ExternalProject.Net3_1.UnitTestMocks.Sample.MultipleDependenciesTests;
+using Moq;
+using System;
+
+namespace ExternalProject.Net3_1.UnitTestMocks.NUnit.Sample.ExcludeDependencyTests
+{
+    [SlowFox.InjectMocks(typeof(ThreeDependencies))]
+    [SlowFox.ExcludeMocks(new Type[] { typeof(IUserCache), typeof(IUserReader) })]
+    [TestFixture]
+    public partial class ExcludeTwoViaArrayTests
+    {
+        [Test]
+        public void Create_ObjectsExist()
+        {
+            var userCacheMock = new Mock<IUserCache>();
+            var userReaderMock = new Mock<IUserReader>();
+
+            ThreeDependencies model = Create(userReaderMock.Object, userCacheMock.Object);
+
+            Assert.That(model, Is.Not.Null);
+            Assert.That(_userWriter, Is.Not.Null);
+        }
+
+        [Test]
+        public void Mock_CanMock()
+        {
+            var userCacheMock = new Mock<IUserCache>();
+            var userReaderMock = new Mock<IUserReader>();
+
+            userCacheMock
+                .Setup(p => p.ClearCache());
+
+            userReaderMock
+                .Setup(p => p.GetName())
+                .Returns("Jamie");
+
+            ThreeDependencies model = Create(userReaderMock.Object, userCacheMock.Object);
+
+            Assert.That(model.GetName(), Is.EqualTo("Jamie"));
+            model.ClearCache();
+
+            userCacheMock
+                .Verify(p => p.ClearCache(), Times.Once);
+
+            userReaderMock
+                .Verify(p => p.GetName(), Times.Once);
+        }
+    }
+}

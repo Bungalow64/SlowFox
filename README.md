@@ -1,21 +1,23 @@
 # Introduction 
-SlowFox is a suite of .NET source generators, aiming to reduce the amount of repetitive code you need to write and maintain.  Since they're all written using source generators, there's no run-time cost (so no reflection involved), instead the code is created at build time.  Plus, using a supported IDE (like Visual Studio 2019/2022), you can see what's being generated immediately when you save your source code.
+SlowFox is a suite of .NET source generators, aiming to reduce the amount of repetitive code you need to write and maintain.
 
-SloxFox.Constructors is a generator that allows you to define the injectable dependencies for any given class, and the private class members, constructor and constructor assignments are all automatically created for you.
+Source generators incur no run-time cost (as no reflection is involved), because the code is created at build time.  Plus, using a supported IDE (like Visual Studio 2019/2022), you can see what's being generated immediately when you save your source code.
+
+There are currently 2 generators available via SlowFox:
+1. [Constructors](#slowfoxconstructors), for generating constructors and private variables
+2. [UnitTestMocks](#slowfoxunittestmocks), for generating mock objects in unit tests
+
+# SlowFox.Constructors
 
 [![](https://img.shields.io/nuget/v/SlowFox.Constructors)](https://www.nuget.org/packages/SlowFox.Constructors/)
 [![](https://img.shields.io/nuget/dt/SlowFox.Constructors)](https://www.nuget.org/packages/SlowFox.Constructors/)
-[![Build Status](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_apis/build/status/Bungalow64.SlowFox.CI?branchName=JAB-Proto)](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_build/latest?definitionId=17&branchName=JAB-Proto)
-[![Repo Size](https://img.shields.io/github/repo-size/bungalow64/slowfox)](https://github.com/Bungalow64/SlowFox)
-[![Licence](https://img.shields.io/github/license/bungalow64/slowfox)](https://github.com/Bungalow64/SlowFox)
+[![Build Status](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_apis/build/status/Bungalow64.SlowFox.CI?branchName=refs%2Fpull%2F5%2Fmerge)](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_build/latest?definitionId=17)
 [![Release Date](https://img.shields.io/github/release-date/bungalow64/slowfox?label=latest%20release)](https://github.com/Bungalow64/SlowFox)
+[![Licence](https://img.shields.io/github/license/bungalow64/slowfox)](https://github.com/Bungalow64/SlowFox)
 
-# Why use SlowFox.Constructors?
-It can sometimes get a bit tedious writing constructors, especially if you're using Dependency Injection and the constructor parameters are just a list of interfaces.  Adding a new dependency might involve adding a class member, adding a constructor parameter, and adding an assignment between the two in that constructor.  This can be quite distracting, especially if you're in the middle of a rapid prototype, or trying to get some refactoring done.
+SloxFox.Constructors is a generator that allows you to define the injectable dependencies for any given class, and the private class members, constructor and constructor assignments are all automatically created for you.
 
-Using a new attribute provided by SlowFox.Constructors, you can now just list the dependencies needed to be injected into a class, and the generator will do the rest for you.  Adding or removing a dependency is as simple as updating the list within the attribute, and the generator will automatically refresh and create the updated code.
-
-# How do I get this working?
+### How do I get it working?
 
 First off, install the NuGet package into your project:
 
@@ -52,83 +54,185 @@ namespace MySampleProject
 }
 ```
 
-And that's it!
+You can reference these private members in your original class, and you can call this constructor during DI, or call it manually, or use it in unit tests - it's as if you've written it all yourself:
 
-You can reference these private members in your original class, and you can call this constructor during DI, or call it manually, or use it in unit tests - it's as if you've written it all yourself.  However, if you change what's listed within the `InjectDependencies` attribute, this generated code will automatically update, without you having to do anything.
+```csharp
+namespace MySampleProject
+{
+    [SlowFox.InjectDependencies(typeof(IUserReader), typeof(IFileHandler))]
+    public partial class MyNewClass
+    {
+        public void SaveUserImage()
+        {
+            var image = _userReader.GetImage();
+            _fileHandler.AddFile(image);
+        }
+    }
+}
+```
 
-# But, I hate underscores.  Can I change what's generated?
+This generator is compatible with:
+- inheritance
+- abstract classes
+- generic types
+- nullable types
+- tuples
 
-Yes you can.  In a `.editorconfig` file, you can change the naming convention used so that it doesn't have a preceeding underscore.
+
+### Configuration
+
+Configuration is set in a .editorconfig file.
+
+To configure the generated code to not use underscores for member names, set the `skip_underscores` value to true:
 
 ```
 [*.cs]
 slowfox_generation.constructors.skip_underscores = true
 ```
 
-You can place this `.editorconfig` file in the root of your project to apply it everywhere, or you can put it inside a directory structure to change only classes under that area:
-
-```csharp
-namespace MySampleProject
-{
-    public partial class MyNewClass
-    {
-        private readonly IUserReader userReader;
-        private readonly IFileHandler fileHandler;
-
-        public MyNewClass(IUserReader userReader, IFileHandler fileHandler)
-        {
-            this.userReader = userReader;
-            this.fileHandler = fileHandler;
-        }
-    }
-}
-```
-
-# Can I automatically check for nulls?
-
-A common check within constructors like this is to check that the parameters are not null.  This can be set to be included in the generated file.  In your `.editorconfig` file, you can enable this:
+To include a null check (and a throw of `ArgumentNullException` if the constructor parameter is null), set `include_nullcheck` to true:
 
 ```
 [*.cs]
 slowfox_generation.constructors.include_nullcheck = true
 ```
 
-This will check if the dependency injected is null (if it's a nullable type), and throw an ArgumentNullException if it is null:
+# SlowFox.UnitTestMocks
+
+[![](https://img.shields.io/nuget/v/SlowFox.UnitTestMocks.xUnit)](https://www.nuget.org/packages/SlowFox.UnitTestMocks.xUnit/)
+[![](https://img.shields.io/nuget/dt/SlowFox.UnitTestMocks.xUnit)](https://www.nuget.org/packages/SlowFox.UnitTestMocks.xUnit/)
+[![Build Status](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_apis/build/status/Bungalow64.SlowFox.CI?branchName=refs%2Fpull%2F5%2Fmerge)](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_build/latest?definitionId=17)
+[![Release Date](https://img.shields.io/github/release-date/bungalow64/slowfox?label=latest%20release)](https://github.com/Bungalow64/SlowFox)
+[![Licence](https://img.shields.io/github/license/bungalow64/slowfox)](https://github.com/Bungalow64/SlowFox)
+
+SlowFox.UnitTestMocks is a generator that creates mock objects (using [Moq](https://www.nuget.org/packages/Moq/)) for the dependencies of a class that is to be tested.
+
+There are packages that are designed for [xUnit](https://www.nuget.org/packages/SlowFox.UnitTestMocks.xUnit/), [NUnit](https://www.nuget.org/packages/SlowFox.UnitTestMocks.NUnit/) and [MSTest2](https://www.nuget.org/packages/SlowFox.UnitTestMocks.MSTest/).
+
+### How do I get it working?
+
+Firstly, choose and install the NuGet package relating to your testing framework:
+
+| Framework | Package |
+| --------- | ------- |
+| xUnit     | [![](https://img.shields.io/nuget/v/SlowFox.UnitTestMocks.xUnit)](https://www.nuget.org/packages/SlowFox.UnitTestMocks.xUnit/) |
+| NUnit     | [![](https://img.shields.io/nuget/v/SlowFox.UnitTestMocks.NUnit)](https://www.nuget.org/packages/SlowFox.UnitTestMocks.NUnit/) |
+| MSTest2   | [![](https://img.shields.io/nuget/v/SlowFox.UnitTestMocks.MSTest)](https://www.nuget.org/packages/SlowFox.UnitTestMocks.MSTest/) |
+
+Next, create a new test class, mark it as `partial` and apply the `InjectMocks` attribute, indicating the class that you're going to be tested:
 
 ```csharp
 namespace MySampleProject
 {
-    public partial class MyNewClass
+    [SlowFox.InjectMocks(typeof(UserHandler))]
+    public partial class UserHandlerTests
     {
-        private readonly IUserReader _userReader;
-        private readonly IFileHandler _fileHandler;
+    }
+}
+```
 
-        public MyNewClass(IUserReader userReader, IFileHandler fileHandler)
+SlowFox will then generate mock objects for each dependency of the selected class, and provide a `Create` method that instantiates a new instance of the selected class with the mock objects used as dependencies:
+
+```csharp
+namespace MySampleProject
+{
+    public partial class UserHandlerTests
+    {
+        private Mock<IDatabase> _database;
+        private Mock<ILogger> _logger;
+
+        public UserHandlerTests()
         {
-            _userReader = userReader ?? throw new System.ArgumentNullException(nameof(userReader));
-            _fileHandler = fileHandler ?? throw new System.ArgumentNullException(nameof(fileHandler));
+            _database = new Mock<IDatabase>(MockBehavior.Strict);
+            _logger = new Mock<ILogger>(MockBehavior.Strict);
+        }
+
+        private UserHandler Create()
+        {
+            return new UserHandler(_database.Object, _logger.Object);
         }
     }
 }
 ```
 
-# FAQ
+> For NUnit and MSTest, the mocks are instantiated in a `Setup` and `Init` method respectively, instead of in a constructor
 
-## Sometimes IntelliSense doesn't update properly, is there something wrong?
+You can call `Create()` in your tests to get the object to test, and you can reference the mock objects to set up any pre-defined responses, or to perform validation:
 
-> It appears as though the tooling for source generators aren't 100% there yet, so if you find that IntelliSense is warning you that something doesn't exist that you'd expect, or if you go and find the generated code and it's not updated following a change, it may be that you need to give a bit of a kick-start to get going again.  If a rebuild doesn't fix it, try closing and opening your IDE (especially if you're using Visual Studio), and you should see the updates then.  This only seems to affect IDEs though - the actual .NET build seems really solid for generated code.
+```csharp
+namespace MySampleProject
+{
+    [SlowFox.InjectMocks(typeof(UserHandler))]
+    public partial class UserHandlerTests
+    {
+        [Fact]
+        public void VerifyAddUser()
+        {
+            _database
+                .Setup(p => p.Save(It.IsAny<User>()));
 
-## I've applied the `InjectDependencies` attribute but I get an error for "Missing partial modifier on declaration of type 'MyCurrentClass'; another partial declaration of this type exists'".  What do I do?
+            UserHandler reader = Create();
 
-> You've not set your class to be partial.  Do that, and the error will be fixed.
+            reader.CreateNewUser();
 
-## Can I use this to generate constructors for nested classes?
+            _database
+                .Verify(p => p.Save(It.IsAny<User>()), Times.Once);
+        }
+    }
+}
+```
 
-> Yes.
+You are able to exclude specific types from being mocked, by using the `ExcludeMocks` attribute.  Any type specified within this attribute will be added as a parameter on the `Create` method, so you can provide a value from within your test:
 
-## What happens if I don't list any types in the `InjectDependencies` attribute?
+```csharp
+namespace MySampleProject
+{
+    [SlowFox.InjectMocks(typeof(UserHandler))]
+    [SlowFox.ExcludeMocks(typeof(ILogger))]
+    public partial class UserHandlerTests
+    {
+        [Fact]
+        public void VerifyAddUser()
+        {
+            _database
+                .Setup(p => p.Save(It.IsAny<User>()));
 
-> Nothing.  No code is generated for that class.
+            ILogger testLogger = BuildTestLogger();
+
+            UserHandler reader = Create(testLogger);
+
+            reader.CreateNewUser();
+
+            _database
+                .Verify(p => p.Save(It.IsAny<User>()), Times.Once);
+        }
+    }
+}
+```
+
+> Note that types that cannot be mocked (e.g., a static or sealed type) will automatically be excluded from being mocked, and will be treated in the same way as types specified in the `ExcludeMocks` attribute
+
+This generator is compatible with constructors that have been generated using [SlowFox.Constructors](#slowfoxconstructors).
+
+### Configuration
+
+Configuration is set in a .editorconfig file.
+
+To configure the generated code to not use underscores for member names, set the `skip_underscores` value to true:
+
+```
+[*.cs]
+slowfox_generation.unit_test_mocks.xunit.skip_underscores = true
+```
+
+To create the mocks using the `Loose` behaviour (instead of the default of `Strict`), set the `use_loose` value to be true:
+
+```
+[*.cs]
+slowfox_generation.unit_test_mocks.xunit.use_loose = true
+```
+
+> These configuration keys are different for NUnit and MSTest.  For NUnit the configuration prefix is `slowfox_generation.unit_test_mocks.nunit` and for MSTest the prefix is `slowfox_generation.unit_test_mocks.mstest`
 
 # Can I help fix any bugs with this, or add new capabilities?
 

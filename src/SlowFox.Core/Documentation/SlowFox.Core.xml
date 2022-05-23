@@ -1,0 +1,583 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SlowFox.Core</name>
+    </assembly>
+    <members>
+        <member name="T:SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator">
+            <summary>
+            The interface for diagnostic definitions
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator.UnexpectedErrorDiagnostic">
+            <summary>
+            The diagnostic for unexpected errors
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator.HasUnexpectedErrorDiagnostic">
+            <summary>
+            Whether there is a diagnostic for unexpected errors
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator.InvalidConfigOptionDiagnostic">
+            <summary>
+            The diagnostic for an invalid config option
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator.HasInvalidConfigOptionDiagnostic">
+            <summary>
+            Whether there is a diagnostic for an invalid config option
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator.NoTypeDiagnostic">
+            <summary>
+            The diagnostic for when a type is missing
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator.HasNoTypeDiagnostic">
+            <summary>
+            Whether there is a diagnostic for when a type is missing
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator.MissingDependencyDiagnostic">
+            <summary>
+            The diagnostic for when a dependency is missing
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator.HasMissingDependencyDiagnostic">
+            <summary>
+            Whether there is a diagnostic for when a dependency is missing
+            </summary>
+        </member>
+        <member name="T:SlowFox.Core.Configuration.EmptyDiagnosticGenerator">
+            <summary>
+            Class defining a diagnostic generator that won't return any diagnostic warnings.  This is to be used for cases where errors should be ignored.
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.EmptyDiagnosticGenerator.UnexpectedErrorDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.EmptyDiagnosticGenerator.HasUnexpectedErrorDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.EmptyDiagnosticGenerator.InvalidConfigOptionDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.EmptyDiagnosticGenerator.HasInvalidConfigOptionDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.EmptyDiagnosticGenerator.NoTypeDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.EmptyDiagnosticGenerator.HasNoTypeDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.EmptyDiagnosticGenerator.MissingDependencyDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.EmptyDiagnosticGenerator.HasMissingDependencyDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="T:SlowFox.Core.Definitions.BaseParameter">
+            <summary>
+            Defines a parameter used in a base class
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.BaseParameter.Name">
+            <summary>
+            The name of the parameter
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.BaseParameter.Type">
+            <summary>
+            The type of the parameter
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.BaseParameter.AlreadyParameter">
+            <summary>
+            Whether the type already exists as a dependency in the parent class
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.BaseParameter.#ctor(System.String,Microsoft.CodeAnalysis.ITypeSymbol,System.Boolean)">
+            <summary>
+            Creates a new instance
+            </summary>
+            <param name="name"></param>
+            <param name="type"></param>
+            <param name="alreadyParameter"></param>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.BaseParameter.Clone">
+            <summary>
+            Clones the object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SlowFox.Core.Definitions.ParentNamespace">
+            <summary>
+            The definition of a parent namespace
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.ParentNamespace.NamespaceName">
+            <summary>
+            The name of the namespace
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.ParentNamespace.UsingDirectives">
+            <summary>
+            The collection of using directives for the namespace
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.ParentNamespace.#ctor(Microsoft.CodeAnalysis.CSharp.Syntax.BaseNamespaceDeclarationSyntax)">
+            <summary>
+            Constructs a new <see cref="T:SlowFox.Core.Definitions.ParentNamespace"/> instance
+            </summary>
+            <param name="syntax"></param>
+        </member>
+        <member name="T:SlowFox.Core.Definitions.TargetClass">
+            <summary>
+            Handles the definition of a target glass
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TargetClass.GeneratedClass">
+            <summary>
+            The generated class
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.TargetClass.Matches(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Whether the supplied type matches the type
+            </summary>
+            <param name="context"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SlowFox.Core.Definitions.TargetClasses">
+            <summary>
+            The definition of a collection of classes
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TargetClasses.Classes">
+            <summary>
+            The list of classes
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.TargetClasses.Add(Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.CSharp.Syntax.AttributeSyntax,Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Adds a new class
+            </summary>
+            <param name="classDeclarationSyntax"></param>
+            <param name="attributeSyntax"></param>
+            <param name="baseType"></param>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.TargetClasses.Find(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Finds a specific type within the list of classes
+            </summary>
+            <param name="context"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.TargetClasses.Process(SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator,Microsoft.CodeAnalysis.GeneratorExecutionContext,System.Boolean)">
+            <summary>
+            Processes each class
+            </summary>
+            <param name="diagnosticGenerator"></param>
+            <param name="context"></param>
+            <param name="skipSourceGeneration"></param>
+        </member>
+        <member name="T:SlowFox.Core.Definitions.TypeDetails">
+            <summary>
+             The definition of a type
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.TypeName">
+            <summary>
+            The original name of the type
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.ShortTypeName">
+            <summary>
+            The short name of the type
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.Name">
+            <summary>
+            The generated name of the type
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.IsNullable">
+            <summary>
+            Whether the type is nullable
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.RequiresPrefix">
+            <summary>
+            Whether the type requires a prefix
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.InputName">
+            <summary>
+            The parameter name of the type
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.FieldPrefix">
+            <summary>
+            The prefix of the field
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.Type">
+            <summary>
+            The type object itself
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Definitions.TypeDetails.MemberName">
+            <summary>
+            The member name of the type
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Definitions.TypeDetails.#ctor(Microsoft.CodeAnalysis.SemanticModel,Microsoft.CodeAnalysis.CSharp.Syntax.TypeSyntax,System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            The constructor
+            </summary>
+            <param name="semanticModel"></param>
+            <param name="typeSyntax"></param>
+            <param name="existingNames"></param>
+            <param name="fieldPrefix"></param>
+        </member>
+        <member name="T:SlowFox.Core.Extensions.ClassDeclarationSyntaxExtensions">
+            <summary>
+            The extension methods for <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax"/> objects
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Extensions.ClassDeclarationSyntaxExtensions.GetModifiers(Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax)">
+            <summary>
+            Gets the modifiers for the given class
+            </summary>
+            <param name="classDeclarationSyntax"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SlowFox.Core.Extensions.ClassDeclarationSyntaxExtensions.FindAttributes(Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.SemanticModel,System.String,System.String)">
+            <summary>
+            Finds the attributes on the given class
+            </summary>
+            <param name="classDeclarationSyntax"></param>
+            <param name="semanticModel"></param>
+            <param name="namespace"></param>
+            <param name="attributeName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SlowFox.Core.Extensions.ITypeSymbolExtensions">
+            <summary>
+            The extension methods for <see cref="T:Microsoft.CodeAnalysis.ITypeSymbol"/> objects
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Extensions.ITypeSymbolExtensions.CanBeMocked(Microsoft.CodeAnalysis.ITypeSymbol)">
+            <summary>
+            Whether the specified type can be mocked
+            </summary>
+            <param name="symbol"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SlowFox.Core.Extensions.SyntaxNodeExtensions">
+            <summary>
+            Extension methods for <see cref="T:Microsoft.CodeAnalysis.SyntaxNode"/> objects
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Extensions.SyntaxNodeExtensions.GetParentClasses(Microsoft.CodeAnalysis.SyntaxNode)">
+            <summary>
+            Gets the list of parent classes
+            </summary>
+            <param name="parent"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SlowFox.Core.Extensions.SyntaxNodeExtensions.GetNamespace(Microsoft.CodeAnalysis.SyntaxNode)">
+            <summary>
+            Gets the list of namespaces in which the object is defined
+            </summary>
+            <param name="parent"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SlowFox.Core.GeneratorLogic.Constructor.Configuration.CustomConfiguration">
+            <summary>
+            The configuration for the constructor generator
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Configuration.CustomConfiguration.SkipUnderscore">
+            <summary>
+            Whether underscores should be ignored
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Configuration.CustomConfiguration.IncludeNullCheck">
+            <summary>
+            Whether there should be a null check for the constructor parameters
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.GeneratorLogic.Constructor.Configuration.CustomConfiguration.#ctor(Microsoft.CodeAnalysis.GeneratorExecutionContext,System.String,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.CSharp.Syntax.AttributeSyntax,SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator)">
+            <summary>
+            Instantiates the configuration
+            </summary>
+            <param name="context"></param>
+            <param name="rootConfig"></param>
+            <param name="classDeclarationSyntax"></param>
+            <param name="attribute"></param>
+            <param name="diagnostic"></param>
+        </member>
+        <member name="T:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter">
+            <summary>
+            Builds the contents of the class
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.ClassName">
+            <summary>
+            The name of the class
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.Namespaces">
+            <summary>
+            The list of namespaces that the class belongs within
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.UsingNamespaces">
+            <summary>
+            The list of using declarations to be included
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.Parameters">
+            <summary>
+            The list of parameter names to be used in the constructor
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.ParameterAssignments">
+            <summary>
+            The list of parameter assignments
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.Members">
+            <summary>
+            The list of class members
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.ParentClasses">
+            <summary>
+            The list of parent classes that the class belongs in
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.Modifier">
+            <summary>
+            The modifier for the class
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.BaseParameters">
+            <summary>
+            The list of base parameters
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.GenerateProtectedConstructor">
+            <summary>
+            Whether the constructor should be protected
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.OutputName">
+            <summary>
+            The name of the file that is to be used to write the class definition to
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.ParameterTypes">
+            <summary>
+            The list of parameter types
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.GeneratorLogic.Constructor.Logic.ClassWriter.Render">
+            <summary>
+            Renders the class file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SlowFox.Core.GeneratorLogic.Constructor.Logic.DependencyReader">
+            <summary>
+            Detects details of all dependencies
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.GeneratorLogic.Constructor.Logic.DependencyReader.Read(Microsoft.CodeAnalysis.GeneratorExecutionContext,SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.CSharp.Syntax.AttributeSyntax,SlowFox.Core.Definitions.TargetClass)">
+            <summary>
+            Reads and processes the dependencies
+            </summary>
+            <param name="context"></param>
+            <param name="diagnosticGenerator"></param>
+            <param name="classDeclaration"></param>
+            <param name="attribute"></param>
+            <param name="baseTargetClass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SlowFox.Core.GeneratorLogic.Constructor.Logic.DependencyReader.FindAttribute(Microsoft.CodeAnalysis.SemanticModel,Microsoft.CodeAnalysis.SyntaxNode)">
+            <summary>
+            Finds the attribute for the class
+            </summary>
+            <param name="semanticModel"></param>
+            <param name="node"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SlowFox.Core.GeneratorLogic.UnitTestMocks.Configuration.CustomConfiguration">
+            <summary>
+            The configuration for the unit test mock generator
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Configuration.CustomConfiguration.SkipUnderscore">
+            <summary>
+            Whether underscores should be ignored
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Configuration.CustomConfiguration.UseLoose">
+            <summary>
+            Whether the mock objects should be set as loose
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.GeneratorLogic.UnitTestMocks.Configuration.CustomConfiguration.#ctor(Microsoft.CodeAnalysis.GeneratorExecutionContext,System.String,System.Collections.Generic.KeyValuePair{Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.CSharp.Syntax.AttributeSyntax},SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator)">
+            <summary>
+            Instantiates the configuration
+            </summary>
+            <param name="context"></param>
+            <param name="rootConfig"></param>
+            <param name="targetClass"></param>
+            <param name="diagnostic"></param>
+        </member>
+        <member name="T:SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators.BaseMockGenerator">
+            <summary>
+            The base mock generator for generating mock objects
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators.BaseMockGenerator.DependencyFilename">
+            <summary>
+            The name of the test framework filename
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators.BaseMockGenerator.CustomUsing">
+            <summary>
+            The using declaration that is to be included in the generated file
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators.BaseMockGenerator.RootConfig">
+            <summary>
+            The root config value
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators.BaseMockGenerator.InitAttribute">
+            <summary>
+            The name of the attribute to be used on the initialisation method (if any)
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators.BaseMockGenerator.InitMethodName">
+            <summary>
+            The name of the method to be used for initialisation (if any)
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators.BaseMockGenerator.Diagnostics">
+            <summary>
+            The diagnostics for the generator
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators.BaseMockGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators.BaseMockGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter">
+            <summary>
+            Builds the contents of the class
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.ClassName">
+            <summary>
+            The name of the class
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.Namespaces">
+            <summary>
+            The list of namespaces that the class belongs within
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.UsingNamespaces">
+            <summary>
+            The list of using declarations to be included
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.Assignments">
+            <summary>
+            The list of assignments
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.Members">
+            <summary>
+            The list of class members
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.ParentClasses">
+            <summary>
+            The list of parent classes that the class belongs in
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.Modifier">
+            <summary>
+            The modifier for the class
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.MethodSignature">
+            <summary>
+            The method signature
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.MethodBody">
+            <summary>
+            The body of the method
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.InitAttribute">
+            <summary>
+            The attribute to be used for the init method
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.InitMethodName">
+            <summary>
+            The name to be used for the init method
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.GeneratorLogic.UnitTestMocks.Logic.ClassWriter.Render">
+            <summary>
+            Renders the class file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SlowFox.Core.GeneratorLogic.UnitTestMocks.Receivers.MockGeneratorReceiver">
+            <summary>
+            The receiver for generating unit test mocks
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Receivers.MockGeneratorReceiver.ClassesToAugment">
+            <summary>
+            The list of classes that have been detected as needing generation
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.GeneratorLogic.UnitTestMocks.Receivers.MockGeneratorReceiver.ClassesToInject">
+            <summary>
+            The list of classes that are to have constructors generated
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.GeneratorLogic.UnitTestMocks.Receivers.MockGeneratorReceiver.OnVisitSyntaxNode(Microsoft.CodeAnalysis.GeneratorSyntaxContext)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SlowFox.Core.Logic.NameGenerator">
+            <summary>
+            A static helper class to generate property and parameter names
+            </summary>
+        </member>
+        <member name="M:SlowFox.Core.Logic.NameGenerator.GetName(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Gets the name based on the type provided
+            </summary>
+            <param name="typeName">The name of the type</param>
+            <param name="usedNames">The list of names already used, to avoid conflicts</param>
+            <returns>Returns the generated name</returns>
+        </member>
+    </members>
+</doc>

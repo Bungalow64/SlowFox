@@ -1,42 +1,28 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections.Generic;
-using System.Linq;
+using SlowFox.Core.Definitions;
+using SlowFox.Core.GeneratorLogic.Constructor.Logic;
 
 namespace SlowFox.Constructors.Receivers
 {
+    /// <summary>
+    /// The receiver for generating constructors
+    /// </summary>
     internal class ConstructorGeneratorReceiver : ISyntaxContextReceiver
     {
-        private const string InjectableClassAttributeName1 = "SlowFox.InjectDependenciesAttribute";
-        private const string InjectableClassAttributeName2 = "SlowFox.InjectDependencies";
-        private const string InjectableClassAttributeName3 = "InjectDependencies";
+        /// <summary>
+        /// The list of classes that have been detected as needing generation
+        /// </summary>
+        public TargetClasses ClassesToAugment { get; private set; } = new TargetClasses();
 
-        public List<KeyValuePair<ClassDeclarationSyntax, AttributeSyntax>> ClassesToAugment { get; private set; } = new List<KeyValuePair<ClassDeclarationSyntax, AttributeSyntax>>();
-
+        /// <inheritdoc/>
         public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
         {
-            if (context.Node is ClassDeclarationSyntax cds)
+            (ClassDeclarationSyntax cds, AttributeSyntax attribute, ITypeSymbol baseType) = DependencyReader.FindAttribute(context.SemanticModel, context.Node);
+
+            if (attribute != null)
             {
-                bool matches(string type)
-                {
-                    if (string.IsNullOrEmpty(type))
-                    {
-                        return false;
-                    }
-                    return type.Equals(InjectableClassAttributeName1) || type.Equals(InjectableClassAttributeName2) || type.Equals(InjectableClassAttributeName3);
-                }
-
-                var attribute = cds
-                    .AttributeLists
-                    .SelectMany(p => p.Attributes)
-                    .Where(p => p.DescendantTokens().Any(dt => dt.IsKind(SyntaxKind.IdentifierToken) && dt.Parent != null && matches(context.SemanticModel.GetTypeInfo(dt.Parent).Type?.ToString())))
-                    .FirstOrDefault();
-
-                if (attribute != null)
-                {
-                    ClassesToAugment.Add(new KeyValuePair<ClassDeclarationSyntax, AttributeSyntax>(cds, attribute));
-                }
+                ClassesToAugment.Add(cds, attribute, baseType);
             }
         }
     }

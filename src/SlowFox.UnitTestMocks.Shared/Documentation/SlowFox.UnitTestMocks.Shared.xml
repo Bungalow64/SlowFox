@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SlowFox.UnitTestMocks.Shared</name>
+    </assembly>
+    <members>
+        <member name="T:SlowFox.ExcludeMocksAttribute">
+            <summary>
+            The attribute used to exclude specific types from being created as mock objects
+            </summary>
+        </member>
+        <member name="P:SlowFox.ExcludeMocksAttribute.Types">
+            <summary>
+            The list of types to be excluded
+            </summary>
+        </member>
+        <member name="M:SlowFox.ExcludeMocksAttribute.#ctor">
+            <summary>
+            The default constructor for the attribute, defining no types to be excluded
+            </summary>
+        </member>
+        <member name="M:SlowFox.ExcludeMocksAttribute.#ctor(System.Type[])">
+            <summary>
+            The constructor for the attribute, defining one or more types to be excluded
+            </summary>
+            <param name="types">The array of types to be excluded</param>
+            <remarks>All excluded types will be created as parameters on the generated Create method</remarks>
+        </member>
+        <member name="T:SlowFox.InjectMocksAttribute">
+            <summary>
+            The attribute used to specify the type for which the mocks will be generated
+            </summary>
+        </member>
+        <member name="P:SlowFox.InjectMocksAttribute.Type">
+            <summary>
+            The type for which the mocks will be generated
+            </summary>
+        </member>
+        <member name="M:SlowFox.InjectMocksAttribute.#ctor">
+            <summary>
+            The default constructor for the attribute, defining no type
+            </summary>
+        </member>
+        <member name="M:SlowFox.InjectMocksAttribute.#ctor(System.Type)">
+            <summary>
+            The default constructor for the attribute, defining the type for which the mocks will be generated
+            </summary>
+        </member>
+    </members>
+</doc>

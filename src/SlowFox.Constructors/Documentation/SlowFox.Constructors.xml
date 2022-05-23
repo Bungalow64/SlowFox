@@ -4,6 +4,23 @@
         <name>SlowFox.Constructors</name>
     </assembly>
     <members>
+        <member name="T:SlowFox.Constructors.Diagnostics.DiagnosticGenerator">
+            <summary>
+            The diagnostics for the generator
+            </summary>
+        </member>
+        <member name="P:SlowFox.Constructors.Diagnostics.DiagnosticGenerator.UnexpectedErrorDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Constructors.Diagnostics.DiagnosticGenerator.InvalidConfigOptionDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Constructors.Diagnostics.DiagnosticGenerator.HasUnexpectedErrorDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Constructors.Diagnostics.DiagnosticGenerator.HasInvalidConfigOptionDiagnostic">
+            <inheritdoc/>
+        </member>
         <member name="T:SlowFox.Constructors.Generators.ConstructorGenerator">
             <summary>
             Source generator for generating constructors
@@ -15,15 +32,17 @@
         <member name="M:SlowFox.Constructors.Generators.ConstructorGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
             <inheritdoc/>
         </member>
-        <member name="T:SlowFox.Constructors.Generators.InjectDependenciesAttributeGenerator">
+        <member name="T:SlowFox.Constructors.Receivers.ConstructorGeneratorReceiver">
             <summary>
-            Source generator for generating the attribute to be used for identifying classes to have a constructor automatically generated
+            The receiver for generating constructors
             </summary>
         </member>
-        <member name="M:SlowFox.Constructors.Generators.InjectDependenciesAttributeGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)">
-            <inheritdoc/>
+        <member name="P:SlowFox.Constructors.Receivers.ConstructorGeneratorReceiver.ClassesToAugment">
+            <summary>
+            The list of classes that have been detected as needing generation
+            </summary>
         </member>
-        <member name="M:SlowFox.Constructors.Generators.InjectDependenciesAttributeGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)">
+        <member name="M:SlowFox.Constructors.Receivers.ConstructorGeneratorReceiver.OnVisitSyntaxNode(Microsoft.CodeAnalysis.GeneratorSyntaxContext)">
             <inheritdoc/>
         </member>
     </members>

@@ -1,4 +1,4 @@
-using ExternalProject.Net6.UnitTestMocks.MSTest.Sample.NamespaceTests;
+using ExternalProject.Net6.UnitTestMocks.Sample.NamespaceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using I = SlowFox;
 

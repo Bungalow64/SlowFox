@@ -5,7 +5,7 @@
 
 Rule ID | Category | Severity | Notes
 --------|----------|----------|--------------------
-SFMK001 |  Design  |  Warning | SFMK001_CannotGenerateMocks, [Documentation](https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md)
-SFMK002 |  Design  |  Warning | SFMK002_OnlyClassesAsTarget, [Documentation](https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md)
-SFMK003 |  Design  |  Warning | SFMK003_MissingDependency, [Documentation](https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md)
-SFMK004 |  Design  |  Warning | SFMK004_InvalidConfigOption, [Documentation](https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md)
+SFMKM001 |  Design  |  Warning | SFMKM001_CannotGenerateMocks, [Documentation](https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md)
+SFMKM002 |  Design  |  Warning | SFMKM002_OnlyClassesAsTarget, [Documentation](https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md)
+SFMKM003 |  Design  |  Warning | SFMKM003_MissingDependency, [Documentation](https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md)
+SFMKM004 |  Design  |  Warning | SFMKM004_InvalidConfigOption, [Documentation](https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md)

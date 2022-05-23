@@ -34,7 +34,7 @@ steps:
     versioningScheme: byPrereleaseNumber
     requestedMajorVersion: 0
     requestedMinorVersion: 1
-    requestedPatchVersion: 0
+    requestedPatchVersion: 3
     packagesToPack: 'src/**/*.csproj'
 - task: DotNetCoreCLI@2
   displayName: Push
@@ -51,10 +51,20 @@ steps:
     vstsFeed: '46089223-147e-4f42-b802-450dfa09eb3b'
 - task: DotNetCoreCLI@2
   displayName: Build (External)
+  continueOnError: true
   inputs:
     projects: |
       **/External*/*.csproj
-    arguments: '--configuration $(BuildConfiguration) --no-restore'
+    arguments: '--configuration $(BuildConfiguration) --no-restore /p:EmitCompilerGeneratedFiles=true /p:CompilerGeneratedFilesOutputPath=$(Build.BinariesDirectory)/GeneratedFiles'
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)/GeneratedFiles'
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).Generated.zip' 
+    verbose: true
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).Generated.zip'
 - task: UseDotNet@2
   displayName: 'Use .NET 3.1 Core SDK'
   inputs:

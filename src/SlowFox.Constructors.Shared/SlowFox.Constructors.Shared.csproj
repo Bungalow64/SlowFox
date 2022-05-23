@@ -5,7 +5,7 @@
 		<AssemblyName>SlowFox.Constructors.Shared</AssemblyName>
 		<RootNamespace>SlowFox.Constructors.Shared</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>0.1.0</Version>
+		<Version>0.2.0</Version>
 		<Authors>Bungalow64</Authors>
 		<Company>Bungalow64 Technologies Ltd</Company>
 		<Product>SlowFox Constructor Generation (Shared)</Product>

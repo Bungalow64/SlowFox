@@ -22,8 +22,8 @@ steps:
     command: pack
     versioningScheme: byPrereleaseNumber
     requestedMajorVersion: 0
-    requestedMinorVersion: 1
-    requestedPatchVersion: 2
+    requestedMinorVersion: 2
+    requestedPatchVersion: 0
     packagesToPack: 'src/**/*.csproj'
 - task: NuGetCommand@2
   displayName: Push

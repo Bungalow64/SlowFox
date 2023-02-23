@@ -34,7 +34,7 @@ steps:
     versioningScheme: byPrereleaseNumber
     requestedMajorVersion: 0
     requestedMinorVersion: 2
-    requestedPatchVersion: 0
+    requestedPatchVersion: 1
     packagesToPack: 'src/**/*.csproj'
 - task: DotNetCoreCLI@2
   displayName: Push

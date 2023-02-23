@@ -20,7 +20,7 @@ namespace ExternalProject.Net3_1.UnitTestMocks.xUnit.Sample.MultipleDependencies
         [Fact]
         public void Mock_CanMock()
         {
-            string? requestedName = null;
+            string requestedName = null;
 
             _userReader.Setup(p => p.GetName()).Returns("Jamie");
 

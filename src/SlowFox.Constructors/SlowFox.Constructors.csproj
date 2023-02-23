@@ -6,6 +6,7 @@
 		<RootNamespace>SlowFox.Constructors</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 		<Version>0.3.0</Version>
 		<Authors>Bungalow64</Authors>
 		<Company>Bungalow64 Technologies Ltd</Company>

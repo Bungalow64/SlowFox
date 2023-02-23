@@ -6,7 +6,7 @@
 		<RootNamespace>SlowFox.UnitTestMocks.xUnit</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
-		<Version>0.2.0</Version>
+		<Version>0.3.0</Version>
 		<Authors>Bungalow64</Authors>
 		<Company>Bungalow64 Technologies Ltd</Company>
 		<Product>SlowFox Unit Test Mock Generation (using xUnit)</Product>
@@ -42,13 +42,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.1" />
-		<PackageReference Include="Moq" Version="4.16.1" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.4.0" />
+		<PackageReference Include="Moq" Version="4.18.4" />
 	</ItemGroup>
 
 	<ItemGroup>

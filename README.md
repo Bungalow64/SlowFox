@@ -11,7 +11,7 @@ There are currently 2 generators available via SlowFox:
 
 [![](https://img.shields.io/nuget/v/SlowFox.Constructors)](https://www.nuget.org/packages/SlowFox.Constructors/)
 [![](https://img.shields.io/nuget/dt/SlowFox.Constructors)](https://www.nuget.org/packages/SlowFox.Constructors/)
-[![Build Status](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_apis/build/status/Bungalow64.SlowFox.CI?branchName=refs%2Fpull%2F5%2Fmerge)](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_build/latest?definitionId=17)
+[![Build Status](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_apis/build/status/Bungalow64.SlowFox.CI?branchName=main)](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_build/latest?definitionId=17)
 [![Release Date](https://img.shields.io/github/release-date/bungalow64/slowfox?label=latest%20release)](https://github.com/Bungalow64/SlowFox)
 [![Licence](https://img.shields.io/github/license/bungalow64/slowfox)](https://github.com/Bungalow64/SlowFox)
 

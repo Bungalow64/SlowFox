@@ -39,5 +39,13 @@ namespace SlowFox.Core.Configuration.Abstract
         /// Whether there is a diagnostic for when a dependency is missing
         /// </summary>
         bool HasMissingDependencyDiagnostic { get; }
+        /// <summary>
+        /// The diagnostic for when a target is abstract
+        /// </summary>
+        DiagnosticDescriptor AbstractTargetDiagnostic { get; }
+        /// <summary>
+        /// Whether there is a diagnostic for when a target is abstract
+        /// </summary>
+        bool HasAbstractTargetDiagnostic { get; }
     }
 }

@@ -21,6 +21,9 @@
         <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.InvalidConfigOptionDiagnostic">
             <inheritdoc/>
         </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.AbstractTargetDiagnostic">
+            <inheritdoc/>
+        </member>
         <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.HasUnexpectedErrorDiagnostic">
             <inheritdoc/>
         </member>
@@ -31,6 +34,9 @@
             <inheritdoc/>
         </member>
         <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.HasMissingDependencyDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.UnitTestMocks.MSTest.Diagnostics.DiagnosticGenerator.HasAbstractTargetDiagnostic">
             <inheritdoc/>
         </member>
         <member name="T:SlowFox.UnitTestMocks.MSTest.Generators.MockGenerator">

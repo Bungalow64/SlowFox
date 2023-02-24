@@ -24,5 +24,9 @@ namespace SlowFox.Core.Configuration
         public virtual DiagnosticDescriptor MissingDependencyDiagnostic => null;
         /// <inheritdoc/>
         public virtual bool HasMissingDependencyDiagnostic => false;
+        /// <inheritdoc/>
+        public virtual DiagnosticDescriptor AbstractTargetDiagnostic => null;
+        /// <inheritdoc/>
+        public virtual bool HasAbstractTargetDiagnostic => false;
     }
 }

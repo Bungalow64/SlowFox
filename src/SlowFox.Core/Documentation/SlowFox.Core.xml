@@ -49,6 +49,16 @@
             Whether there is a diagnostic for when a dependency is missing
             </summary>
         </member>
+        <member name="P:SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator.AbstractTargetDiagnostic">
+            <summary>
+            The diagnostic for when a target is abstract
+            </summary>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.Abstract.IDiagnosticGenerator.HasAbstractTargetDiagnostic">
+            <summary>
+            Whether there is a diagnostic for when a target is abstract
+            </summary>
+        </member>
         <member name="T:SlowFox.Core.Configuration.EmptyDiagnosticGenerator">
             <summary>
             Class defining a diagnostic generator that won't return any diagnostic warnings.  This is to be used for cases where errors should be ignored.
@@ -76,6 +86,12 @@
             <inheritdoc/>
         </member>
         <member name="P:SlowFox.Core.Configuration.EmptyDiagnosticGenerator.HasMissingDependencyDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.EmptyDiagnosticGenerator.AbstractTargetDiagnostic">
+            <inheritdoc/>
+        </member>
+        <member name="P:SlowFox.Core.Configuration.EmptyDiagnosticGenerator.HasAbstractTargetDiagnostic">
             <inheritdoc/>
         </member>
         <member name="T:SlowFox.Core.Definitions.BaseParameter">

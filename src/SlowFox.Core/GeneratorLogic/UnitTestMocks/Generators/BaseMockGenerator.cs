@@ -157,6 +157,12 @@ namespace SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators
                         context.ReportDiagnostic(Diagnostic.Create(Diagnostics.NoTypeDiagnostic, targetClass.Value.GetLocation(), targetClass.Key.Identifier.Value, targetType?.Kind().ToString() ?? UnknownText));
                         continue;
                     }
+                    
+                    if (targetSymbol.IsAbstract)
+                    {
+                        context.ReportDiagnostic(Diagnostic.Create(Diagnostics.AbstractTargetDiagnostic, targetClass.Value.GetLocation(), targetSymbol));
+                        continue;
+                    }
 
                     // check that the users compilation references the expected library 
                     if (!context.Compilation.ReferencedAssemblyNames.Any(ai => ai.Name.Equals(NamespaceMoq, StringComparison.OrdinalIgnoreCase)))
@@ -170,7 +176,7 @@ namespace SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators
 
                     List<(string parameterName, ITypeSymbol type)> types;
 
-                    ImmutableArray<IParameterSymbol> parameters = targetSymbol.InstanceConstructors.FirstOrDefault()?.Parameters ?? new ImmutableArray<IParameterSymbol>();
+                    ImmutableArray<IParameterSymbol> parameters = targetSymbol.InstanceConstructors.FirstOrDefault()?.Parameters ?? ImmutableArray<IParameterSymbol>.Empty;
                     types = parameters.Select(p => (p.Name, p.Type)).ToList();
 
                     if (!types.Any())

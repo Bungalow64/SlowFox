@@ -14,7 +14,7 @@ namespace SlowFox.UnitTestMocks.MSTest.Diagnostics
             messageFormat: "Couldn't generate the mocks for object '{0}'.  {1} {2}.",
             category: "Design",
             DiagnosticSeverity.Warning,
-            helpLinkUri: "https://github.com/Bungalow64/SlowFox/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md",
+            helpLinkUri: "https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md",
             isEnabledByDefault: true);
 
         private static readonly DiagnosticDescriptor _noTypeDiagnostic = new DiagnosticDescriptor(
@@ -23,7 +23,7 @@ namespace SlowFox.UnitTestMocks.MSTest.Diagnostics
             messageFormat: "Incorrect type found for object '{0}'.  Expected IdentifierNameSyntax, but found {1}.",
             category: "Design",
             DiagnosticSeverity.Warning,
-            helpLinkUri: "https://github.com/Bungalow64/SlowFox/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md",
+            helpLinkUri: "https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md",
             isEnabledByDefault: true);
 
         private static readonly DiagnosticDescriptor _missingDependencyDiagnostic = new DiagnosticDescriptor(
@@ -32,7 +32,7 @@ namespace SlowFox.UnitTestMocks.MSTest.Diagnostics
             messageFormat: "{1} is required in {0}, but it has not been found",
             category: "Design",
             DiagnosticSeverity.Warning,
-            helpLinkUri: "https://github.com/Bungalow64/SlowFox/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md",
+            helpLinkUri: "https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md",
             isEnabledByDefault: true);
 
         private static readonly DiagnosticDescriptor _invalidConfigOptionDiagnostic = new DiagnosticDescriptor(
@@ -41,7 +41,16 @@ namespace SlowFox.UnitTestMocks.MSTest.Diagnostics
             messageFormat: "Config '{0}' has an unexpected value: {1}.  Allowed options are: {2}.",
             category: "Design",
             DiagnosticSeverity.Warning,
-            helpLinkUri: "https://github.com/Bungalow64/SlowFox/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md",
+            helpLinkUri: "https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md",
+            isEnabledByDefault: true);
+
+        private static readonly DiagnosticDescriptor _abstractTargetDiagnostic = new DiagnosticDescriptor(
+            id: "SFMKM005",
+            title: "Abstract classes cannot be the target of the InjectMocksAttribute",
+            messageFormat: "{0} is an abstract class",
+            category: "Design",
+            DiagnosticSeverity.Warning,
+            helpLinkUri: "https://github.com/Bungalow64/SlowFox/blob/main/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md",
             isEnabledByDefault: true);
 
         /// <inheritdoc/>
@@ -57,6 +66,9 @@ namespace SlowFox.UnitTestMocks.MSTest.Diagnostics
         public override DiagnosticDescriptor InvalidConfigOptionDiagnostic => _invalidConfigOptionDiagnostic;
 
         /// <inheritdoc/>
+        public override DiagnosticDescriptor AbstractTargetDiagnostic => _abstractTargetDiagnostic;
+
+        /// <inheritdoc/>
         public override bool HasUnexpectedErrorDiagnostic => true;
 
         /// <inheritdoc/>
@@ -67,5 +79,8 @@ namespace SlowFox.UnitTestMocks.MSTest.Diagnostics
 
         /// <inheritdoc/>
         public override bool HasMissingDependencyDiagnostic => true;
+
+        /// <inheritdoc/>
+        public override bool HasAbstractTargetDiagnostic => true;
     }
 }

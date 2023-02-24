@@ -31,6 +31,10 @@ namespace SlowFox.Tests.Shared.Base
         {
             return AssertGeneration(new Dictionary<string, string>(), AppendAttribute(code));
         }
+        protected Task AssertNoGeneration(DiagnosticResult expectedDiagnostic, params string[] code)
+        {
+            return AssertGeneration(new Dictionary<string, string>(), new DiagnosticResult[] { expectedDiagnostic }, AppendAttribute(code));
+        }
         protected Task AssertMultipleGenerations(IDictionary<string, string> primaryGeneratorOutputs, params string[] code)
         {
             return AssertGeneration(primaryGeneratorOutputs, AppendAttribute(code));

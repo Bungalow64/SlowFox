@@ -18,3 +18,6 @@ A required dependency has not been found.  The warning will indicate which packa
 
 An unexpected value has been found for a configuration option.  Check the documentation for the expected values.
 
+## SFMKM005 Abstract Not Allowed As Target
+
+This is a warning because the type referenced in the InjectMocksAttribute is abstract, which isn't allowed since a concrete class is required to determine which mocks to generate.  Update the attribute to reference a non-abstract class instead.

@@ -1124,4 +1124,33 @@ namespace Logic.Readers.Tests
 }";
         await AssertGenerationWithConfig(generated, "Logic.Readers.Tests.UserReaderTests.Generated.cs", config, classFile1);
     }
+
+    [Fact]
+    public async Task InjectInterface_NoGeneration_ReturnWarning()
+    {
+        var classFile1 =
+@"using Xunit;
+using DemoProject.NET7.InjectConsole.Logic;
+
+namespace DemoProject.NET7.InjectConsole.Tests;
+
+[SlowFox.InjectMocks(typeof(IDataReader))]
+public partial class UnitTest1
+{
+}";
+
+        var classFile2 =
+@"namespace DemoProject.NET7.InjectConsole.Logic;
+
+public interface IDataReader
+{
+    void DoSomething();
+}";
+        var expectedDiagnostic = DiagnosticResult
+            .CompilerWarning("SFMKX005")
+            .WithSpan("", 6, 2, 6, 42)
+            .WithArguments("DemoProject.NET7.InjectConsole.Logic.IDataReader");
+
+        await AssertNoGeneration(expectedDiagnostic, classFile1, classFile2);
+    }
 }

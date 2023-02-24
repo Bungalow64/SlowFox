@@ -44,6 +44,15 @@ namespace SlowFox.UnitTestMocks.NUnit.Diagnostics
             helpLinkUri: "https://github.com/Bungalow64/SlowFox/src/SlowFox.UnitTestMocks.NUnit/Documentation/RuleDocumentation.md",
             isEnabledByDefault: true);
 
+        private static readonly DiagnosticDescriptor _abstractTargetDiagnostic = new DiagnosticDescriptor(
+            id: "SFMKN005",
+            title: "Abstract classes cannot be the target of the InjectMocksAttribute",
+            messageFormat: "{0} is an abstract class",
+            category: "Design",
+            DiagnosticSeverity.Warning,
+            helpLinkUri: "https://github.com/Bungalow64/SlowFox/src/SlowFox.UnitTestMocks.MSTest/Documentation/RuleDocumentation.md",
+            isEnabledByDefault: true);
+
         /// <inheritdoc/>
         public override DiagnosticDescriptor UnexpectedErrorDiagnostic => _unexpectedErrorDiagnostic;
 
@@ -57,6 +66,9 @@ namespace SlowFox.UnitTestMocks.NUnit.Diagnostics
         public override DiagnosticDescriptor InvalidConfigOptionDiagnostic => _invalidConfigOptionDiagnostic;
 
         /// <inheritdoc/>
+        public override DiagnosticDescriptor AbstractTargetDiagnostic => _abstractTargetDiagnostic;
+
+        /// <inheritdoc/>
         public override bool HasUnexpectedErrorDiagnostic => true;
 
         /// <inheritdoc/>
@@ -67,5 +79,8 @@ namespace SlowFox.UnitTestMocks.NUnit.Diagnostics
 
         /// <inheritdoc/>
         public override bool HasMissingDependencyDiagnostic => true;
+
+        /// <inheritdoc/>
+        public override bool HasAbstractTargetDiagnostic => true;
     }
 }

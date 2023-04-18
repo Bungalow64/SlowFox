@@ -9,7 +9,7 @@ There are currently 2 generators available via SlowFox:
 
 [![](https://img.shields.io/nuget/v/SlowFox.Core)](https://www.nuget.org/packages/SlowFox.Core/)
 [![](https://img.shields.io/nuget/dt/SlowFox.Core)](https://www.nuget.org/packages/SlowFox.Core/)
-[![Build Status](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_apis/build/status/Bungalow64.SlowFox.CI?branchName=main)](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_build/latest?definitionId=17)
+[![Build Status](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_apis/build/status/Bungalow64.SlowFox.CI?branchName=main)](https://dev.azure.com/bungalow64/Bungalow64.ConstructorGenerators/_build?definitionId=17&_a=summary)
 [![Release Date](https://img.shields.io/github/release-date/bungalow64/slowfox?label=latest%20release)](https://github.com/Bungalow64/SlowFox)
 [![Licence](https://img.shields.io/github/license/bungalow64/slowfox)](https://github.com/Bungalow64/SlowFox)
 
@@ -19,7 +19,7 @@ This package is required as a dependency of the source generators, but doesn't d
 
 Check out the documentation for the source generators themselves:
 
-- [SlowFox.Constructors](https://feed.nuget.org/packages/SlowFox.UnitTestMocks.Constructors/)
+- [SlowFox.Constructors](https://feed.nuget.org/packages/SlowFox.Constructors/)
 - [SlowFox.UnitTestMocks.xUnit](https://feed.nuget.org/packages/SlowFox.UnitTestMocks.xUnit/)
 - [SlowFox.UnitTestMocks.NUnit](https://feed.nuget.org/packages/SlowFox.UnitTestMocks.NUnit/)
 - [SlowFox.UnitTestMocks.MSTest](https://feed.nuget.org/packages/SlowFox.UnitTestMocks.MSTest/)

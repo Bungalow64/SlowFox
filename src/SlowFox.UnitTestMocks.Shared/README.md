@@ -9,7 +9,7 @@ SlowFox is a suite of .NET source generators, aiming to reduce the amount of rep
 [![Release Date](https://img.shields.io/github/release-date/bungalow64/slowfox?label=latest%20release)](https://github.com/Bungalow64/SlowFox)
 [![Licence](https://img.shields.io/github/license/bungalow64/slowfox)](https://github.com/Bungalow64/SlowFox)
 
-SlowFox.UnitTestMocks.Shared is a library that provides common objects for the [SlowFox.UnitTestMocks.*](https://feed.nuget.org/packages/SlowFox.Constructors) source generators.
+SlowFox.UnitTestMocks.Shared is a library that provides common objects for the [SlowFox.UnitTestMocks.*](https://feed.nuget.org/packages/SlowFox.UnitTestMocks.xUnit) source generators.
 
 This package is required as a dependency of the source generators, but doesn't do anything just on its own.
 

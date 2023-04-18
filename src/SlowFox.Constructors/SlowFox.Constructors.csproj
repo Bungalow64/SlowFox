@@ -21,6 +21,7 @@
 		<PackageProjectUrl>https://github.com/Bungalow64/SlowFox.git</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Bungalow64/SlowFox.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -51,6 +52,7 @@
 
 	<ItemGroup>
 		<None Include="..\Bungalow64.png" Pack="true" Visible="false" PackagePath="" />
+		<None Include="README.md" Pack="true" PackagePath="\"/>
 	</ItemGroup>
 
 	<ItemGroup>

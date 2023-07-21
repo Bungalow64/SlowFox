@@ -119,7 +119,7 @@ Firstly, choose and install the NuGet package relating to your testing framework
 | NUnit     | [![](https://img.shields.io/nuget/v/SlowFox.UnitTestMocks.NUnit)](https://www.nuget.org/packages/SlowFox.UnitTestMocks.NUnit/) |
 | MSTest2   | [![](https://img.shields.io/nuget/v/SlowFox.UnitTestMocks.MSTest)](https://www.nuget.org/packages/SlowFox.UnitTestMocks.MSTest/) |
 
-Next, create a new test class, mark it as `partial` and apply the `InjectMocks` attribute, indicating the class that you're going to be tested:
+Next, create a new test class, mark it as `partial` and apply the `InjectMocks` attribute, indicating the class that you're going to be testing:
 
 ```csharp
 namespace MySampleProject

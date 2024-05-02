@@ -3,7 +3,7 @@ using ExternalProject.Net5.UnitTestMocks.Sample.MultipleDependenciesTests;
 using Xunit;
 using Moq;
 
-namespace ExternalProject.Net5.UnitTestMocks.xUnit.Sample.ExcludeDependencyTests
+namespace ExternalProject.Net5.UnitTestMocks.xUnit.Sample.Tests.ExcludeDependencyTests
 {
     [SlowFox.InjectMocks(typeof(ThreeDependenciesWithGeneric))]
     [SlowFox.ExcludeMocks(typeof(ILogger<IUserCache>))]

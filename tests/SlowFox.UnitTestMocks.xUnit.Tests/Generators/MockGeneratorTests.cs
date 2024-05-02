@@ -1153,4 +1153,61 @@ public interface IDataReader
 
         await AssertNoGeneration(expectedDiagnostic, classFile1, classFile2);
     }
+
+    [Fact]
+    public async Task Class_ExcludeOneGenericType_DoNotMockType()
+    {
+        var classFile1 =
+@"using SlowFox;
+using Logic.IO;
+
+namespace Logic.Readers.Tests
+{
+    [InjectMocks(typeof(UserReader))]
+    [ExcludeMocks(typeof(ILogger<UserReader>))]
+    public partial class UserReaderTests { }
+}";
+
+        var classFile2 =
+@"namespace Logic.IO
+{
+    public class UserReader
+    {
+        private readonly IDatabase _database;
+        private readonly ILogger<UserReader> _logger;
+
+        public UserReader(IDatabase database, ILogger<UserReader> logger)
+        {
+            _database = database;
+            _logger = logger;
+        }
+    }
+
+    public interface IDatabase { }
+    public interface ILogger<T> { }
+}";
+
+        var generated =
+@"using Xunit;
+using Moq;
+
+namespace Logic.Readers.Tests
+{
+    public partial class UserReaderTests
+    {
+        private Mock<Logic.IO.IDatabase> _database;
+
+        public UserReaderTests()
+        {
+            _database = new Mock<Logic.IO.IDatabase>(MockBehavior.Strict);
+        }
+
+        private Logic.IO.UserReader Create(Logic.IO.ILogger<Logic.IO.UserReader> logger)
+        {
+            return new Logic.IO.UserReader(_database.Object, logger);
+        }
+    }
+}";
+        await AssertFullGeneration(generated, "Logic.Readers.Tests.UserReaderTests.Generated.cs", classFile1, classFile2);
+    }
 }

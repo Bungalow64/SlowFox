@@ -1,6 +1,6 @@
-﻿using ExternalProject.Net3_1.UnitTestMocks.Sample.InjectableDependencies;
+﻿using ExternalProject.Net5.UnitTestMocks.Sample.InjectableDependencies;
 
-namespace ExternalProject.Net3_1.UnitTestMocks.Sample.MultipleDependenciesTests
+namespace ExternalProject.Net5.UnitTestMocks.Sample.MultipleDependenciesTests
 {
     public class ThreeDependenciesWithGeneric
     {

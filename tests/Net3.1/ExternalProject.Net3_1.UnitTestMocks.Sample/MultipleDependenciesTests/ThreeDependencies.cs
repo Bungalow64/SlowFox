@@ -2,21 +2,21 @@
 
 namespace ExternalProject.Net3_1.UnitTestMocks.Sample.MultipleDependenciesTests
 {
-    public class ThreeDependenciesWithGeneric
+    public class ThreeDependencies
     {
         private readonly IUserReader _userReader;
         private readonly IUserWriter _userWriter;
-        private readonly ILogger<IUserCache> _logger;
+        private readonly IUserCache _userCache;
 
-        public ThreeDependenciesWithGeneric(IUserReader userReader, IUserWriter userWriter, ILogger<IUserCache> logger)
+        public ThreeDependencies(IUserReader userReader, IUserWriter userWriter, IUserCache userCache)
         {
             _userReader = userReader;
             _userWriter = userWriter;
-            _logger = logger;
+            _userCache = userCache;
         }
 
         public string GetName() => _userReader.GetName();
         public void UpdateName(string name) => _userWriter.UpdateName(name);
-        public IUserCache Log() => _logger.Log();
+        public void ClearCache() => _userCache.ClearCache();
     }
 }

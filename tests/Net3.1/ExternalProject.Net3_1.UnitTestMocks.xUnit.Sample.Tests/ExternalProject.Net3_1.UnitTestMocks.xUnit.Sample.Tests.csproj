@@ -15,7 +15,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="SlowFox.UnitTestMocks.xUnit" Version="0.*-*" />
+		<PackageReference Include="SlowFox.UnitTestMocks.xUnit" Version="1.*-*" />
 	</ItemGroup>
 
 	<ItemGroup>

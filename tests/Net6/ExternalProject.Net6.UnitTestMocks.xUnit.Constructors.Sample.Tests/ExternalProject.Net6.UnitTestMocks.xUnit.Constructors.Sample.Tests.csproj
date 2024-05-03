@@ -18,8 +18,8 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="SlowFox.Constructors" Version="0.*-*" />
-		<PackageReference Include="SlowFox.UnitTestMocks.xUnit" Version="0.*-*" />
+		<PackageReference Include="SlowFox.Constructors" Version="1.*-*" />
+		<PackageReference Include="SlowFox.UnitTestMocks.xUnit" Version="1.*-*" />
 	</ItemGroup>
 
 </Project>

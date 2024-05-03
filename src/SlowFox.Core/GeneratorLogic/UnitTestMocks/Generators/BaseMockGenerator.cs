@@ -127,7 +127,7 @@ namespace SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators
 
                     var excludedTypes = excludedRawTypes
                         .OfType<TypeOfExpressionSyntax>()
-                        .Select(p => semanticModel.GetTypeInfo((IdentifierNameSyntax)p.Type).Type)
+                        .Select(p => semanticModel.GetTypeInfo((SimpleNameSyntax)p.Type).Type)
                         .Where(p => !(p is null))
                         .ToList();
 
@@ -135,21 +135,21 @@ namespace SlowFox.Core.GeneratorLogic.UnitTestMocks.Generators
                         .AddRange(excludedRawTypes
                         .OfType<ArrayCreationExpressionSyntax>()
                         .SelectMany(p => p.Initializer.Expressions.OfType<TypeOfExpressionSyntax>())
-                        .Select(p => semanticModel.GetTypeInfo((IdentifierNameSyntax)p.Type).Type)
+                        .Select(p => semanticModel.GetTypeInfo((SimpleNameSyntax)p.Type).Type)
                         .Where(p => !(p is null)));
 
                     excludedTypes
                         .AddRange(excludedRawTypes
                         .OfType<ImplicitArrayCreationExpressionSyntax>()
                         .SelectMany(p => p.Initializer.Expressions.OfType<TypeOfExpressionSyntax>())
-                        .Select(p => semanticModel.GetTypeInfo((IdentifierNameSyntax)p.Type).Type)
+                        .Select(p => semanticModel.GetTypeInfo((SimpleNameSyntax)p.Type).Type)
                         .Where(p => !(p is null)));
 
                     excludedTypes
                         .AddRange(excludedRawTypes
                         .OfType<ImplicitStackAllocArrayCreationExpressionSyntax>()
                         .SelectMany(p => p.Initializer.Expressions.OfType<TypeOfExpressionSyntax>())
-                        .Select(p => semanticModel.GetTypeInfo((IdentifierNameSyntax)p.Type).Type)
+                        .Select(p => semanticModel.GetTypeInfo((SimpleNameSyntax)p.Type).Type)
                         .Where(p => !(p is null)));
 
                     if (!(context.Compilation.GetSemanticModel(targetType.SyntaxTree).GetSymbolInfo(targetType).Symbol is INamedTypeSymbol targetSymbol))

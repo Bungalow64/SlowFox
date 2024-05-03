@@ -237,3 +237,15 @@ slowfox_generation.unit_test_mocks.xunit.use_loose = true
 # Can I help fix any bugs with this, or add new capabilities?
 
 Of course!  Head on over to the [issues](https://github.com/Bungalow64/SlowFox/issues) page, raise it, and we'll have a chat about what needs to be done.
+
+# Releases
+
+## v1.0.1 - 2-May-2024
+
+This release fixes this issue:
+
+- [Cannot generate unit test mocks when excluding generic dependency](https://github.com/Bungalow64/SlowFox/issues/26)
+
+## v1.0.0 - 19-Apr-2023
+
+The initial release.

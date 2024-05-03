@@ -5,6 +5,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="SlowFox.Constructors" Version="0.*-*" />
+		<PackageReference Include="SlowFox.Constructors" Version="1.*-*" />
 	</ItemGroup>
 </Project>
